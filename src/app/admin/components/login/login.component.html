@@ -1,0 +1,93 @@
+<mat-horizontal-stepper [linear]="isLinear" #stepper>
+    <mat-step [stepControl]="firstFormGroup">
+        <form [formGroup]="firstFormGroup" (ngSubmit)="addUG(firstFormGroup.value)">
+            <ng-template matStepLabel>Usuario - Grupo</ng-template>
+            <div class="container">
+                <h4>Relación Usuario con Grupo</h4>
+                <div class="row">
+                    <div class="col-md-4">
+                        <mat-card>
+                          <mat-form-field>
+                            <mat-label>Usuarios</mat-label>
+                            <mat-select [formControl]="usuarios" multiple formControlName="user">
+                              <mat-option *ngFor="let topping of usuario" [value]="topping.inT_IDUSUARIO_P">{{topping.stR_NOMBRE_USUARIO}}</mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                        </mat-card>
+                    </div>
+                    <div class="col-md-4">
+                        <mat-card>
+                              <mat-form-field>
+                                <mat-label>Grupos: </mat-label>
+                                <mat-select formControlName="INT_IDGRUPO_P">
+                                  <mat-option *ngFor="let food of grupo" [value]="food.inT_IDGRUPO_P">
+                                    {{food.stR_NOMBRE_GRUPO}}
+                                  </mat-option>
+                                </mat-select>
+                              </mat-form-field>
+                        </mat-card>
+                    </div>
+                    <div class="col-sm-3">
+                      <button type="submit" mat-stroked-button color="primary">Ok</button>
+                    </div>
+                </div>
+            </div>
+        <div>
+          <button mat-button matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="secondFormGroup">
+      <form [formGroup]="secondFormGroup">
+        <ng-template matStepLabel>Rol - Pantalla - Permisos</ng-template>
+        <div class="container">
+          <div class="row">
+            <div class="col-sm-3">
+              <mat-card>
+                <mat-form-field>
+                  <mat-label>Rol: </mat-label>
+                  <mat-select formControlName="INT_IDROL_P">
+                    <mat-option *ngFor="let food of rol" [value]="food.inT_IDROL_P">
+                      {{food.stR_NOMBRE_ROL}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </mat-card>
+            </div>
+            <div class="col-sm-3">
+              <mat-card>
+                <mat-form-field>
+                  <mat-label>Pantallas</mat-label>
+                  <mat-select [formControl]="pantallas" multiple>
+                    <mat-option *ngFor="let topping of pantalla" [value]="topping.inT_IDPANTALLA_P">{{topping.stR_NOMBRE_PANTALLA}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </mat-card>
+            </div>
+            <div class="col-sm-3">
+              <mat-card>
+                <mat-form-field>
+                  <mat-label>Permisos</mat-label>
+                  <mat-select [formControl]="permisos" multiple>
+                    <mat-option *ngFor="let topping of permiso" [value]="topping.inT_IDPERMISO_P">{{topping.stR_NOMBRE_PERMISO}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </mat-card>
+            </div>
+          </div>
+        </div>
+        <div>
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Done</ng-template>
+      You are now done.
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button (click)="stepper.reset()">Reset</button>
+      </div>
+    </mat-step>
+  </mat-horizontal-stepper>

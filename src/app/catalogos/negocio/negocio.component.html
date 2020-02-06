@@ -1,0 +1,60 @@
+<mat-card class="container">
+  <mat-card-header>
+    <mat-card-title>Modelo de Negocios</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+  <form [formGroup]="negocioForm" (ngSubmit)="saveModelos(negocioForm.value)">
+    <div class="row">
+      <div class="col">
+        <mat-form-field>
+          <input matInput placeholder="Nombre" formControlName="nombre" matTooltip="Escribe un numbre para el modelo de negocio"/>
+        </mat-form-field>
+      </div>
+      <div class="col">
+        <mat-form-field>
+          <input matInput placeholder="Nombre" formControlName="tipo_captura_id" matTooltip="Escribe un numbre para el modelo de negocio"/>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+        <div class="col">
+          <div class="btn-group btn-group-sm" role="group" aria-label="...">
+            <button type="submit" class="btn btn-outline-primary btn-sm btn-block">Guardar</button>
+          </div>
+        </div>
+      </div>
+  </form>
+  </mat-card-content>
+  <div class="row">
+    <div class="col">
+      <mat-form-field>
+        <input
+          matInput
+          (keyup)="applyFilter($event.target.value)"
+          placeholder="Buscar"
+        />
+      </mat-form-field>
+
+      <table mat-table class="mat-elevation-z8" [dataSource]="dataSource">
+        <!-- Position Column -->
+        <ng-container matColumnDef="nombre">
+          <th mat-header-cell *matHeaderCellDef>Modelo</th>
+          <td mat-cell *matCellDef="let element">{{ element.nombre }}</td>
+        </ng-container>
+
+      
+
+        <ng-container matColumnDef="action">
+          <th mat-header-cell *matHeaderCellDef>Acción</th>
+          <td mat-cell *matCellDef="let element"> 
+            <a mat-raised-button [routerLink]="['edit', element.id]">Editar</a>
+            <a mat-raised-button [routerLink]="['rubros', element.id, element.nombre]">Ver rubros</a>
+            <button mat-raised-button color="warn" (click)="deleteCentro(element.id)">Eliminar</button>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+    </div>
+  </div>
+</mat-card>

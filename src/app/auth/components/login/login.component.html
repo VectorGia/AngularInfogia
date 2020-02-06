@@ -1,0 +1,61 @@
+<body>
+    <div class="first-column">
+      <div class="logo">
+        <img src="../../../../assets/data.png" alt="" />
+        <p class="login">Sistema InfoGIA 2.0 - Proformas</p>
+      </div>
+    </div>
+    <div class="second-column">
+      <div class="formulario pl-0">
+        <form class="example-form" [formGroup]="loginForm" (ngSubmit)="Login(loginForm.value)">
+          <mat-card>
+            <mat-card-header>
+              <mat-card-title>Inicio de Sesion</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <mat-form-field class="example-full-width">
+                <input
+                  matInput
+                  formControlName="username"
+                  placeholder="Usuario"
+                  name="UserName"
+                  type="email"
+                  required
+                />
+              </mat-form-field>
+              <mat-form-field class="example-full-width">
+                <input
+                  matInput
+                  formControlName="password"
+                  placeholder="Contraseña"
+                  name="Password"
+                  type="password"
+                  required
+                />
+              </mat-form-field>
+              <!-- <mat-form-field class="example-full-width">
+                <mat-label>Grupo</mat-label>
+                <mat-select>
+                  <mat-option value="value">Option</mat-option>
+                </mat-select>
+              </mat-form-field> -->
+              <div>
+                <p
+                  style="color:#E92626;font-size:20px;font-weight:normal"
+                  Class="success"
+                  align="left"
+                >
+                  {{ errorMessage }}
+                </p>
+              </div>
+              <div class="exmple-button-row">
+                <button mat-raised-button type="submit" color="primary">
+                  Aceptar
+                </button>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </form>
+      </div>
+    </div>
+  </body>

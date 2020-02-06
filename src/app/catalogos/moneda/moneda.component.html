@@ -1,0 +1,151 @@
+<mat-tab-group>
+  <mat-tab label="Alta Moneda">
+    <mat-card class="container">
+      <mat-card-header>
+        <mat-card-title>Dar de Alta Moneda</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="row">
+          <div class="col">
+            <form [formGroup]="formMoneda" (ngSubmit)="saveMoneda(formMoneda.value)">
+              <div class="row">
+                <div class="col-sm-10">
+                  <mat-form-field>
+                    <input matInput placeholder="Nombre del Pais" formControlName="pais">
+                  </mat-form-field>
+                </div>
+                <div class="col-sm-10">
+                  <mat-form-field>
+                    <input matInput placeholder="Descripción" formControlName="descripcion">
+                  </mat-form-field>
+                </div>
+                <div class="col-sm-4">
+                  <mat-form-field>
+                    <input matInput placeholder="Abreviatura del Pais" formControlName="clave">
+                  </mat-form-field>
+                </div>
+                <div class="col-sm-5">
+                  <label>Activar tipo de cambio: </label>
+                  <br>
+                  <mat-radio-group formControlName="estatus">
+                    <mat-radio-button class="mr-2" value="true">Si</mat-radio-button>
+                    <mat-radio-button value="false">No</mat-radio-button>
+                  </mat-radio-group>
+                </div>
+                <div class="col-sm-8">
+                  <div class="btn-group btn-group-sm" role="group" aria-label="...">
+                    <button type="submit"  class="btn btn-outline-primary btn-sm btn-block">Guardar</button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="col">
+            <table mat-table [dataSource]="dataSource" class="example-container mat-elevation-z8">
+              <ng-container matColumnDef="id">
+                <th mat-header-cell *matHeaderCellDef> ID. </th>
+                <td mat-cell *matCellDef="let item"> {{item.id}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="abrev">
+                <th mat-header-cell *matHeaderCellDef> Abrev. </th>
+                <td mat-cell *matCellDef="let item"> {{item.clave}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="nombre">
+                <th mat-header-cell *matHeaderCellDef> País. </th>
+                <td mat-cell *matCellDef="let item"> {{item.pais}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="estatus">
+                <th mat-header-cell *matHeaderCellDef> Activo. </th>
+                <td mat-cell *matCellDef="let item"> {{item.estatus}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="action">
+                  <th mat-header-cell *matHeaderCellDef>Acción</th>
+                  <td mat-cell *matCellDef="let item">
+                    <a mat-raised-button [routerLink]="['edit', item.inT_IDMONEDA_P]">Editar</a>
+                    <button mat-raised-button color="warn" (click)="deleteMoneda(item.inT_IDMONEDA_P)">Eliminar</button>
+                  </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+          </div>
+        </div>
+        </mat-card-content>
+      </mat-card>
+  </mat-tab>
+  <mat-tab label="Registrar valor">
+    <mat-card class="container">
+      <mat-card-header>
+        <mat-card-title>Registrar Moneda</mat-card-title>
+      </mat-card-header>
+      <form [formGroup]="form" (ngSubmit)="saveCambio(form.value)">
+        <div class="row">
+          <div class="col">
+            <mat-form-field>
+              <mat-label>Seleccione el País: </mat-label>
+              <mat-select matNativeControl formControlName="id" id="moneda">
+                <mat-option *ngFor="let moneda of monedas" [value]="moneda.id">
+                  {{moneda.pais}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <mat-form-field>
+              <input matInput placeholder="Amount" formControlName="DBL_TIPOCAMBIO_OFICIAL" type="number" class="example-right-align">
+              <span matPrefix>$&nbsp;</span>
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <div class="btn-group btn-group-sm" role="group" aria-label="...">
+              <button type="submit"  class="btn btn-outline-primary btn-sm btn-block">Guardar</button>
+            </div>
+          </div>
+        </div>
+      </form>
+      <div class="row">
+        <div class="col">
+          <table mat-table [dataSource]="dataSourcee" class="example-container mat-elevation-z8">
+
+            <ng-container matColumnDef="abrev">
+              <th mat-header-cell *matHeaderCellDef> Abrev. </th>
+              <td mat-cell *matCellDef="let item"> {{item.clave}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="nombre">
+              <th mat-header-cell *matHeaderCellDef> País. </th>
+              <td mat-cell *matCellDef="let item"> {{item.pais}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="cambio">
+              <th mat-header-cell *matHeaderCellDef> Tipo de Cambio. </th>
+              <td mat-cell *matCellDef="let item"> {{item.dbL_TIPOCAMBIO_OFICIAL}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="fecha">
+              <th mat-header-cell *matHeaderCellDef> Fecha </th>
+              <td mat-cell *matCellDef="let item"> {{item.feC_MODIF_TIPOCAMBIO }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="action">
+                <th mat-header-cell *matHeaderCellDef>Acción</th>
+                <td mat-cell *matCellDef="let item">
+                  <a mat-raised-button [routerLink]="['edit', item.id]">Editar</a>
+                  <button mat-raised-button color="warn" (click)="deleteMoneda(item.id)">Eliminar</button>
+                </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumn; sticky: true"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumn;"></tr>
+          </table>
+        </div>
+      </div>
+    </mat-card>
+  </mat-tab>
+</mat-tab-group>
+
+

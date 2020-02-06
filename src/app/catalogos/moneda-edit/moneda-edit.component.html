@@ -1,0 +1,35 @@
+<mat-card class="container">
+  <form [formGroup]="formMonedaEdit" (ngSubmit)="saveMoneda($event)">
+      <div class="row">
+        <div class="col-sm-10">
+          <mat-form-field>
+            <input matInput placeholder="Nombre del Pais" formControlName="pais">
+          </mat-form-field>
+        </div>
+        <div class="col-sm-10">
+          <mat-form-field>
+            <input matInput placeholder="Descripción" formControlName="descripcion">
+          </mat-form-field>
+        </div>
+        <div class="col-sm-4">
+          <mat-form-field>
+            <input matInput placeholder="Abreviatura del Pais" formControlName="clave">
+          </mat-form-field>
+        </div>
+        <div class="col-sm-5">
+          <label>Activar tipo de cambio: </label>
+          <br>
+          <mat-radio-group formControlName="estatus">
+            <mat-radio-button class="mr-2" value="true">Si</mat-radio-button>
+            <mat-radio-button value="false">No</mat-radio-button>
+          </mat-radio-group>
+        </div>
+        <div class="col-sm-8">
+          <div class="btn-group btn-group-sm" role="group" aria-label="...">
+            <button type="submit"  class="btn btn-outline-primary btn-sm btn-block">Guardar</button>
+          </div>
+        </div>
+      </div>
+    </form>
+
+</mat-card>

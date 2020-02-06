@@ -1,0 +1,151 @@
+<div class="container-fluid">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Empresa</mat-card-title>
+    </mat-card-header>
+  <mat-card-content>
+    <form [formGroup]="form" (ngSubmit)="saveDatos(form.value)">
+      <div class="row">
+        <div class="col-sm-2">
+          <mat-form-field>
+            <input matInput placeholder="ID: " formControlName="desc_id" matTooltip="ID de la empresa"/>
+          </mat-form-field>
+        </div>
+        <div class="col-sm-5">
+        <mat-form-field>
+          <input matInput placeholder="Nombre: " formControlName="nombre" matTooltip="Nombre de la empresa" />
+        </mat-form-field>
+      </div>
+      <div class="col-sm-2">
+        <mat-form-field>
+          <input matInput placeholder="Abreviatura: " formControlName="abrev" matTooltip="Abreviatura para la empresa"/>
+        </mat-form-field>
+      </div>
+    </div>
+    <div>
+      <div class="row">
+        <div class="col">
+        <label>Cadena de conexión al ERP: </label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-2">
+        <p>
+          <mat-form-field appearance="legacy">
+            <mat-label>Host: </mat-label>
+            <input matInput placeholder="99:99:99:99" formControlName="host" matTooltip="Dirección de HOST"/>
+          </mat-form-field>
+        </p>
+      </div>
+      <div class="col-sm-2">
+        <p>
+          <mat-form-field appearance="legacy">
+            <mat-label>Puerto: </mat-label>
+            <input matInput placeholder="9999" formControlName="puerto_compania" matTooltip="Dirección de Puerto"/>
+          </mat-form-field>
+        </p>
+      </div>
+      <div class="col-sm-3">
+        <p>
+          <mat-form-field appearance="legacy">
+            <mat-label>Usuario: </mat-label>
+            <input matInput placeholder="Nombre de usuario" formControlName="usuario_etl" matTooltip="Nombre de usuario"/>
+          </mat-form-field>
+        </p>
+      </div>
+      <div class="col-sm-3">
+        <p>
+          <mat-form-field appearance="legacy">
+            <mat-label>Contraseña: </mat-label>
+            <input matInput type="password" placeholder="Contraseña" formControlName="contrasenia_etl" matTooltip="Contraseña del usuario" />
+          </mat-form-field>
+        </p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-2">
+        <p>
+          <mat-form-field appearance="legacy">
+            <mat-label>Base de Datos: </mat-label>
+            <input matInput placeholder="Nombre..." formControlName="bd_name"/>
+          </mat-form-field>
+        </p>
+      </div>
+      <div class="col-md-2">
+        <p>
+          <mat-form-field appearance="legacy">
+            <mat-label>Moneda: </mat-label>
+            <mat-select placeholder="Select me" formControlName="moneda_id" matTooltip="Tipo de moneda">
+              <mat-option value="1">MX</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </p>
+      </div>
+      <div class="col">
+        <div class="btn-group btn-group-sm" role="group" aria-label="...">
+          <button type="submit"  class="btn btn-outline-primary btn-sm btn-block">Guardar</button>
+        </div>
+    </div>
+  </div>
+  </div>
+</form>
+
+<div class="row">
+  <div class="col">
+    <mat-form-field>
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Buscar">
+    </mat-form-field>
+    <div class="mat-elevation-z8">
+      <table mat-table [dataSource]="dataSource">
+        <!-- Position Column -->
+        <ng-container matColumnDef="idDB">
+          <th mat-header-cell *matHeaderCellDef> No. </th>
+          <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+        </ng-container>
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef> ID </th>
+          <td mat-cell *matCellDef="let element"> {{element.desc_id}} </td>
+        </ng-container>
+        <!-- Name Column -->
+        <ng-container matColumnDef="empresa">
+          <th mat-header-cell *matHeaderCellDef> EMPRESA </th>
+          <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
+        </ng-container>
+        <!-- Weight Column -->
+        <ng-container matColumnDef="abrev">
+          <th mat-header-cell *matHeaderCellDef> ABREVIATURA </th>
+          <td mat-cell *matCellDef="let element"> {{element.abrev}} </td>
+        </ng-container>
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="etl">
+          <th mat-header-cell *matHeaderCellDef> ETL </th>
+          <td mat-cell *matCellDef="let element"> {{element.activo_etl}} </td>
+              </ng-container>
+              <ng-container matColumnDef="cadconexion">
+                <th mat-header-cell *matHeaderCellDef> CADENA DE CONEXIÓN </th>
+                <td mat-cell *matCellDef="let element"> {{element.host}} </td>
+              </ng-container>
+              <ng-container matColumnDef="cambio">
+                <th mat-header-cell *matHeaderCellDef> TIPO DE CAMBIO </th>
+                <td mat-cell *matCellDef="let element"> {{element.moneda_id}} </td>
+              </ng-container>
+              <ng-container matColumnDef="action">
+                <th mat-header-cell *matHeaderCellDef>Acción</th>
+                <td mat-cell *matCellDef="let element">
+                  <div>
+                    <a mat-raised-button [routerLink]="['edit', element.id]">Editar</a>
+                   <button mat-raised-button color="warn" (click)="openDialog(element.id)">Eliminar</button>
+                  </div>
+                </td>
+              </ng-container>
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+            <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+          </div>
+        </div>
+      </div>
+  </mat-card-content>
+  </mat-card>
+
+</div>

@@ -1,0 +1,29 @@
+.mat-column-idDB{
+    width: 1%;
+  }
+  .mat-column-id{
+    width: 1%;
+  }
+  .mat-column-empresa{
+    width: 3%;
+  }
+  .mat-column-abrev{
+    width: 2%;
+  }
+  .mat-column-etl{
+    width: 2%;
+  }
+  .mat-column-cadconexion{
+    width: 2%;
+  }
+  .mat-column-cambio{
+    width: 2%;
+  }
+  table {
+    width: 100%;
+  }
+  
+  .mat-form-field {
+    font-size: 14px;
+    width: 100%;
+  }

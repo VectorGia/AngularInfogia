@@ -1,0 +1,9 @@
+export interface Relaciones{
+    INT_IDUSUARIO_P
+    INT_IDGRUPO_P
+    INT_IDROL_P
+    SERIAL_IDRELACIONUSU_P
+    INT_IDPANTALLA_P
+    INT_IDPERMISO_P
+    BOOL_ESTATUS_LOGICO_RELUSU: boolean;
+} 

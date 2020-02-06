@@ -1,0 +1,45 @@
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>Editar Rubro</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <form [formGroup]="editRubro" (ngSubmit)="saveEdit($event)">
+            <div class="row">
+                <div class="col">
+                    <mat-form-field>
+                        <input matInput placeholder="Nombre Rubro" formControlName="nombre"> 
+                    </mat-form-field>
+                </div>
+                <div class="col">
+                    <mat-form-field>
+                        <input matInput placeholder="Clave" formControlName="clave" >
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <mat-form-field>
+                        <input matInput placeholder="Cuentas incluidas" formControlName="rangos_cuentas_incluidas">
+                    </mat-form-field>
+                </div>
+                <div class="col">
+                    <mat-form-field>
+                        <input matInput placeholder="Cuentas excluidas" formControlName="rango_cuentas_excluidas">
+                    </mat-form-field>
+                </div>
+                <div class="col">
+                    <mat-form-field>
+                        <input matInput placeholder="Aritmetica" formControlName="aritmetica">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                  <div class="btn-group btn-group-sm" role="group" aria-label="...">
+                    <button type="submit"  class="btn btn-outline-primary btn-sm btn-block">Guardar</button>
+                  </div>
+                </div>
+              </div>
+        </form>
+    </mat-card-content>
+</mat-card>

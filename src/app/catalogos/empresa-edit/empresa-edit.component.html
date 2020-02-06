@@ -1,0 +1,106 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Empresa</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <form [formGroup]="form" (ngSubmit)="saveCompania($event)">
+    <div class="row">
+      <div class="col-md-2">
+        <mat-form-field>
+          <input matInput placeholder="ID: " formControlName="desc_id" matTooltip="ID de la empresa"/>
+        </mat-form-field>
+      </div>
+      <div class="col">
+        <mat-form-field>
+          <input matInput placeholder="Nombre: " formControlName="nombre" matTooltip="Nombre de la empresa" />
+        </mat-form-field>
+      </div>
+      <div class="col">
+        <mat-form-field>
+          <input matInput placeholder="Abreviatura: " formControlName="abrev" matTooltip="Abreviatura para la empresa"/>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <label>Activación en ETL: </label>
+        <mat-radio-group aria-label="Select an option" formControlName="activo_etl">
+          <mat-radio-button value="true">Si</mat-radio-button>
+          <mat-radio-button value="false">No</mat-radio-button>
+        </mat-radio-group>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <label>Cadena de conexión al ERP: </label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <p>
+          <mat-form-field appearance="legacy">
+            <mat-label>Host: </mat-label>
+            <input matInput placeholder="99:99:99:99" formControlName="host" matTooltip="Dirección de HOST"/>
+          </mat-form-field>
+        </p>
+      </div>
+      <div class="col">
+        <p>
+          <mat-form-field appearance="legacy">
+            <mat-label>Puerto: </mat-label>
+            <input matInput placeholder="9999" formControlName="puerto_compania" matTooltip="Dirección de Puerto"/>
+          </mat-form-field>
+        </p>
+      </div>
+      <div class="col">
+        <p>
+          <mat-form-field appearance="legacy">
+            <mat-label>Usuario: </mat-label>
+            <input matInput placeholder="Nombre de usuario" formControlName="usuario_etl" matTooltip="Nombre de usuario"/>
+          </mat-form-field>
+        </p>
+      </div>
+      <div class="col">
+        <p>
+          <mat-form-field appearance="legacy">
+            <mat-label>Contraseña: </mat-label>
+            <input matInput placeholder="Contraseña" formControlName="contrasenia_etl" matTooltip="Contraseña del usuario" />
+          </mat-form-field>
+        </p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-2">
+        <p>
+          <mat-form-field appearance="legacy">
+            <mat-label>Base de Datos: </mat-label>
+            <input matInput placeholder="Nombre..." formControlName="bd_name"/>
+          </mat-form-field>
+        </p>
+      </div>
+      <div class="col-md-2">
+        <p>
+          <mat-form-field appearance="legacy">
+            <mat-label>Moneda: </mat-label>
+            <mat-select placeholder="Select me" formControlName="moneda_id" matTooltip="Tipo de moneda">
+              <mat-option value="1">MX</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </p>
+      </div>
+    </div>
+  <div class="row">
+    <div class="col-sm-1">
+      <div class="btn-group btn-group-sm" role="group" aria-label="...">
+          <button type="submit" [disabled]="form.invalid" class="btn btn-outline-primary btn-sm btn-block">Guardar</button>
+      </div>
+    </div>
+    <div class="col-sm-1">
+      <div class="example-button-row ">
+        <a mat-raised-button color="danger" (onClick)="return()">
+          Cancelar
+        </a>
+      </div>
+    </div>
+  </div>
+</form>

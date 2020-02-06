@@ -1,0 +1,21 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Modelo de Negocios</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+  <form [formGroup]="modelo" (ngSubmit)="saveModelo($event)">
+    <div class="row">
+      <div class="col">
+        <mat-form-field>
+          <input matInput placeholder="Nombre" formControlName="nombre" matTooltip="Escribe un numbre para el modelo de negocio"/>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+        <div class="col">
+          <div class="btn-group btn-group-sm" role="group" aria-label="...">
+            <button type="submit"  class="btn btn-outline-primary btn-sm btn-block">Guardar</button>
+          </div>
+        </div>
+      </div>
+  </form>

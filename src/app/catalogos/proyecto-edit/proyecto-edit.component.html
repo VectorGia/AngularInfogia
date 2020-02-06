@@ -1,0 +1,49 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Actualizar Proyecto</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <form [formGroup]="proyectoForm" (ngSubmit)="saveProyecto($event)">
+    <div class="row">
+      <div class="col-md-2">
+        <mat-form-field>
+          <input matInput placeholder="Proyecto(ID):" formControlName="desc_id" />
+        </mat-form-field>
+      </div>
+      <div class="col-md-6">
+        <mat-form-field>
+          <input matInput placeholder="Nombre del proyecto: " formControlName="nombre" />
+        </mat-form-field>
+      </div>
+      <div class="col">
+        <mat-form-field>
+          <input matInput placeholder="Responsable del Proyecto: " formControlName="responsable" />
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+          <mat-form-field>
+            <mat-label>Estatus</mat-label>
+            <select matNativeControl required formControlName="estatus">
+              <option value="true">Activo</option>
+              <option value="false">Inactivo</option>
+            </select>
+          </mat-form-field>
+        </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-1">
+        <div class="btn-group btn-group-sm" role="group" aria-label="...">
+          <button type="submit"  class="btn btn-outline-primary btn-sm btn-block">Guardar</button>
+        </div>
+      </div>
+      <div class="col-sm-2">
+        <div class="example-button-row ">
+          <button mat-raised-button color="danger" (onClick)="return()">
+            Cancelar
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>

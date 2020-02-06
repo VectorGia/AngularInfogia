@@ -1,0 +1,100 @@
+<mat-card class="container">
+    <mat-tab-group>
+      <mat-tab label="Extracción Programada">
+        <mat-card-header>
+          <mat-card-title>
+            Extracción Programada
+          </mat-card-title>
+        </mat-card-header>
+        <form [formGroup]="formFecha" (ngSubmit)="save(formFecha.value)">
+          <div class="row">
+              <div class="col-2">
+                  <mat-form-field class="example-full-width">
+                      <input matInput [matDatepicker]="picker" placeholder="Selecciona una fecha" formControlName="TEXT_FECH_EXTR">
+                      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                      <mat-datepicker touchUi #picker></mat-datepicker>
+                    </mat-form-field>
+              </div>
+              <div class="col">
+                <input type="time" formControlName="TEXT_HORA_EXTR">
+              </div>
+              <div class="col">
+                <div class="btn-group btn-group-sm" role="group" aria-label="...">
+                  <button type="submit"  class="btn btn-outline-primary btn-sm btn-block">Guardar</button>
+                </div>
+              </div>
+          </div>
+        </form>
+        <div class="row">
+          <div class="col">
+            <div class="mat-elevation-z8">
+              <table mat-table [dataSource]="dataSource">
+                <!-- Position Column -->
+                <ng-container matColumnDef="idDB">
+                  <th mat-header-cell *matHeaderCellDef>No.</th>
+                  <td mat-cell *matCellDef="let element">
+                    {{ element.inT_IDCOMPANIA_P }}
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="id">
+                  <th mat-header-cell *matHeaderCellDef>ID</th>
+                  <td mat-cell *matCellDef="let element">
+                    {{ element.stR_IDCOMPANIA }}
+                  </td>
+                </ng-container>
+                <!-- Name Column -->
+                <ng-container matColumnDef="empresa">
+                  <th mat-header-cell *matHeaderCellDef>EMPRESA</th>
+                  <td mat-cell *matCellDef="let element">
+                    {{ element.stR_NOMBRE_COMPANIA }}
+                  </td>
+                </ng-container>
+                <!-- Weight Column -->
+                <ng-container matColumnDef="abrev">
+                  <th mat-header-cell *matHeaderCellDef>ABREVIATURA</th>
+                  <td mat-cell *matCellDef="let element">
+                    {{ element.stR_ABREV_COMPANIA }}
+                  </td>
+                </ng-container>
+                <!-- Symbol Column -->
+                <ng-container matColumnDef="etl">
+                  <th mat-header-cell *matHeaderCellDef>ETL</th>
+                  <td mat-cell *matCellDef="let element">
+                    <input
+                      type="checkbox"
+                      [checked]="element.booL_ETL_COMPANIA"
+                    />
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="cadconexion">
+                  <th mat-header-cell *matHeaderCellDef>CADENA DE CONEXIÓN</th>
+                  <td mat-cell *matCellDef="let element">
+                    {{ element.stR_HOST_COMPANIA }}
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="cambio">
+                  <th mat-header-cell *matHeaderCellDef>TIPO DE CAMBIO</th>
+                  <td mat-cell *matCellDef="let element">
+                    {{ element.stR_MONEDA_COMPANIA }}
+                  </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr
+                  mat-row
+                  *matRowDef="let row; columns: displayedColumns"
+                ></tr>
+              </table>
+
+              <mat-paginator
+                [pageSizeOptions]="[5, 10, 25, 100]"
+              ></mat-paginator>
+            </div>
+          </div>
+        </div>
+      </mat-tab>
+      <mat-tab label="Second"> Content 2 </mat-tab>
+      <mat-tab label="Third"> Content 3 </mat-tab>
+    </mat-tab-group>
+</mat-card>

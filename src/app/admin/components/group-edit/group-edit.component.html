@@ -1,0 +1,38 @@
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>Editar Grupo</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <form [formGroup]="formEditGrupo" (ngSubmit)="saveGrupo($event)">
+            <div class="row">
+              <div class="col-md-5">
+                <mat-form-field>
+                  <input
+                    matInput
+                    placeholder="Nombre del grupo"
+                    formControlName="stR_NOMBRE_GRUPO"
+                  />
+                </mat-form-field>
+              </div>
+              <div class="col-sm-1">
+                <button
+                  class="btn-sm"
+                  type="submit"
+                  mat-raised-button
+                  color="primary"
+                  [disabled]="formEditGrupo.invalid"
+                >
+                  Actualizar
+                </button>
+              </div>
+              <div class="col-sm-1">
+                <div class="example-button-row ">
+                  <button mat-raised-button color="danger" (onClick)="return()">
+                    Cancelar
+                  </button>
+                </div>
+              </div>
+            </div>
+          </form>
+    </mat-card-content>
+</mat-card>

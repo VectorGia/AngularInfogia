@@ -1,0 +1,42 @@
+<mat-sidenav-container class="sidenav-container" (backdropClick)="close('backdrop')">
+  <mat-sidenav #sidenav mode="side" position="start">
+    <mat-toolbar>Menu</mat-toolbar>
+    <mat-nav-list>
+        <ul class="acorh">
+            <li><a routerLink="/admin">Seguridad</a>
+            </li>
+            <li><a>Catalogos</a>
+              <ul>
+                <li><a  routerLink="/catalogo/empresa">Empresa</a></li>
+                <li><a  routerLink="/catalogo/negocio">Modelo de Negocio</a></li>
+                <li><a  routerLink="/catalogo/proyecto">Proyecto</a></li>
+                <li><a  routerLink="/catalogo/cambio">Tipos de Cambio</a></li>
+              </ul>
+            </li>
+            <li><a>Modulos</a>
+              <ul>
+                <li><a  routerLink="/proforma/proforma">Proforma</a></li>
+                <li><a  routerLink="/proforma/estatus">Estatus del proyecto</a></li>
+                <li><a  routerLink="/proforma/extraccion">Extracción</a></li>
+              </ul>
+            </li>
+          </ul>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      <img src="./../../assets/data.png" alt="">
+      <button mat-icon-button (click)="sidenav.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <div class="ml-2">
+        <span>Sistema InfoGIA 2.0 - Proformas</span>
+      </div>
+      <div class="col offset-6">
+        <span class="usuario">Usuario: {{id}}</span> 
+        <button mat-stroked-button color="accent" (click)="logout()">Salir</button >
+      </div>
+    </mat-toolbar>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

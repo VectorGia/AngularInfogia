@@ -1,0 +1,50 @@
+
+<mat-card class="container">
+    <h4>Rubros del Modelo {{name}} </h4>
+    <table mat-table class="mat-elevation-z8" [dataSource]="dataSource">
+        <!-- Position Column -->
+        <ng-container matColumnDef="nombre">
+        <th mat-header-cell *matHeaderCellDef>Modelo</th>
+        <td mat-cell *matCellDef="let element">{{ element.nombre }}</td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="clave">
+        <th mat-header-cell *matHeaderCellDef>Clave</th>
+        <td mat-cell *matCellDef="let element">{{ element.clave }}</td>
+        </ng-container>
+
+        <!-- Weight Column -->
+        <ng-container matColumnDef="cuenta">
+        <th mat-header-cell *matHeaderCellDef>Cuentas incluidas</th>
+        <td mat-cell *matCellDef="let element">{{ element.rangos_cuentas_incluidas }}</td>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="monto">
+        <th mat-header-cell *matHeaderCellDef>Cuentas excluidas</th>
+        <td mat-cell *matCellDef="let element">{{ element.rango_cuentas_excluidas }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="aritmetica">
+        <th mat-header-cell *matHeaderCellDef>Aritmetica</th>
+        <td mat-cell *matCellDef="let element">{{ element.aritmetica }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef>Acción</th>
+        <td mat-cell *matCellDef="let element"> 
+            <a mat-raised-button [routerLink]="['edit', element.id]">Editar</a>
+            <button mat-raised-button color="warn" (click)="deleteRubro(element.id)">Eliminar</button>
+        </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+    <div class="row">
+        <div class="col">
+            <button mat-raised-button color="primary" (click)="return()">Regresar</button>
+            <a mat-raised-button (click)="openDialog()">Agregar a Rubro</a>
+        </div>
+    </div>
+</mat-card>

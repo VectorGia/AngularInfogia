@@ -1,0 +1,94 @@
+.wrapper{
+    background: url(../../../../assets/fondo-login.PNG);
+    background-repeat: no-repeat;
+    position: relative;
+    width: 800px;
+    height: 300px;
+    margin: 0 auto;
+    margin-top: 150px;
+  }
+  .form-container{
+    position: absolute;
+    width: 345px;
+    height: 240px;
+    background-color: white;
+    top: -25px;
+    right: 30px;
+    box-shadow: 9px 13px 16px 0px rgba(0,0,0,0.75);
+  }
+  h2{
+      font-size: 25px;
+  }
+  .form-control{
+      width: 70%;
+      border: 0;
+      border-bottom: 1px solid gray
+  }
+
+  .login{
+       font-family: 'PT Sans';
+        letter-spacing: 1px;
+        font-size: 20px;
+        line-height: 30px;
+        margin-right: 60px;
+        color: white;
+        bottom: 5px;
+      
+  }
+  img{
+      align-items: center;
+      width: 170px;
+  
+  }
+  .formulario{
+    width: 100%;
+  }
+  .example-form {
+    min-width: 150px;
+    max-width: 500px;
+    width: 100%;
+  }
+  
+  .example-full-width {
+    width: 100%;
+  }
+  .example-button-row button,
+  .example-button-row a {
+    margin-right: 8px;
+  }
+
+  .first-column {
+    width: 49%;
+    height: 100%;
+    float: left;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+  }
+  
+  .second-column {
+    width: 49%;
+    height: 100%;
+    float: right;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  body{
+    background-color: #000080;
+  }
+  /* body{
+ 
+
+    background: rgba(73,155,234,1);
+    background: -moz-linear-gradient(left, rgba(73,155,234,1) 0%, rgba(255,255,255,1) 92%, rgba(255,255,255,1) 100%);
+    background: -webkit-gradient(left top, right top, color-stop(0%, rgba(73,155,234,1)), color-stop(92%, rgba(255,255,255,1)), color-stop(100%, rgba(255,255,255,1)));
+    background: -webkit-linear-gradient(left, rgba(73,155,234,1) 0%, rgba(255,255,255,1) 92%, rgba(255,255,255,1) 100%);
+    background: -o-linear-gradient(left, rgba(73,155,234,1) 0%, rgba(255,255,255,1) 92%, rgba(255,255,255,1) 100%);
+    background: -ms-linear-gradient(left, rgba(73,155,234,1) 0%, rgba(255,255,255,1) 92%, rgba(255,255,255,1) 100%);
+    background: linear-gradient(to right, rgba(73,155,234,1) 0%, rgba(255,255,255,1) 92%, rgba(255,255,255,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#499bea', endColorstr='#ffffff', GradientType=1 );
+    
+  } */

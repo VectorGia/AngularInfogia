@@ -1,0 +1,183 @@
+<div class="container mt-2">
+    <mat-tab-group mat-stretch-tabs class="example-stretched-tabs mat-elevation-z4">
+      <mat-tab label="Grupo/Usuario/Rol/Pantallas/Permisos"> 
+        <mat-card>
+          <mat-card-header>
+              <mat-card-title>Relación de usuarios.</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+              <form [formGroup]="relaionForm" (ngSubmit)="send(relaionForm.value)">
+                  <div class="row">
+                    <div class="col-md-5">
+                      <mat-form-field>
+                        <mat-label for="grupo">Grupos activos</mat-label>
+                        <mat-select formControlName="INT_IDGRUPO_P">
+                          <mat-option 
+                            *ngFor="let grupo of grupos; let i = index"
+                            [value]="grupo.inT_IDGRUPO_P">
+                            {{ grupo.stR_NOMBRE_GRUPO }}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                    <div class="col-md-5">
+                        <mat-form-field>
+                            <mat-label>Usuarios</mat-label>
+                            <mat-select formControlName="INT_IDUSUARIO_P">
+                              <mat-option *ngFor="let item of usuarios; let i = index" [value]="item.inT_IDUSUARIO_P">
+                                  {{item.stR_NOMBRE_USUARIO}}
+                              </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-5">
+                        <mat-form-field>
+                            <mat-label>Rol</mat-label>
+                            <mat-select formControlName="INT_IDROL_P" [(value)]="rolItem">
+                              <mat-option *ngFor="let rol of roles; let i = index" [value]="rol.inT_IDROL_P">
+                                  {{rol.stR_NOMBRE_ROL}}
+                              </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                      </div>
+                      <div class="col-md-5">
+                        <mat-form-field>
+                          <mat-label>Pantallas</mat-label>
+                          <mat-select formControlName="INT_IDPANTALLA_P">
+                            <mat-option *ngFor="let pant of pantallas; let i = index" [value]="pant.inT_IDPANTALLA_P">
+                              {{pant.stR_NOMBRE_PANTALLA}}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                    </div>
+                      <div class="col-md-5">
+                        <mat-form-field>
+                          <mat-label>Permisos</mat-label>
+                          <mat-select formControlName="INT_IDPERMISO_P" >
+                            <mat-option *ngFor="let per of permisos; let i = index" [value]="per.inT_IDPERMISO_P">
+                              {{per.stR_NOMBRE_PERMISO}}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col">
+                      <button
+                        class="btn-sm"
+                        type="submit"
+                        mat-raised-button
+                        color="primary"
+                      >
+                        Agregar
+                      </button>
+                    </div>
+                  </div>
+                </form>
+          </mat-card-content>
+        </mat-card>
+      </mat-tab>
+    <mat-tab label="Compañia/Modelo/Proyecto/Centro de Costo">  
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>Relación de Catalogos.</mat-card-title>
+      </mat-card-header>
+        <form [formGroup]="formCatalogos" (ngSubmit)="saveCatalogos(formCatalogos.value)">
+          <div class="row">
+            <div class="col">
+              <mat-form-field>
+                <mat-label>Rol</mat-label>
+                <mat-select formControlName="INT_IDROL_P" [(value)]="rolItem">
+                  <mat-option *ngFor="let rol of roles; let i = index" [value]="rol.inT_IDROL_P">
+                      {{rol.stR_NOMBRE_ROL}}
+                  </mat-option>
+                </mat-select>
+            </mat-form-field>
+            </div>
+            <div class="col-md-5">
+              <mat-form-field>
+                <mat-label for="grupo">Compañia</mat-label>
+                <mat-select formControlName="INT_IDCOMPANIA_P">
+                  <mat-option 
+                    *ngFor="let compania of companias; let i = index"
+                    [value]="compania.inT_IDCOMPANIA_P">
+                    {{ compania.stR_NOMBRE_COMPANIA }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-md-5">
+              <mat-form-field>
+                <mat-label for="grupo">Modelo de Negocio</mat-label>
+                <mat-select formControlName="INT_IDMODELO_NEGOCIO_P">
+                  <mat-option 
+                    *ngFor="let negocio of negocios; let i = index"
+                    [value]="negocio.inT_IDMODELONEGOCIO_P">
+                    {{ negocio.stR_NOMBREMODELONEGOCIO }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-md-5">
+              <mat-form-field>
+                <mat-label for="grupo">Proyecto</mat-label>
+                <mat-select formControlName="INT_IDPROYECTO_P">
+                  <mat-option 
+                    *ngFor="let proyecto of proyectos; let i = index"
+                    [value]="proyecto.inT_IDPROYECTO_P">
+                    {{ proyecto.stR_NOMBRE_PROYECTO }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-md-5">
+              <mat-form-field>
+                <mat-label for="grupo">Centros de Costos</mat-label>
+                <mat-select formControlName="INT_IDCENTROSCOSTO_P">
+                  <mat-option 
+                    *ngFor="let centro of centros; let i = index"
+                    [value]="centro.inT_IDCENTROCOSTO_P">
+                    {{ centro.stR_NOMBRE_CC }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col">
+              <button
+                class="btn-sm"
+                type="submit"
+                mat-raised-button
+                color="primary"
+              >
+                Agregar
+              </button>
+            </div>
+          </div>
+        </form>
+      </mat-card>
+    </mat-tab>
+    <mat-tab label="Modelo - Cuenta">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>Relación de cuentas con unidad de negocio</mat-card-title>
+        </mat-card-header>
+        <form [formGroup]="cuentaForm" (ngSubmit)="onSave(cuentaForm.value)">
+        <div class="row">
+          <div class="col">
+              <mat-form-field>
+                <mat-label for="grupo">Modelo de Negocio</mat-label>
+                <mat-select formControlName="INT_IDMODELO">
+                  <mat-option 
+                  *ngFor="let negocio of negocios; let i = index"
+                  [value]="negocio.inT_IDMODELONEGOCIO_P">
+                  {{ negocio.stR_NOMBREMODELONEGOCIO }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+        
+      </form>
+    </mat-card>
+    </mat-tab>
+    </mat-tab-group> 
+    
+  </div>

@@ -1,0 +1,14 @@
+.fondo{
+    background: #E9E5E5;
+}
+.boton button{
+  margin-right: 8px;
+}
+
+table input {
+  width: 50px;
+}
+
+.display{
+  display: none;
+}

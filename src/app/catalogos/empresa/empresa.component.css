@@ -1,0 +1,33 @@
+.mat-radio-button ~ .mat-radio-button {
+  margin-left: 16px;
+}
+
+td, th {
+  width: 25%;
+}
+
+.mat-column-idDB{
+  width: 10%;
+}
+.mat-column-id{
+  width: 10%;
+}
+.mat-column-empresa{
+  width: 15%;
+}
+.mat-column-abrev{
+  width: 10%;
+}
+.mat-column-etl{
+  width: 5%;
+}
+.mat-column-cadconexion{
+  width: 15%;
+}
+.mat-column-cambio{
+  width: 10%;
+}
+.mat-column-modNegocios{
+  width: 15%;
+}
+
