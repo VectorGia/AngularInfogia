@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { MontosconsolidadosService } from 'src/app/core/service/montosconsolidados.service';
 import {MatTableDataSource, MatSort, MatPaginator} from '@angular/material';
-import { FormGroup, FormBuilder, NgForm } from '@angular/forms';
+import { FormGroup, FormBuilder, NgForm, FormControl } from '@angular/forms';
 import { ProformaService } from 'src/app/core/service/proforma.service';
+import { CompaniaService } from 'src/app/core/service/compania.service';
+import { CentrosService } from 'src/app/core/service/centros.service';
 
 export interface Numeros {
   enero: number;
@@ -37,20 +39,55 @@ export class ProformaComponent implements OnInit {
   displayedColumn: string[] = ['aant','enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto',
   'septiembre', 'octubre', 'noviembre', 'diciembre', 'apost'];
   dataSource: any;
-  tresnueve: boolean = true;
+  tresnueve: boolean = false;
   seisseis: boolean = false;
   nuevetres: boolean = false;
   condiciones: FormGroup;
   proforma: any;
-  opc
-  constructor(private montosServies: MontosconsolidadosService, private fB: FormBuilder, private proformaService: ProformaService) { 
-    this.getProforma();
+  formProforma: FormGroup;
+  change
+
+  empresas: any;
+  centros: any;
+  constructor(private montosServies: MontosconsolidadosService, 
+    private fB: FormBuilder, 
+    private proformaService: ProformaService,
+    private empresaService: CompaniaService,
+    private centroService: CentrosService) { 
+    //this.getProforma();
+
   }
 
   ngOnInit() {
-    this.buildMontos();
+    this.buildProforma();
+    this.fetchCentros();
+    this.fetchEmpresa();
   }
 
+  buildProforma(){
+    this.formProforma = this.fB.group({
+      anio: [2019],
+      tipo_captura_id: [2],
+      tipo_proforma_id: [39],
+      empresa_id: [''],
+      centro_costo_id: ['']
+    })
+  }
+
+  onChange(value){
+    console.log(value)
+    if(value == "tresnueve"){
+      this.tresnueve=true;
+    }
+    if(value == "seisseis"){
+      this.tresnueve = false;
+      this.seisseis = true;
+    }
+    if(value == "nuevetres"){
+      this.seisseis = false;
+      this.nuevetres = true;
+    }
+  }
  /*  getMontos(form: NgForm){
     return this.montosServies.getAllMontos(form)
     .subscribe(data => {
@@ -62,18 +99,28 @@ export class ProformaComponent implements OnInit {
       console.log('Error al extraer los registros!' + error);
     });
   } */
-  buildMontos(){
-    this.condiciones = this.fB.group({
-      montConsAnio: [2020],
-      montConsMes: [1],
-      montConsEmpresa: [1],
-      montConsModeloNeg: [1],
-      montConsProyecto: [1],
-      montConsRubro: [1]
+
+  save(form: NgForm){
+    this.proformaService.getTestProforma(form).subscribe(res=>{
+      this.proforma = res;
+      console.log("Proforma: ",this.proforma)
     })
   }
 
-  getProforma(){
+  fetchEmpresa(){
+    this.empresaService.getAllCompania()
+    .subscribe(res => {
+      this.empresas = res
+    })
+  }
+
+  fetchCentros(){
+    this.centroService.getAllCentros()
+    .subscribe(res => {
+      this.centros = res;
+    })
+  }
+  /* getProforma(){
     this.proformaService.getTestProforma()
     .subscribe( res => {
       this.proforma =  res;
@@ -82,5 +129,5 @@ export class ProformaComponent implements OnInit {
     error => {
       console.log('Error al extraer los registros!' + error);
     });
-  }
+  } */
 }

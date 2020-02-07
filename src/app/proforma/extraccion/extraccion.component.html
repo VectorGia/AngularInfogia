@@ -1,11 +1,11 @@
-<mat-card class="container">
+<mat-card class="example-container">
+  <mat-card-header>
+    <mat-card-title>
+      Extracción Programada
+    </mat-card-title>
+  </mat-card-header>
     <mat-tab-group>
       <mat-tab label="Extracción Programada">
-        <mat-card-header>
-          <mat-card-title>
-            Extracción Programada
-          </mat-card-title>
-        </mat-card-header>
         <form [formGroup]="formFecha" (ngSubmit)="save(formFecha.value)">
           <div class="row">
               <div class="col-2">
@@ -33,27 +33,27 @@
                 <ng-container matColumnDef="idDB">
                   <th mat-header-cell *matHeaderCellDef>No.</th>
                   <td mat-cell *matCellDef="let element">
-                    {{ element.inT_IDCOMPANIA_P }}
+                    {{ element.id }}
                   </td>
                 </ng-container>
                 <ng-container matColumnDef="id">
                   <th mat-header-cell *matHeaderCellDef>ID</th>
                   <td mat-cell *matCellDef="let element">
-                    {{ element.stR_IDCOMPANIA }}
+                    {{ element.desc_id }}
                   </td>
                 </ng-container>
                 <!-- Name Column -->
                 <ng-container matColumnDef="empresa">
                   <th mat-header-cell *matHeaderCellDef>EMPRESA</th>
                   <td mat-cell *matCellDef="let element">
-                    {{ element.stR_NOMBRE_COMPANIA }}
+                    {{ element.nombre }}
                   </td>
                 </ng-container>
                 <!-- Weight Column -->
                 <ng-container matColumnDef="abrev">
                   <th mat-header-cell *matHeaderCellDef>ABREVIATURA</th>
                   <td mat-cell *matCellDef="let element">
-                    {{ element.stR_ABREV_COMPANIA }}
+                    {{ element.abrev }}
                   </td>
                 </ng-container>
                 <!-- Symbol Column -->
@@ -62,21 +62,21 @@
                   <td mat-cell *matCellDef="let element">
                     <input
                       type="checkbox"
-                      [checked]="element.booL_ETL_COMPANIA"
+                      [checked]="element.etl"
                     />
                   </td>
                 </ng-container>
                 <ng-container matColumnDef="cadconexion">
                   <th mat-header-cell *matHeaderCellDef>CADENA DE CONEXIÓN</th>
                   <td mat-cell *matCellDef="let element">
-                    {{ element.stR_HOST_COMPANIA }}
+                    {{ element.host }}
                   </td>
                 </ng-container>
 
                 <ng-container matColumnDef="cambio">
                   <th mat-header-cell *matHeaderCellDef>TIPO DE CAMBIO</th>
                   <td mat-cell *matCellDef="let element">
-                    {{ element.stR_MONEDA_COMPANIA }}
+                    {{ element.moneda_id }}
                   </td>
                 </ng-container>
 
@@ -93,8 +93,8 @@
             </div>
           </div>
         </div>
+        <button (click)="extraccion()">Extraer</button>
       </mat-tab>
-      <mat-tab label="Second"> Content 2 </mat-tab>
-      <mat-tab label="Third"> Content 3 </mat-tab>
+
     </mat-tab-group>
 </mat-card>

@@ -12,7 +12,11 @@
       </div>
       <div class="col">
         <mat-form-field>
-          <input matInput placeholder="Nombre" formControlName="tipo_captura_id" matTooltip="Escribe un numbre para el modelo de negocio"/>
+          <mat-label>Tipo de captura</mat-label>
+          <mat-select formControlName="tipo_captura_id">
+            <mat-option value="1">Flujo</mat-option>
+            <mat-option value="2">Contable</mat-option>
+          </mat-select>
         </mat-form-field>
       </div>
     </div>

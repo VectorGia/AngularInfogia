@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { GlobalVariable } from './../../shared/global'
 import { Observable } from 'rxjs';
 import { ProformaDetalle } from '../models/proformadetalle';
+import { Proforma } from '../models/proforma';
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -19,7 +20,8 @@ export class ProformaService {
     this.header = new HttpHeaders(headerSettings);
    }
 
-   getTestProforma():Observable<ProformaDetalle[]>{
-     return this.http.get<ProformaDetalle[]>(`${this.url}/api/TestProforma`)
+   getTestProforma(proforma): Observable<Proforma>{
+     console.log("recibi: ",proforma)
+     return this.http.post<Proforma>(`${this.url}/api/Proforma`, proforma)
    }
 }

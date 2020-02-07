@@ -60,7 +60,7 @@ export class ProyectoComponent implements OnInit {
   saveProyecto(form: NgForm){
     this.ps.addProyecto(form).subscribe(
       res => {
-        let id = res['nombre'];
+        alert("Se guardo exitosamente")
         this.ngOnInit();
       })
   }

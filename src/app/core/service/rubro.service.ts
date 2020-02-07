@@ -36,6 +36,7 @@ export class RubroService {
       tap((rubro: Rubros) => console.log(`added rubro w/ id=${rubro.id}`))
     )}
     updateRubro(id: any, changes: Partial<Rubros>){
+      console.log("recibi: ", id, changes);
       return this.http.put(`${this.url}/api/Rubros/${id}`,changes,httpOptions);
     } 
 

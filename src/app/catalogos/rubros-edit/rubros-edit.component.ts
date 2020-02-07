@@ -46,9 +46,20 @@ rubro: any;
       const rubro = this.editRubro.value;
       this.rubroService.updateRubro(this.id, rubro)
       .subscribe((newRubro) => {
-        this.router.navigate([`./../..`])
+        
+        this.router.navigate(['./catalogo/negocio/rubros/'+ this.getData(window.location.href,"rubros/","/edit") ])
       })
     }
   }
 
+  getData(url,startDelimiter,endDelimiter){
+    var idxIni=url.indexOf(startDelimiter);
+    idxIni=idxIni+startDelimiter.length;
+    var idxFin=url.indexOf(endDelimiter);
+    if(idxFin===-1){
+        return url.substring(idxIni);
+    }else{
+        return url.substring(idxIni,idxFin)
+    }
+}
 }

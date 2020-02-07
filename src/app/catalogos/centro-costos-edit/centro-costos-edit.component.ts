@@ -41,7 +41,8 @@ export class CentroCostosEditComponent implements OnInit {
       this.cS.updateCentro(this.id, centro)
       .subscribe((newCentro) => {
         console.log(newCentro);
-        this.router.navigate([this.idProyecto])
+        let idProyecto=this.getIdProyecto(window.location.href);
+        this.router.navigate(['./catalogo/costos/' + idProyecto])
       })
     }
   }
@@ -67,7 +68,7 @@ export class CentroCostosEditComponent implements OnInit {
     })
   }
 
-  idProyecto=this.getIdProyecto(window.location.href);
+
     
    getIdProyecto(url){
       var inicioCad="costos/";

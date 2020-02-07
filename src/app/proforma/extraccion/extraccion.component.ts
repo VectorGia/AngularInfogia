@@ -5,6 +5,7 @@ import {SelectionModel} from '@angular/cdk/collections';
 import { Compania } from 'src/app/core/models/compania';
 import { FormGroup, FormBuilder, Validators, NgForm } from '@angular/forms';
 import { EtlprogService } from 'src/app/core/service/etlprog.service';
+import { PreproformaService } from 'src/app/core/service/preproforma.service';
 @Component({
   selector: 'app-extraccion',
   templateUrl: './extraccion.component.html',
@@ -15,7 +16,7 @@ export class ExtraccionComponent implements OnInit {
   dataSource: any;
   selection = new SelectionModel<Compania>(true, []);
   formFecha: FormGroup;
-  constructor(private cS: CompaniaService, private fB: FormBuilder, private eS: EtlprogService) { 
+  constructor(private cS: CompaniaService, private fB: FormBuilder, private eS: EtlprogService, private pProformaService: PreproformaService) { 
     this.buildForm();
   }
 
@@ -49,6 +50,13 @@ export class ExtraccionComponent implements OnInit {
     this.formFecha = this.fB.group({
       TEXT_FECH_EXTR: ['', Validators.required],
       TEXT_HORA_EXTR: ['', Validators.required]
+    })
+  }
+
+  extraccion(){
+    this.pProformaService.getPreProforma()
+    .subscribe( res => {
+      alert("Se realizo la extracción")
     })
   }
 }

@@ -15,7 +15,11 @@ export class DialogOverviewDialogComponent implements OnInit {
   modelos: any;
   select: boolean;
   id: string;
-
+  nombre: any;
+  clave: any;
+  cuentainclu: any;
+  cuentaexclu: any;
+  aritmetica: any;
   constructor(private fb: FormBuilder,
     private dialogRef: MatDialogRef<DialogOverviewDialogComponent>,
     private ns: NegocioService,

@@ -30,10 +30,8 @@ export class ProyectoService {
   addProyecto(proyecto): Observable<Proyecto>{
     console.log("recibi",proyecto);
     proyecto.idsempresas = proyecto.idsempresas.toString();
-    return this.http.post<Proyecto>(`${this.url}/api/Proyecto`, proyecto, httpOptions).pipe(
-      tap((proyecto: Proyecto) => console.log(`added proyecto w/ id=${proyecto.nombre}`))
-      
-  )}
+    return this.http.post<Proyecto>(`${this.url}/api/Proyecto`, proyecto, httpOptions)
+  }
   updateProyecto(id: string, changes: Partial<Proyecto>){
     return this.http.put(`${this.url}/api/Proyecto/${id}`,changes,httpOptions);
   } 

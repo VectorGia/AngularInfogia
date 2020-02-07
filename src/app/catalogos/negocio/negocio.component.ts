@@ -40,10 +40,6 @@ export class NegocioComponent implements OnInit {
               public dialog: MatDialog,) {
 
                 this.buildModelo();
-   this.modeloForm = this.fb.group({
-    nombre: [null],
-     activo: [true]
-   })
   // this.fetchCuentas();
    this.fetchCompania();
   }
@@ -72,7 +68,7 @@ export class NegocioComponent implements OnInit {
 
     this.ns.addModelos(form).subscribe(
       res => {
-        let nombre = res['STR_NOMBREMODELONEGOCIO'];
+        let nombre = res['nombre'];
         alert("Se guardo exitosamente!")
         this.ngOnInit();
       },
@@ -109,7 +105,7 @@ export class NegocioComponent implements OnInit {
     this.negocioForm = this.fb.group({
       nombre: ['', Validators.required],
       activo: [true],
-     tipo_captura_id: ['']
+      tipo_captura_id: ['']
     })
   }
   applyFilter(filterValue: string) {
