@@ -27,12 +27,12 @@ export class ProformaDetailsComponent implements OnInit {
   id: any;
   empresas: any;
   centros: any;
-  constructor(private montosServies: MontosconsolidadosService, 
-    private fB: FormBuilder, 
+  constructor(private montosServies: MontosconsolidadosService,
+    private fB: FormBuilder,
     private proformaService: ProformaService,
     private empresaService: CompaniaService,
     private centroService: CentrosService,
-    private activeRoute: ActivatedRoute) { 
+    private activeRoute: ActivatedRoute) {
     //this.getProforma();
 
   }
@@ -125,6 +125,7 @@ export class ProformaDetailsComponent implements OnInit {
 
   guardarProforma(){
     if(this.isValidDetalles(this.proforma, ['nombre_rubro'])){
+      this.recalculateAll(this.proforma);///HNA:Antes de mandar a guardar la proforma se recalcula completa
       this.proformaService.addProforma(this.proforma)
       .subscribe( res => {
         alert("Se guardo");
@@ -140,7 +141,11 @@ export class ProformaDetailsComponent implements OnInit {
       event.preventDefault();
       return;
     }
-    detalle[nombrecol] = event.target.value;
+    ///HNA:dado que en las vista se divide entre 1000, aqui los montos ingresados se multiplicaran por 1000
+    detalle[nombrecol] = event.target.value*1000;
+    //HNA: ocurrio un cambio correcto en la proforma por lo que se recalcula el detalle impactado y los totales de proforma
+    //verificar que en pantala se ven los cambios si no es asi hay que repintar toda la proforma
+    this.recalculateDetalle(detalle, this.proforma);
     console.log(detalle);
 
   }
@@ -159,4 +164,92 @@ export class ProformaDetailsComponent implements OnInit {
     }
     return true;
 }
+
+  sumColumns(detalles, targetColumn, columnsNames) {
+    for (var i = 0; i < detalles.length; i++) {
+      this.sumColumnsForDetalle(detalles[i], targetColumn, columnsNames);
+    }
+    return detalles;
+  }
+
+   sumColumnsForDetalle(detalle, targetColumn, columnsNames) {
+    var suma = 0;
+    for (var j = 0; j < columnsNames.length; j++) {
+      var colName = columnsNames[j];
+      suma += detalle[colName]
+    }
+    detalle[targetColumn] = suma;
+
+    return detalle;
+  }
+
+  getDetallesTotales(detalles){
+    var detallesTotales=[];
+    detalles.forEach(detalle => {
+      if(detalle.aritmetica){
+        detallesTotales.push(detalle);
+      }
+    });
+    return detallesTotales;
+  }
+  recalculateDetalle(detalleModificado, detalles) {
+    this.sumColumnsForDetalle(detalleModificado, 'ejercicio_resultado', [ 'enero_monto_resultado', 'febrero_monto_resultado', 'marzo_monto_resultado', 'abril_monto_resultado',
+      'mayo_monto_resultado', 'junio_monto_resultado', 'julio_monto_resultado', 'agosto_monto_resultado',
+      'septiembre_monto_resultado', 'octubre_monto_resultado', 'noviembre_monto_resultado', 'diciembre_monto_resultado']);
+    this.sumColumnsForDetalle(detalleModificado, 'total_resultado', ['ejercicio_resultado', 'acumulado_resultado']);
+    this.calculaDetTot(detalles,this.getDetallesTotales(detalles));
+    return detalles;
+  }
+
+  recalculateAll(detalles) {
+
+    this.sumColumns(detalles, 'ejercicio_resultado', ['enero_monto_resultado', 'febrero_monto_resultado', 'marzo_monto_resultado', 'abril_monto_resultado',
+      'mayo_monto_resultado', 'junio_monto_resultado', 'julio_monto_resultado', 'agosto_monto_resultado',
+      'septiembre_monto_resultado', 'octubre_monto_resultado', 'noviembre_monto_resultado', 'diciembre_monto_resultado']);
+    this.sumColumns(detalles, 'total_resultado', ['ejercicio_resultado', 'acumulado_resultado'
+    ]);
+    this.calculaDetTot(detalles, this.getDetallesTotales(detalles));
+    return detalles;
+  }
+   calculaDetTot(detalles, detallesTotales) {
+    console.log("##### detalles=%o, detallesTotales=%o",detalles,detallesTotales);
+    detallesTotales.forEach(detalleTotal => {
+      var aritmeticas = {};
+      aritmeticas["enero_monto"] = detalleTotal.aritmetica;
+      aritmeticas["febrero_monto"] = detalleTotal.aritmetica;
+      aritmeticas["marzo_monto"] = detalleTotal.aritmetica;
+      aritmeticas["abril_monto"] = detalleTotal.aritmetica;
+      aritmeticas["mayo_monto"] = detalleTotal.aritmetica;
+      aritmeticas["junio_monto"] = detalleTotal.aritmetica;
+      aritmeticas["julio_monto"] = detalleTotal.aritmetica;
+      aritmeticas["agosto_monto"] = detalleTotal.aritmetica;
+      aritmeticas["septiembre_monto"] = detalleTotal.aritmetica;
+      aritmeticas["octubre_monto"] = detalleTotal.aritmetica;
+      aritmeticas["noviembre_monto"] = detalleTotal.aritmetica;
+      aritmeticas["diciembre_monto"] = detalleTotal.aritmetica;
+      aritmeticas["ejercicio"] = detalleTotal.aritmetica;
+      aritmeticas["acumulado"] = detalleTotal.aritmetica;
+      aritmeticas["total"] = detalleTotal.aritmetica;
+      detalles.forEach(detalle => {
+        let detalleClave = detalle.clave_rubro;
+        if (detalleTotal.aritmetica.indexOf(detalleClave) !== -1) {
+          for (const prop in aritmeticas) {
+            aritmeticas[prop] = aritmeticas[prop].replace(detalleClave, detalle[prop+"_resultado"]);
+          }
+        }
+
+      });
+      for (const prop in aritmeticas) {
+        //console.log(prop+"_resultado="+aritmeticas[prop]);
+        try{
+          detalleTotal[prop+"_resultado"] = eval(aritmeticas[prop]);
+        }catch (e) {
+          console.error("Error de evaluacion de la expresion",e);
+        }
+      }
+    });
+
+
+    return detallesTotales;
+  }
 }
