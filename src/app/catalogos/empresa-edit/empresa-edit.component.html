@@ -24,7 +24,7 @@
     <div class="row">
       <div class="col">
         <label>Activación en ETL: </label>
-        <mat-radio-group aria-label="Select an option" formControlName="activo_etl">
+        <mat-radio-group aria-label="Select an option" formControlName="etl">
           <mat-radio-button value="true">Si</mat-radio-button>
           <mat-radio-button value="false">No</mat-radio-button>
         </mat-radio-group>
@@ -64,7 +64,7 @@
         <p>
           <mat-form-field appearance="legacy">
             <mat-label>Contraseña: </mat-label>
-            <input matInput placeholder="Contraseña" formControlName="contrasenia_etl" matTooltip="Contraseña del usuario" />
+            <input matInput type="password" placeholder="Contraseña" formControlName="contrasenia_etl" matTooltip="Contraseña del usuario" />
           </mat-form-field>
         </p>
       </div>

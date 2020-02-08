@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RubroService } from 'src/app/core/service/rubro.service';
+import { element } from 'protractor';
 
 @Component({
   selector: 'app-rubros-edit',
@@ -12,6 +13,8 @@ export class RubrosEditComponent implements OnInit {
 editRubro: FormGroup;
 id: string;
 rubro: any;
+disabledC: boolean = true;
+disabledR: boolean = true;
   constructor(private formBuilder: FormBuilder, private activeRoute: ActivatedRoute,
     private rubroService: RubroService, 
     private router: Router) { 
@@ -25,6 +28,13 @@ rubro: any;
       this.rubroService.getRubroById(this.id)
       .subscribe(data => {
         console.log("data: ",data)
+        if(data[0].aritmetica != ""){
+          this.disabledC = false
+          this.disabledR = true;
+        }else{
+          this.disabledR = false;
+          this.disabledC = true;
+        }
         this.editRubro.patchValue(data[0])
       })
     })

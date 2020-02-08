@@ -17,17 +17,17 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col">
+                <div class="col" *ngIf="disabledC">
                     <mat-form-field>
                         <input matInput placeholder="Cuentas incluidas" formControlName="rangos_cuentas_incluidas">
                     </mat-form-field>
                 </div>
-                <div class="col">
+                <div class="col" *ngIf="disabledC">
                     <mat-form-field>
                         <input matInput placeholder="Cuentas excluidas" formControlName="rango_cuentas_excluidas">
                     </mat-form-field>
                 </div>
-                <div class="col">
+                <div class="col" *ngIf="disabledR">
                     <mat-form-field>
                         <input matInput placeholder="Aritmetica" formControlName="aritmetica">
                     </mat-form-field>

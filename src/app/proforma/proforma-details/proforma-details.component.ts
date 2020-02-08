@@ -1,39 +1,17 @@
 import { Component, OnInit } from '@angular/core';
+import { NgForm, FormGroup, FormBuilder } from '@angular/forms';
 import { MontosconsolidadosService } from 'src/app/core/service/montosconsolidados.service';
-import {MatTableDataSource, MatSort, MatPaginator} from '@angular/material';
-import { FormGroup, FormBuilder, NgForm, FormControl } from '@angular/forms';
 import { ProformaService } from 'src/app/core/service/proforma.service';
 import { CompaniaService } from 'src/app/core/service/compania.service';
 import { CentrosService } from 'src/app/core/service/centros.service';
-
-export interface Numeros {
-  enero: number;
-  febrero: number;
-  marzo: number;
-  abril: number;
-  mayo: number;
-  junio: number;
-  julio: number;
-  agosto: number;
-  septiembre: number;
-  octubre: number;
-  noviembre: number;
-  diciembre: number;
-}
-
-const ELEMENT_DATA: Numeros[] = [
-  {enero: 0, febrero: 0, marzo: 0, abril: 0, mayo: 0, junio: 0, julio: 0, agosto: 0, septiembre: 0, octubre: 0, noviembre: 0, diciembre: 0},
-  {enero: 0, febrero: 0, marzo: 0, abril: 0, mayo: 0, junio: 0, julio: 0, agosto: 0, septiembre: 0, octubre: 0, noviembre: 0, diciembre: 0},
-  {enero: 0, febrero: 0, marzo: 0, abril: 0, mayo: 0, junio: 0, julio: 0, agosto: 0, septiembre: 0, octubre: 0, noviembre: 0, diciembre: 0},
-  {enero: 0, febrero: 0, marzo: 0, abril: 0, mayo: 0, junio: 0, julio: 0, agosto: 0, septiembre: 0, octubre: 0, noviembre: 0, diciembre: 0}
-]
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-proforma',
-  templateUrl: './proforma.component.html',
-  styleUrls: ['./proforma.component.css']
+  selector: 'app-proforma-details',
+  templateUrl: './proforma-details.component.html',
+  styleUrls: ['./proforma-details.component.css']
 })
-export class ProformaComponent implements OnInit {
+export class ProformaDetailsComponent implements OnInit {
   displayedColumns: string[] = ['nombre','total','aant','ejercicio','enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto',
   'septiembre', 'octubre', 'noviembre', 'diciembre'/* , 'apost' */];
   displayedColumn: string[] = ['aant','enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto',
@@ -46,14 +24,15 @@ export class ProformaComponent implements OnInit {
   proforma: any;
   formProforma: FormGroup;
   change:any;
-
+  id: any;
   empresas: any;
   centros: any;
   constructor(private montosServies: MontosconsolidadosService, 
     private fB: FormBuilder, 
     private proformaService: ProformaService,
     private empresaService: CompaniaService,
-    private centroService: CentrosService) { 
+    private centroService: CentrosService,
+    private activeRoute: ActivatedRoute) { 
     //this.getProforma();
 
   }
@@ -62,6 +41,15 @@ export class ProformaComponent implements OnInit {
     this.buildProforma();
     this.fetchCentros();
     this.fetchEmpresa();
+
+    this.activeRoute.params.subscribe((params) => {
+      this.id = params.id;
+      this.proformaService.getProforma(this.id)
+      .subscribe(res => {
+        this.proforma = res;
+        console.log("proforma obtenida: ", this.proforma)
+      })
+    })
   }
 
   buildProforma(){

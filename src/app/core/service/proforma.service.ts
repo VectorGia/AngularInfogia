@@ -20,8 +20,20 @@ export class ProformaService {
     this.header = new HttpHeaders(headerSettings);
    }
 
+  getAllProformas(): Observable<Proforma[]>{
+    return this.http.get<Proforma[]>(`${this.url}/api/Proforma`)
+  }
+
+  getProforma(id){
+    return this.http.get<Proforma>(`${this.url}/api/Proforma/${id}`)
+  }
    getTestProforma(proforma): Observable<Proforma>{
      console.log("recibi: ",proforma)
      return this.http.post<Proforma>(`${this.url}/api/Proforma`, proforma)
+   }
+
+   addProforma(proforma){
+     console.log("recibi proforma: ", proforma)
+     return this.http.post<Proforma>(`${this.url}/api/ProformaGuardar`, proforma)
    }
 }

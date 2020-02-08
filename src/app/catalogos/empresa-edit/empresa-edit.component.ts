@@ -49,7 +49,7 @@ export class EmpresaEditComponent implements OnInit {
       desc_id: ['', [Validators.required]],
       nombre: ['', Validators.required],
       abrev: ['', Validators.required],
-      activo_etl: ['', Validators.required],
+      etl: ['', Validators.required],
       host: ['', Validators.required],
       puerto_compania: ['', Validators.required],
       usuario_etl: ['', Validators.required],
