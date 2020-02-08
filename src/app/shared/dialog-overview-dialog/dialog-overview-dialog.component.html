@@ -3,8 +3,8 @@
     <form [formGroup]="cuentasForm" (ngSubmit)="saveRubro(cuentasForm.value)">
       <h4>Unidad de Negocio</h4>
      
-      <mat-radio-group aria-label="Select an option" formControlName="tipo_id">
-        <mat-radio-button value="2" (click)="opc()" [checked]="true">Cuentas</mat-radio-button>
+      <mat-radio-group aria-label="Select an option" formControlName="tipo_id.value">
+        <mat-radio-button value="2" (click)="opc()" checked="true">Cuentas</mat-radio-button>
         <mat-radio-button value="1" (click)="opcr()">Rubro</mat-radio-button>
       </mat-radio-group> 
         <mat-form-field>
