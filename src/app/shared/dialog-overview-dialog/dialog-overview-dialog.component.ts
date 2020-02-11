@@ -17,6 +17,7 @@ export class DialogOverviewDialogComponent implements OnInit {
   id: string;
   nombre: any;
   clave: any;
+  gender = "2";
   cuentainclu: any;
   cuentaexclu: any;
   aritmetica: any;

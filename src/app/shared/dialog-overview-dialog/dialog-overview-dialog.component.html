@@ -3,10 +3,18 @@
     <form [formGroup]="cuentasForm" (ngSubmit)="saveRubro(cuentasForm.value)">
       <h4>Unidad de Negocio</h4>
      
-      <mat-radio-group aria-label="Select an option" formControlName="tipo_id.value">
+      <label for="">
+        <input type="radio" formControlName="tipo_id" value="1" [(ngModel)]="gender" (click)="opcr()">
+        Rubro
+      </label>
+      <label for="">
+        <input type="radio" formControlName="tipo_id" value="2" [(ngModel)]="gender" (click)="opc()">
+        Cuentas
+      </label>
+      <!-- <mat-radio-group aria-label="Select an option" formControlName="tipo_id">
         <mat-radio-button value="2" (click)="opc()" checked="true">Cuentas</mat-radio-button>
         <mat-radio-button value="1" (click)="opcr()">Rubro</mat-radio-button>
-      </mat-radio-group> 
+      </mat-radio-group>  -->
         <mat-form-field>
           <input matInput placeholder="Concepto: " formControlName="nombre" [(ngModel)]="nombre" maxlength="30">
           <button mat-button *ngIf="nombre" matSuffix mat-icon-button aria-label="Clear" (click)="nombre=''">

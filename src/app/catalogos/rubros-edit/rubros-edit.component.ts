@@ -50,6 +50,10 @@ disabledR: boolean = true;
     })
   }
 
+  return(){
+    this.router.navigate(['./catalogo/negocio/rubros/'+ this.getData(window.location.href,"rubros/","/edit") ])
+   }
+
   saveEdit(event: Event){
     event.preventDefault();
     if(this.editRubro.valid){

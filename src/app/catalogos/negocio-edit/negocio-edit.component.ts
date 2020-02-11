@@ -57,4 +57,7 @@ export class NegocioEditComponent implements OnInit {
       
     })
   }
+  return(){
+    this.router.navigate(['./catalogo/negocio'])
+   }
 }

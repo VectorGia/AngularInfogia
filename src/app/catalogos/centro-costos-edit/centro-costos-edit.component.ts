@@ -32,7 +32,8 @@ export class CentroCostosEditComponent implements OnInit {
     })
   }
   return(){
-    this.router.navigate(['./catalogo/costos/'])
+    let idProyecto=this.getIdProyecto(window.location.href);
+    this.router.navigate(['./catalogo/costos/' + idProyecto])
    }
   saveCentro(event: Event){
     event.preventDefault();

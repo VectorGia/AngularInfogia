@@ -124,7 +124,7 @@ export class ProformaDetailsComponent implements OnInit {
   } */
 
   guardarProforma(){
-    if(this.isValidDetalles(this.proforma, ['nombre_rubro'])){
+    if(this.isValidDetalles(this.proforma, ['nombre_rubro','fecha_captura', 'clave_rubro', 'aritmetica'])){
       this.recalculateAll(this.proforma);///HNA:Antes de mandar a guardar la proforma se recalcula completa
       this.proformaService.addProforma(this.proforma)
       .subscribe( res => {
