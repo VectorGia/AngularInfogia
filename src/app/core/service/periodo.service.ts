@@ -26,11 +26,13 @@ export class PeriodoService {
 
   postPeriodo(periodo): Observable<Periodo> {
     console.log('recibi periodo: ', periodo);
-    return this.http.post<Periodo>(`${this.url}/api/Periodo`, periodo, httpOptions).pipe(
-      // tslint:disable-next-line: no-shadowed-variable
-      tap(( periodo: Periodo) => console.log(`added periodos w/ id=${periodo.id}`)));
+    return this.http.post<Periodo>(`${this.url}/api/Periodo`, periodo, httpOptions);
   }
-
+  updatePeriodo(id, changes: Partial<Periodo>) {
+    console.log('recibi id:', id);
+    console.log('estatus: ', changes);
+    return this.http.put(`${this.url}/api/Periodo/${id}`, changes, httpOptions);
+  }
   delete(id) {
     return this.http.delete(`${this.url}/api/Periodo/${id}`);
   }

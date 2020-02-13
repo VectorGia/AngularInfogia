@@ -9,7 +9,7 @@ import { TipocapturaService } from 'src/app/core/service/tipocaptura.service';
 import { TipoproformaService } from 'src/app/core/service/tipoproforma.service';
 import { FormGroup, FormBuilder, Validators, NgForm } from '@angular/forms';
 import { ConfirmationDialogComponent } from 'src/app/shared/confirmation-dialog/confirmation-dialog.component';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatSlideToggleChange } from '@angular/material';
 
 @Component({
   selector: 'app-estatus',
@@ -23,6 +23,8 @@ export class EstatusComponent implements OnInit {
   tcaptura: any;
   proformar: any;
   periodoForm: FormGroup;
+  checked = false;
+  estatus: any;
   constructor(private periodoService: PeriodoService, private capturaService: TipocapturaService,
               private proformarService: TipoproformaService, private formBuilder: FormBuilder, public dialog: MatDialog) {
                 this.buildFormPeriodo();
@@ -32,6 +34,7 @@ export class EstatusComponent implements OnInit {
     this.fetchTipoCaptura();
     this.fetchPeriodos();
     this.fetchTipoProformar();
+    console.log('slide', this.checked);
   }
 
   buildFormPeriodo() {
@@ -40,7 +43,7 @@ export class EstatusComponent implements OnInit {
       tipo_proforma_id: ['', Validators.required],
       anio_periodo: ['', Validators.required],
       activo: [true],
-      estatus: [true]
+      estatus: [this.checked]
     });
   }
   fetchPeriodos() {
@@ -69,6 +72,7 @@ export class EstatusComponent implements OnInit {
     this.periodoService.postPeriodo(form)
     .subscribe(res => {
       alert('Se guardo con exito!');
+      this.ngOnInit();
     });
   }
 
@@ -93,4 +97,8 @@ export class EstatusComponent implements OnInit {
     );
   }
 
+  onChange(value: MatSlideToggleChange) {
+    const { checked } = value;
+    this.checked = checked;
+  }
 }

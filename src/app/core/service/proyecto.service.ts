@@ -33,7 +33,7 @@ export class ProyectoService {
     return this.http.post<Proyecto>(`${this.url}/api/Proyecto`, proyecto, httpOptions)
   }
   updateProyecto(id: string, changes: Partial<Proyecto>){
-    return this.http.put(`${this.url}/api/Proyecto/${id}`,changes,httpOptions);
+    return this.http.put(`${this.url}/api/Proyecto/${id}`, changes, httpOptions);
   } 
 
   deleteProyecto(id: string){

@@ -65,7 +65,7 @@ export class EmpresaComponent implements OnInit {
       }
     )
   }
-  saveDatos(form:NgForm){
+  saveDatos(form: NgForm){
     this.cs.addCompania(form).subscribe(
       res => {
         let id = res['STR_IDCOMPANIA'];

@@ -32,6 +32,17 @@
             </mat-form-field>
           </div>
           <div class="col">
+            <section class="example-section">
+              <mat-slide-toggle formControlName="estatus"
+                  class="example-margin"
+                  (change)="onChange($event)"
+                  [color]="color"
+                  [checked]="checked">
+                Activar
+              </mat-slide-toggle>
+            </section>
+          </div>
+          <div class="col">
             <div class="example-button-row">
               <button class="btn btn-sm" type="submit" mat-raised-button color="primary">
                 Registrar
