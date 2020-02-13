@@ -5,7 +5,7 @@ import { FormBuilder, FormGroup, Validators, NgForm } from '@angular/forms';
 import {MatTableDataSource, MatSort, MatPaginator} from '@angular/material';
 import {SelectionModel} from '@angular/cdk/collections';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ConfirmationDialogComponent } from './../../shared/confirmation-dialog/confirmation-dialog.component'
+import { ConfirmationDialogComponent } from './../../shared/confirmation-dialog/confirmation-dialog.component';
 import { MatDialog } from '@angular/material';
 import { CompaniaService } from 'src/app/core/service/compania.service';
 import { EmpresaProyectoService } from 'src/app/core/service/empresa-proyecto.service';
@@ -25,8 +25,8 @@ export class CentroCostosComponent implements OnInit {
   id: any;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
-  constructor(private cs: CentrosService, 
-              private fb: FormBuilder, 
+  constructor(private cs: CentrosService,
+              private fb: FormBuilder,
               private router: Router,
               private companiaService: CompaniaService,
               public dialog: MatDialog,
@@ -36,24 +36,24 @@ export class CentroCostosComponent implements OnInit {
   }
 
   ngOnInit() {
-    //this.array.paginator = this.paginator;
+    // this.array.paginator = this.paginator;
     this.activeRoute.params.subscribe((params) => {
       this.id = params.id;
-      console.log("ID Proyecto:",this.id)
+      console.log('ID Proyecto:', this.id)
       this.empresaproService.getEmpresas(this.id)
         .subscribe(companias => {
-          if(companias.length > 0 ){
-            console.log(companias)
-            this.companias = companias
-          }else{
+          if (companias.length > 0 ) {
+            console.log(companias);
+            this.companias = companias;
+          } else {
             this.companiaService.getAllCompania()
             .subscribe(companias => {
               this.companias = companias;
-            })
+            });
           }
-        console.log("compañias listadas",this.companias)
-      })
-    })
+          console.log('compañias listadas', this.companias);
+      });
+    });
     this.renderDataTable();
     this.centroForm = this.fb.group({
       tipo: [null, Validators.required],
@@ -65,16 +65,16 @@ export class CentroCostosComponent implements OnInit {
       proyecto_id: [this.id],
       empresa_id: [4],
       activo: [true]
-    })
+    });
   }
 
-  renderDataTable(){
+  renderDataTable() {
     this.cs.getCentro(this.id)
     .subscribe(
-      x=> {
+      x => {
         this.dataSource = new MatTableDataSource();
         this.dataSource.data = x;
-        console.log("cc: ",this.dataSource.data);
+        console.log('cc: ', this.dataSource.data);
       },
       error => {
         console.log('Error al extraer los registros!' + error);
@@ -90,7 +90,7 @@ export class CentroCostosComponent implements OnInit {
       this.array.paginator.firstPage();
     } */
   }
-  onFormSubmit(form:NgForm){
+  onFormSubmit(form: NgForm){
 
     this.cs.addCentro(form).subscribe(
       res => {
@@ -105,20 +105,19 @@ export class CentroCostosComponent implements OnInit {
      (res) => {
       this.renderDataTable();
      }
-   )
+   );
  }
  openDialog(id): void {
   const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
     width: '550px',
-    data: "Esta seguro de eliminar este grupo?"
+    data: 'Esta seguro de eliminar este grupo?'
   });
   dialogRef.afterClosed().subscribe(result => {
-    if(result) {
+    if (result) {
       console.log('Yes clicked');
-      this.delete(id)
+      this.delete(id);
       // DO SOMETHING
     }
   });
 }
-
 }

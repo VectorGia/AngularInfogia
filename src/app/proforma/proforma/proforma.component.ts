@@ -34,27 +34,24 @@ const ELEMENT_DATA: Numeros[] = [
   styleUrls: ['./proforma.component.css']
 })
 export class ProformaComponent implements OnInit {
-  displayedColumns: string[] = ['nombre','total','aant','ejercicio','enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto',
-  'septiembre', 'octubre', 'noviembre', 'diciembre'/* , 'apost' */];
-  displayedColumn: string[] = ['aant','enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto',
+  // tslint:disable-next-line: max-line-length
+  displayedColumns: string[] = ['nombre', 'total', 'aant', 'ejercicio', 'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto',
+  'septiembre', 'octubre', 'noviembre', 'diciembre', 'apost'];
+  displayedColumn: string[] = ['aant', 'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto',
   'septiembre', 'octubre', 'noviembre', 'diciembre', 'apost'];
   dataSource: any;
-  tresnueve: boolean = false;
-  seisseis: boolean = false;
-  nuevetres: boolean = false;
+  tresnueve = false;
+  seisseis = false;
+  nuevetres = false;
   condiciones: FormGroup;
   proforma: any;
   formProforma: FormGroup;
-  change:any;
-  
+  change: any;
   empresas: any;
   centros: any;
-  constructor(private montosServies: MontosconsolidadosService, 
-    private fB: FormBuilder, 
-    private proformaService: ProformaService,
-    private empresaService: CompaniaService,
-    private centroService: CentrosService) { 
-    //this.getProforma();
+  // tslint:disable-next-line: max-line-length
+  constructor(private montosServies: MontosconsolidadosService, private fB: FormBuilder, private proformaService: ProformaService, private empresaService: CompaniaService, private centroService: CentrosService) { 
+    // this.getProforma();
 
   }
 

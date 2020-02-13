@@ -15,12 +15,12 @@ export class BuscarproformaComponent implements OnInit {
     this.fetchProforma();
   }
 
-  fetchProforma(){
+  fetchProforma() {
     this.proformaService.getAllProformas()
-    .subscribe(res=> {
+    .subscribe(res => {
       this.proforma = res;
-      console.log(this.proforma)
-    })
+      console.log(this.proforma);
+    });
   }
 
 }

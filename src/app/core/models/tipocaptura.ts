@@ -1,9 +1,8 @@
-export interface Tipo_Proforma{
-    id
+export interface TipoCaptura {
+    id;
     activo: boolean;
-    nombre: string;
     clave: string;
     descripcion: string;
     fec_modif: Date;
-    mes_inicio;
+    idusuario;
 }

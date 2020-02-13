@@ -14,14 +14,13 @@ const httpOptions = {
 export class CompaniaService {
   private url = GlobalVariable.BASE_API_URL;
   header: any;
-  constructor(private http: HttpClient) { 
-    
+  constructor(private http: HttpClient) {
     const headerSettings: {[name: string]: string | string[]; } = {};
     this.header = new HttpHeaders(headerSettings);
   }
 
   getAllCompania(): Observable<Compania[]>{
-    return this.http.get<Compania[]>(`${this.url}/api/Empresa`)
+    return this.http.get<Compania[]>(`${this.url}/api/Empresa`);
   }
 
   getCompania(id: string){
