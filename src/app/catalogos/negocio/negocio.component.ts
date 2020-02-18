@@ -55,12 +55,12 @@ export class NegocioComponent implements OnInit {
       });
   }
 
-
   saveModelos(form: NgForm) {
 
     this.ns.addModelos(form).subscribe(
       res => {
-        let nombre = res['nombre'];
+        // tslint:disable-next-line: no-string-literal
+        const nombre = res['nombre'];
         alert('Se guardo exitosamente!');
         this.ngOnInit();
       },
@@ -94,8 +94,7 @@ export class NegocioComponent implements OnInit {
   buildModelo() {
     this.negocioForm = this.fb.group({
       nombre: ['', Validators.required],
-      activo: [true],
-      tipo_captura_id: ['']
+      activo: [true]
     });
   }
   applyFilter(filterValue: string) {

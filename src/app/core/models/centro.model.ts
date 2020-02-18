@@ -1,6 +1,8 @@
-export interface CentroCostos{
-    id
-    proyecto_id
+export interface CentroCostos {
+    STR_IDCENTROCOSTO: any;
+    id: any;
+    proyecto_id: any;
+    modelo_negocio_id: any;
     tipo: string;
     desc_id: string;
     nombre: string;

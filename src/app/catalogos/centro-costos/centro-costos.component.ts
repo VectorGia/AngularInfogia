@@ -10,6 +10,7 @@ import { MatDialog } from '@angular/material';
 import { CompaniaService } from 'src/app/core/service/compania.service';
 import { EmpresaProyectoService } from 'src/app/core/service/empresa-proyecto.service';
 import { isNull } from 'util';
+import { NegocioService } from 'src/app/core/service/negocio.service';
 
 @Component({
   selector: 'app-centro-costos',
@@ -23,6 +24,7 @@ export class CentroCostosComponent implements OnInit {
   companias: any;
   centros: any;
   id: any;
+  modelos: any;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
   constructor(private cs: CentrosService,
@@ -31,7 +33,8 @@ export class CentroCostosComponent implements OnInit {
               private companiaService: CompaniaService,
               public dialog: MatDialog,
               private activeRoute: ActivatedRoute,
-              private empresaproService: EmpresaProyectoService) {
+              private empresaproService: EmpresaProyectoService,
+              private modeloService: NegocioService) {
 
   }
 
@@ -39,7 +42,7 @@ export class CentroCostosComponent implements OnInit {
     // this.array.paginator = this.paginator;
     this.activeRoute.params.subscribe((params) => {
       this.id = params.id;
-      console.log('ID Proyecto:', this.id)
+      console.log('ID Proyecto:', this.id);
       this.empresaproService.getEmpresas(this.id)
         .subscribe(companias => {
           if (companias.length > 0 ) {
@@ -47,6 +50,7 @@ export class CentroCostosComponent implements OnInit {
             this.companias = companias;
           } else {
             this.companiaService.getAllCompania()
+            // tslint:disable-next-line: no-shadowed-variable
             .subscribe(companias => {
               this.companias = companias;
             });
@@ -55,6 +59,7 @@ export class CentroCostosComponent implements OnInit {
       });
     });
     this.renderDataTable();
+    this.fetchModelos();
     this.centroForm = this.fb.group({
       tipo: [null, Validators.required],
       desc_id: [null, Validators.required],
@@ -63,7 +68,8 @@ export class CentroCostosComponent implements OnInit {
       estatus: [null, Validators.required],
       gerente: [null, Validators.required],
       proyecto_id: [this.id],
-      empresa_id: [4],
+      empresa_id: ['', Validators.required],
+      modelo_negocio_id: ['', Validators.required],
       activo: [true]
     });
   }
@@ -90,17 +96,17 @@ export class CentroCostosComponent implements OnInit {
       this.array.paginator.firstPage();
     } */
   }
-  onFormSubmit(form: NgForm){
+  onFormSubmit(form: NgForm) {
 
     this.cs.addCentro(form).subscribe(
       res => {
-        let id = res['STR_IDCENTROCOSTO'];
+        // tslint:disable-next-line: no-string-literal
+        const id = res['STR_IDCENTROCOSTO'];
         this.renderDataTable();
-      }
-    )
+      });
   }
 
- delete(id){
+ delete(id) {
    this.cs.deleteCentro(id).subscribe(
      (res) => {
       this.renderDataTable();
@@ -118,6 +124,14 @@ export class CentroCostosComponent implements OnInit {
       this.delete(id);
       // DO SOMETHING
     }
+  });
+}
+
+fetchModelos() {
+  this.modeloService.getAllModelos()
+  .subscribe( res => {
+    this.modelos = res;
+    console.log('modelos: ', this.modelos);
   });
 }
 }

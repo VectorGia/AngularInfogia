@@ -116,7 +116,7 @@
                                 <th mat-header-cell *matHeaderCellDef> Abril </th>
                                 <td mat-cell *matCellDef="let user"> 
                                     <div *ngIf="tresnueve">
-                                        <input type="text" value="0" ng-model="user.abril_monto_resultado" (change)="changeMonto(user, 'abril_monto_resultado', $event)">
+                                        <input type="text" [value]="user.abril_monto_resultado" ng-model="user.abril_monto_resultado" (change)="changeMonto(user, 'abril_monto_resultado', $event)">
                                     </div>
                                     <div *ngIf="!tresnueve">
                                         {{user.abril_monto_resultado / 1000 | currency}}
@@ -127,7 +127,7 @@
                                 <th mat-header-cell *matHeaderCellDef> Mayo </th>
                                 <td mat-cell *matCellDef="let user">
                                     <div *ngIf="tresnueve">
-                                        <input type="text" value="0" ng-model="user.mayo_monto_resultado" (change)="changeMonto(user, 'mayo_monto_resultado', $event)">
+                                        <input type="text" [value]="user.mayo_monto_resultado" ng-model="user.mayo_monto_resultado" (change)="changeMonto(user, 'mayo_monto_resultado', $event)">
                                     </div>
                                     <div *ngIf="!tresnueve">
                                         {{user.mayo_monto_resultado / 1000 | currency}}
@@ -138,7 +138,7 @@
                                 <th mat-header-cell *matHeaderCellDef> Junio </th>
                                 <td mat-cell *matCellDef="let user">
                                     <div *ngIf="tresnueve">
-                                        <input type="text" value="0" ng-model="user.junio_monto_resultado" (change)="changeMonto(user, 'junio_monto_resultado', $event)">
+                                        <input type="text" [value]="user.junio_monto_resultado" ng-model="user.junio_monto_resultado" (change)="changeMonto(user, 'junio_monto_resultado', $event)">
                                     </div>
                                     <div *ngIf="!tresnueve ">
                                         {{user.junio_monto_resultado / 1000 | currency}} 
@@ -149,7 +149,7 @@
                                 <th mat-header-cell *matHeaderCellDef> Julio </th>
                                 <td mat-cell *matCellDef="let user"> 
                                     <div *ngIf="tresnueve || seisseis">
-                                        <input type="text" value="0" ng-model="user.julio_monto_resultado" (change)="changeMonto(user, 'julio_monto_resultado', $event)">
+                                        <input type="text" [value]="user.julio_monto_resultado" ng-model="user.julio_monto_resultado" (change)="changeMonto(user, 'julio_monto_resultado', $event)">
                                     </div>
                                     <div *ngIf="!tresnueve && !seisseis">
                                         {{user.julio_monto_resultado / 1000 | currency}} 
@@ -160,7 +160,7 @@
                                 <th mat-header-cell *matHeaderCellDef> Agosto </th>
                                 <td mat-cell *matCellDef="let user"> 
                                     <div *ngIf="tresnueve || seisseis">
-                                        <input type="text" value="0" ng-model="user.agosto_monto_resultado" (change)="changeMonto(user, 'agosto_monto_resultado', $event)">
+                                        <input type="text" [value]="user.agosto_monto_resultado" ng-model="user.agosto_monto_resultado" (change)="changeMonto(user, 'agosto_monto_resultado', $event)">
                                     </div>
                                     <div *ngIf="!tresnueve && !seisseis">
                                         {{user.agosto_monto_resultado / 1000 | currency}} 
@@ -171,7 +171,7 @@
                                 <th mat-header-cell *matHeaderCellDef> Septiembre </th>
                                 <td mat-cell *matCellDef="let user"> 
                                     <div *ngIf="tresnueve || seisseis ">
-                                        <input type="text" value="0" ng-model="user.septiembre_monto_resultado" (change)="changeMonto(user, 'septiembre_monto_resultado', $event)">
+                                        <input type="text" [value]="user.septiembre_monto_resultado" ng-model="user.septiembre_monto_resultado" (change)="changeMonto(user, 'septiembre_monto_resultado', $event)">
                                     </div>
                                     <div *ngIf="!tresnueve && !seisseis">
                                         {{user.septiembre_monto_resultado / 1000 | currency}} 
@@ -182,7 +182,7 @@
                                 <th mat-header-cell *matHeaderCellDef> Octubre </th>
                                 <td mat-cell *matCellDef="let user"> 
                                     <div *ngIf="tresnueve || seisseis || nuevetres">
-                                        <input type="text" value="0" ng-model="user.octubre_monto_resultado" (change)="changeMonto(user, 'octubre_monto_resultado', $event)">
+                                        <input type="text" [value]="user.octubre_monto_resultado" ng-model="user.octubre_monto_resultado" (change)="changeMonto(user, 'octubre_monto_resultado', $event)">
                                     </div>
                                     <div *ngIf="!tresnueve && !seisseis && !nuevetres">
                                         {{user.octubre_monto_resultado / 1000 | currency}} 
@@ -193,7 +193,7 @@
                                 <th mat-header-cell *matHeaderCellDef> Noviembre </th>
                                 <td mat-cell *matCellDef="let user"> 
                                     <div *ngIf="tresnueve || seisseis || nuevetres">
-                                        <input type="text" value="0" ng-model="user.noviembre_monto_resultado" (change)="changeMonto(user, 'noviembre_monto_resultado', $event)">
+                                        <input type="text" [value]="user.noviembre_monto_resultado" ng-model="user.noviembre_monto_resultado" (change)="changeMonto(user, 'noviembre_monto_resultado', $event)">
                                     </div>
                                     <div *ngIf="!tresnueve && !seisseis && !nuevetres">
                                         {{user.noviembre_monto_resultado / 1000 | currency}} 
@@ -204,7 +204,7 @@
                                 <th mat-header-cell *matHeaderCellDef> Diciembre </th>
                                 <td mat-cell *matCellDef="let user"> 
                                     <div *ngIf="tresnueve || seisseis || nuevetres">
-                                        <input type="text" value="0" ng-model="user.diciembre_monto_resultado" (change)="changeMonto(user, 'diciembre_monto_resultado', $event)">
+                                        <input type="text" [value]="user.diciembre_monto_resultado" ng-model="user.diciembre_monto_resultado" (change)="changeMonto(user, 'diciembre_monto_resultado', $event)">
                                     </div>
                                     <div *ngIf="!tresnueve && !seisseis && !nuevetres">
                                         {{user.diciembre_monto_resultado / 1000 | currency}} 

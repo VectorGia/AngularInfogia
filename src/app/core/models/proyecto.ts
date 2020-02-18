@@ -1,9 +1,8 @@
 import {Compania} from './compania'
 
 export interface Proyecto{
-    id
-    centro_costo_id
-    modelo_negocio_id
+    id: any;
+    centro_costo_id: any;
     nombre: string;
     responsable: string;
     desc_id: string;
@@ -13,5 +12,5 @@ export interface Proyecto{
     fecha_fin: Date;
     fecha_inicio: Date;
     fecha_modificacion: Date;
-    idsempresas: any
+    idsempresas: any;
 }

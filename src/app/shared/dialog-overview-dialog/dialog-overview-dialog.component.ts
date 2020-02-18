@@ -17,24 +17,26 @@ export class DialogOverviewDialogComponent implements OnInit {
   id: string;
   nombre: any;
   clave: any;
-  gender = "2";
+  gender = '2';
   cuentainclu: any;
   cuentaexclu: any;
   aritmetica: any;
+  rubros: any;
+  disableSelect = new FormControl(false);
   constructor(private fb: FormBuilder,
-    private dialogRef: MatDialogRef<DialogOverviewDialogComponent>,
-    private ns: NegocioService,
-    private rS: RubroService, 
-    private aR: ActivatedRoute,
-    @Inject(MAT_DIALOG_DATA) public data: any) {
+              private dialogRef: MatDialogRef<DialogOverviewDialogComponent>,
+              private ns: NegocioService,
+              private rS: RubroService,
+              private aR: ActivatedRoute,
+              @Inject(MAT_DIALOG_DATA) public data: any) {
     this.buildCuenta();
-    
    }
 
   ngOnInit() {
+    this.fetchRubros();
   }
 
-  buildCuenta(){
+  buildCuenta() {
     this.cuentasForm = this.fb.group({
       id_modelo_neg: [this.data.id, Validators.required],
       nombre: ['', Validators.required],
@@ -42,130 +44,142 @@ export class DialogOverviewDialogComponent implements OnInit {
       rangos_cuentas_incluidas: ['', Validators.required],
       rango_cuentas_excluidas: [''],
       aritmetica: ['', Validators.required],
+      hijos: ['', Validators.required],
       activo: [true],
       tipo_id: ['', Validators.required]
     });
-  
-
   }
 
+  fetchRubros(){
+    this.rS.getRubroByModeloId(this.data.id)
+    .subscribe(res => {
+      this.rubros = res;
+      console.log('rubros: ', this.rubros);
+    });
+  }
   onNoClick(): void {
     this.dialogRef.close();
   }
-  opc(){
+  opc() {
     this.select = false;
   }
 
-  opcr(){
+  opcr() {
     this.select = true;
   }
 
 
-  onSubmit(){
-    if(this.cuentasForm.valid){
-      console.log("Form Submitted!");
+  onSubmit() {
+    if (this.cuentasForm.valid) {
+      console.log('Form Submitted!');
       this.cuentasForm.reset();
     }
   }
 
-  existClaveIn(rubros, clave){
-    for(let i = 0; i< rubros.length; i++){
-      if(rubros[i].clave === clave){
+  existClaveIn(rubros, clave) {
+    // tslint:disable-next-line: prefer-for-of
+    for (let i = 0; i < rubros.length; i++) {
+      if (rubros[i].clave === clave) {
         return true;
       }
     }
     return false;
   }
 
-  saveRubro(form: any){
-    if( form.aritmetica ){
+  saveRubro(form: any) {
+    if ( form.aritmetica ) {
       this.rS.getRubroByModeloId(this.data.id).subscribe( res => {
-        let rubros = res;
-        if ( this.existClaveIn(rubros, form.clave) ){
-          alert("Ya existe un rubro con la clave " + form.clave + " favor de verificar.");
+        const rubros = res;
+        if ( this.existClaveIn(rubros, form.clave) ) {
+          alert('Ya existe un rubro con la clave ' + form.clave + ' favor de verificar.');
           return;
         }
-        let msg = this.isValidExpresion( {aritmetica: form.aritmetica} ,rubros);
-        if(msg){
-          alert(msg)
-        }else{
-          this.rS.postRubro(form).subscribe(
-            res => {
-              let nombre = res["nombre"];
+        const msg = this.isValidExpresion( {aritmetica: form.aritmetica} , rubros);
+        if (msg) {
+          alert(msg);
+        } else {
+          // tslint:disable-next-line: no-shadowed-variable
+          this.rS.postRubro(form).subscribe( res => {
+              const nombre = res.nombre;
               this.onNoClick();
               this.ngOnInit();
-            })
+            });
         }
-      })
-    }
-    else{
+      });
+    } else {
       this.rS.getRubroByModeloId(this.data.id).subscribe( res => {
-        let rubros = res;
-        if ( this.existClaveIn(rubros, form.clave) ){
-          alert("Ya existe un rubro con la clave " + form.clave + " favor de verificar.");
+        const rubros = res;
+        if ( this.existClaveIn(rubros, form.clave) ) {
+          alert('Ya existe un rubro con la clave ' + form.clave + ' favor de verificar.');
           return;
         }
-          this.rS.postRubro(form).subscribe(
-            res => {
-              let nombre = res["nombre"];
+        // tslint:disable-next-line: no-shadowed-variable
+        this.rS.postRubro(form).subscribe( res => {
+              const nombre = res.nombre;
+              console.log('nombre', nombre);
               this.onNoClick();
               this.ngOnInit();
-     
-      })
-    })
+      });
+    });
   }
 }
 
 
-  isValidExpresion( rubroRubros,rubrosCtas) {
-    let evaluacion=this.isValid(rubrosCtas,rubroRubros);
-    if(!evaluacion.resultado){
-        return "Arimética '"+rubroRubros.aritmetica+"' es inválida. Causa:["+evaluacion.mensaje+"]";
+  isValidExpresion( rubroRubros, rubrosCtas) {
+    const evaluacion = this.isValid(rubrosCtas, rubroRubros);
+    if (!evaluacion.resultado) {
+        return 'Arimética \'' + rubroRubros.aritmetica + '\' es inválida. Causa:[' + evaluacion.mensaje + ']';
     }
 
-  return "";
+    return '';
 }
-getRubros(rubros,claveTipo) {
-let rubrosTipo=[];
+getRubros(rubros, claveTipo) {
+const rubrosTipo = [];
+// tslint:disable-next-line: prefer-for-of
 for (let i = 0; i < rubros.length; i++) {
-    let rubroCtas = rubros[i];
+    const rubroCtas = rubros[i];
     if (rubroCtas.tipo.clave === claveTipo) {
-        rubrosTipo.push(rubroCtas)
+        rubrosTipo.push(rubroCtas);
     }
 }
 return rubrosTipo;
 }
 
-isValid(rubrosCtas,rubroRubros){
-let cvesInAritmetica=this.getUnique(rubroRubros.aritmetica.match(/[A-Za-z]+/g));
-for(let i=0;i<cvesInAritmetica.length;i++){
-    let clave=cvesInAritmetica[i];
-    if(!this.findRubroByClave(rubrosCtas,clave)){
-        return  {resultado:false,mensaje:"No se encontro el rubro '"+clave+"' especificado en aritmética, dentro de los rubros"}
+isValid(rubrosCtas, rubroRubros) {
+const cvesInAritmetica = this.getUnique(rubroRubros.aritmetica.match(/[A-Za-z]+/g));
+// tslint:disable-next-line: prefer-for-of
+for (let i = 0; i < cvesInAritmetica.length; i++) {
+    const clave = cvesInAritmetica[i];
+    if (!this.findRubroByClave(rubrosCtas, clave)) {
+        return  {resultado: false, mensaje: 'No se encontro el rubro \'' + clave + '\' especificado en aritmética, dentro de los rubros'};
     }
 }
 try {
-    eval(rubroRubros.aritmetica.replace(/\w+/g, "1"));
-}catch (e) {
+  // tslint:disable-next-line: no-eval
+  eval(rubroRubros.aritmetica.replace(/\w+/g, '1'));
+} catch (e) {
     console.error(e);
-    return  {resultado:false,mensaje:"Error de evaluación"}
+    return  {resultado: false, mensaje: 'Error de evaluación'};
 }
-return {resultado:true,mensaje:""};
+return {resultado: true, mensaje: ''};
 
 }
 
-findRubroByClave(rubros,clave){
-for(let i=0;i<rubros.length;i++){
-    if(rubros[i].clave===clave){
+findRubroByClave(rubros, clave) {
+// tslint:disable-next-line: prefer-for-of
+for (let i = 0; i < rubros.length; i++) {
+    if (rubros[i].clave === clave) {
         return rubros[i];
     }
 }
 }
 
 getUnique(array) {
-var uniqueArray = [];
+// tslint:disable-next-line: prefer-const
+let uniqueArray = [];
 
-for (var i = 0; i < array.length; i++) {
+// tslint:disable-next-line: prefer-for-of
+for (let i = 0; i < array.length; i++) {
     if (uniqueArray.indexOf(array[i]) === -1) {
         uniqueArray.push(array[i]);
     }

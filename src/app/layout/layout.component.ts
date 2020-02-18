@@ -18,11 +18,14 @@ export class LayoutComponent {
   id: string;
   @ViewChild('sidenav', {static: false}) sidenav: MatSidenav;
   reason = '';
+
+  shouldRun = [/(^|\.)plnkr\.co$/, /(^|\.)stackblitz\.io$/].some(h => h.test(window.location.host));
+  // tslint:disable-next-line: use-lifecycle-interface
   ngOnInit() {
     this.id = localStorage.getItem('token');
     console.log(this.id);
   }
-  logout(){
+  logout() {
     console.log('logout');
     this.aS.logout();
     this.router.navigate(['/auth/login'])
@@ -32,7 +35,4 @@ export class LayoutComponent {
     this.sidenav.close();
   }
 
-  shouldRun = [/(^|\.)plnkr\.co$/, /(^|\.)stackblitz\.io$/].some(h => h.test(window.location.host));
-
-  
 }

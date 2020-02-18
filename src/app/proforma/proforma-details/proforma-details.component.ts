@@ -12,28 +12,30 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./proforma-details.component.css']
 })
 export class ProformaDetailsComponent implements OnInit {
-  displayedColumns: string[] = ['nombre','total','aant','ejercicio','enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto',
-  'septiembre', 'octubre', 'noviembre', 'diciembre'/* , 'apost' */];
-  displayedColumn: string[] = ['aant','enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto',
+  displayedColumns: string[] = ['nombre', 'total', 'aant',
+                                'ejercicio', 'enero', 'febrero', 'marzo', 'abril', 'mayo',
+                                'junio', 'julio', 'agosto',
+                                'septiembre', 'octubre', 'noviembre', 'diciembre'/* , 'apost' */];
+  displayedColumn: string[] = ['aant', 'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto',
   'septiembre', 'octubre', 'noviembre', 'diciembre', 'apost'];
   dataSource: any;
-  tresnueve: boolean = false;
-  seisseis: boolean = false;
-  nuevetres: boolean = false;
+  tresnueve = false;
+  seisseis = false;
+  nuevetres = false;
   condiciones: FormGroup;
   proforma: any;
   formProforma: FormGroup;
-  change:any;
+  change: any;
   id: any;
   empresas: any;
   centros: any;
   constructor(private montosServies: MontosconsolidadosService,
-    private fB: FormBuilder,
-    private proformaService: ProformaService,
-    private empresaService: CompaniaService,
-    private centroService: CentrosService,
-    private activeRoute: ActivatedRoute) {
-    //this.getProforma();
+              private fB: FormBuilder,
+              private proformaService: ProformaService,
+              private empresaService: CompaniaService,
+              private centroService: CentrosService,
+              private activeRoute: ActivatedRoute) {
+    // this.getProforma();
 
   }
 
@@ -47,34 +49,34 @@ export class ProformaDetailsComponent implements OnInit {
       this.proformaService.getProforma(this.id)
       .subscribe(res => {
         this.proforma = res;
-        console.log("proforma obtenida: ", this.proforma)
-      })
-    })
+        console.log('proforma obtenida: ', this.proforma);
+      });
+    });
   }
 
-  buildProforma(){
+  buildProforma() {
     this.formProforma = this.fB.group({
       anio: [2019],
       tipo_captura_id: [2],
       tipo_proforma_id: [''],
       empresa_id: [''],
       centro_costo_id: ['']
-    })
+    });
   }
 
-  onChange(value){
-    console.log(value)
-    if(value === "4"){
-      this.tresnueve=true;
+  onChange(value) {
+    console.log(value);
+    if (value === '4') {
+      this.tresnueve = true;
       this.seisseis = false;
       this.nuevetres = false;
     }
-    if(value === "5"){
+    if (value === '5') {
       this.tresnueve = false;
       this.seisseis = true;
       this.nuevetres = false;
     }
-    if(value === "6"){
+    if (value === '6') {
       this.tresnueve = false;
       this.seisseis = false;
       this.nuevetres = true;
@@ -92,25 +94,25 @@ export class ProformaDetailsComponent implements OnInit {
     });
   } */
 
-  save(form: NgForm){
-    this.proformaService.getTestProforma(form).subscribe(res=>{
+  save(form: NgForm) {
+    this.proformaService.getTestProforma(form).subscribe(res => {
       this.proforma = res;
-      console.log("Proforma: ",this.proforma)
-    })
+      console.log('Proforma: ', this.proforma);
+    });
   }
 
-  fetchEmpresa(){
+  fetchEmpresa() {
     this.empresaService.getAllCompania()
     .subscribe(res => {
-      this.empresas = res
-    })
+      this.empresas = res;
+    });
   }
 
-  fetchCentros(){
+  fetchCentros() {
     this.centroService.getAllCentros()
     .subscribe(res => {
       this.centros = res;
-    })
+    });
   }
   /* getProforma(){
     this.proformaService.getTestProforma()
@@ -123,40 +125,41 @@ export class ProformaDetailsComponent implements OnInit {
     });
   } */
 
-  guardarProforma(){
-    if(this.isValidDetalles(this.proforma, ['nombre_rubro','fecha_captura', 'clave_rubro', 'aritmetica'])){
-      this.recalculateAll(this.proforma);///HNA:Antes de mandar a guardar la proforma se recalcula completa
-      this.proformaService.addProforma(this.proforma)
+  guardarProforma() {
+    if (this.isValidDetalles(this.proforma, ['nombre_rubro', 'fecha_captura', 'clave_rubro', 'aritmetica'])) {
+      this.recalculateAll(this.proforma); // /HNA:Antes de mandar a guardar la proforma se recalcula completa
+      this.proformaService.updateProforma(this.id, this.proforma)
       .subscribe( res => {
-        alert("Se guardo");
-      })
+        alert('Se guardo');
+      });
     }
   }
 
-  changeMonto(detalle: any, nombrecol, event: any){
-    if(isNaN(event.target.value)){
-      alert("Dato invalido, favor de verificar.");
+  changeMonto(detalle: any, nombrecol, event: any) {
+    if (isNaN(event.target.value)) {
+      alert('Dato invalido, favor de verificar.');
       event.target.focus();
       event.stopPropagation();
       event.preventDefault();
       return;
     }
-    ///HNA:dado que en las vista se divide entre 1000, aqui los montos ingresados se multiplicaran por 1000
-    detalle[nombrecol] = event.target.value*1000;
-    //HNA: ocurrio un cambio correcto en la proforma por lo que se recalcula el detalle impactado y los totales de proforma
-    //verificar que en pantala se ven los cambios si no es asi hay que repintar toda la proforma
+    /// HNA:dado que en las vista se divide entre 1000, aqui los montos ingresados se multiplicaran por 1000
+    detalle[nombrecol] = event.target.value * 1000;
+    // HNA: ocurrio un cambio correcto en la proforma por lo que se recalcula el detalle impactado y los totales de proforma
+    // verificar que en pantala se ven los cambios si no es asi hay que repintar toda la proforma
     this.recalculateDetalle(detalle, this.proforma);
     console.log(detalle);
 
   }
 
-  isValidDetalles(detalles,excludeProperties){
-    for(var i=0;i<detalles.length;i++){
+  isValidDetalles(detalles, excludeProperties) {
+    // tslint:disable-next-line: prefer-for-of
+    for (let i = 0; i < detalles.length; i++) {
         for (const prop in detalles[i]) {
-            if(excludeProperties.indexOf(prop)===-1){
+            if (excludeProperties.indexOf(prop) === -1) {
                 console.log(prop + ': ' + detalles[i][prop]);
-                if(isNaN(detalles[i][prop])){
-                    alert("existe algun dato no numérico en la proforma favor de validar.");
+                if (isNaN(detalles[i][prop])) {
+                    alert('existe algun dato no numérico en la proforma favor de validar.');
                     return false;
                 }
             }
@@ -166,45 +169,49 @@ export class ProformaDetailsComponent implements OnInit {
 }
 
   sumColumns(detalles, targetColumn, columnsNames) {
-    for (var i = 0; i < detalles.length; i++) {
+    // tslint:disable-next-line: prefer-for-of
+    for (let i = 0; i < detalles.length; i++) {
       this.sumColumnsForDetalle(detalles[i], targetColumn, columnsNames);
     }
     return detalles;
   }
 
    sumColumnsForDetalle(detalle, targetColumn, columnsNames) {
-    var suma = 0;
-    for (var j = 0; j < columnsNames.length; j++) {
-      var colName = columnsNames[j];
-      suma += detalle[colName]
+    let suma = 0;
+    // tslint:disable-next-line: prefer-for-of
+    for (let j = 0; j < columnsNames.length; j++) {
+      const colName = columnsNames[j];
+      suma += detalle[colName];
     }
     detalle[targetColumn] = suma;
 
     return detalle;
   }
 
-  getDetallesTotales(detalles){
-    var detallesTotales=[];
+  getDetallesTotales(detalles) {
+    // tslint:disable-next-line: prefer-const
+    let detallesTotales = [];
     detalles.forEach(detalle => {
-      if(detalle.aritmetica){
+      if (detalle.aritmetica) {
         detallesTotales.push(detalle);
       }
     });
     return detallesTotales;
   }
   recalculateDetalle(detalleModificado, detalles) {
-    this.sumColumnsForDetalle(detalleModificado, 'ejercicio_resultado', [ 'enero_monto_resultado', 'febrero_monto_resultado', 'marzo_monto_resultado', 'abril_monto_resultado',
+    this.sumColumnsForDetalle(detalleModificado, 'ejercicio_resultado', [ 'enero_monto_resultado',
+    'febrero_monto_resultado', 'marzo_monto_resultado', 'abril_monto_resultado',
       'mayo_monto_resultado', 'junio_monto_resultado', 'julio_monto_resultado', 'agosto_monto_resultado',
       'septiembre_monto_resultado', 'octubre_monto_resultado', 'noviembre_monto_resultado', 'diciembre_monto_resultado']);
     this.sumColumnsForDetalle(detalleModificado, 'total_resultado', ['ejercicio_resultado', 'acumulado_resultado']);
-    this.calculaDetTot(detalles,this.getDetallesTotales(detalles));
+    this.calculaDetTot(detalles, this.getDetallesTotales(detalles));
     return detalles;
   }
 
   recalculateAll(detalles) {
 
-    this.sumColumns(detalles, 'ejercicio_resultado', ['enero_monto_resultado', 'febrero_monto_resultado', 'marzo_monto_resultado', 'abril_monto_resultado',
-      'mayo_monto_resultado', 'junio_monto_resultado', 'julio_monto_resultado', 'agosto_monto_resultado',
+    this.sumColumns(detalles, 'ejercicio_resultado', ['enero_monto_resultado', 'febrero_monto_resultado', 'marzo_monto_resultado',
+        'abril_monto_resultado', 'mayo_monto_resultado', 'junio_monto_resultado', 'julio_monto_resultado', 'agosto_monto_resultado',
       'septiembre_monto_resultado', 'octubre_monto_resultado', 'noviembre_monto_resultado', 'diciembre_monto_resultado']);
     this.sumColumns(detalles, 'total_resultado', ['ejercicio_resultado', 'acumulado_resultado'
     ]);
@@ -212,11 +219,11 @@ export class ProformaDetailsComponent implements OnInit {
     return detalles;
   }
    calculaDetTot(detalles, detallesTotales) {
-    console.log("##### detalles=%o, detallesTotales=%o",detalles,detallesTotales);
+    console.log('##### detalles=%o, detallesTotales=%o', detalles, detallesTotales);
     detallesTotales.forEach(detalleTotal => {
-      var aritmeticas = {};
-      aritmeticas["enero_monto"] = detalleTotal.aritmetica;
-      aritmeticas["febrero_monto"] = detalleTotal.aritmetica;
+      const aritmeticas = {};
+      aritmeticas['enero_monto'] = detalleTotal.aritmetica;
+      aritmeticas['febrero_monto'] = detalleTotal.aritmetica;
       aritmeticas["marzo_monto"] = detalleTotal.aritmetica;
       aritmeticas["abril_monto"] = detalleTotal.aritmetica;
       aritmeticas["mayo_monto"] = detalleTotal.aritmetica;
@@ -231,20 +238,23 @@ export class ProformaDetailsComponent implements OnInit {
       aritmeticas["acumulado"] = detalleTotal.aritmetica;
       aritmeticas["total"] = detalleTotal.aritmetica;
       detalles.forEach(detalle => {
-        let detalleClave = detalle.clave_rubro;
+        const detalleClave = detalle.clave_rubro;
         if (detalleTotal.aritmetica.indexOf(detalleClave) !== -1) {
+          // tslint:disable-next-line: forin
           for (const prop in aritmeticas) {
-            aritmeticas[prop] = aritmeticas[prop].replace(detalleClave, detalle[prop+"_resultado"]);
+            aritmeticas[prop] = aritmeticas[prop].replace(detalleClave, detalle[prop + '_resultado']);
           }
         }
 
       });
+      // tslint:disable-next-line: forin
       for (const prop in aritmeticas) {
-        //console.log(prop+"_resultado="+aritmeticas[prop]);
-        try{
-          detalleTotal[prop+"_resultado"] = eval(aritmeticas[prop]);
-        }catch (e) {
-          console.error("Error de evaluacion de la expresion",e);
+        // console.log(prop+"_resultado="+aritmeticas[prop]);
+        try {
+          // tslint:disable-next-line: no-eval
+          detalleTotal[prop + '_resultado'] = eval(aritmeticas[prop]);
+        } catch (e) {
+          console.error('Error de evaluacion de la expresion', e);
         }
       }
     });

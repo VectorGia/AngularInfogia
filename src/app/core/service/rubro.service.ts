@@ -20,18 +20,23 @@ export class RubroService {
     this.header = new HttpHeaders(headerSettings);
   }
 
+  getRubros(): Observable<Rubros[]> {
+  return this.http.get<Rubros[]>(`${this.url}/api/Rubros/`);
+  }
+
   getRubroByModeloId(id){
     console.log("recibi id: ", id)
-    return this.http.get<Rubros>(`${this.url}/api/Rubros/${id}`)
+    return this.http.get<Rubros>(`${this.url}/api/Rubros/${id}`);
   }
 
   getRubroById(id){
     console.log("recibi id: ", id)
-    return this.http.get<Rubros>(`${this.url}/api/Rubros/id/${id}`)
+    return this.http.get<Rubros>(`${this.url}/api/Rubros/id/${id}`);
   }
 
   postRubro(rubro): Observable<Rubros>{
     console.log(rubro);
+    rubro.hijos = rubro.hijos.toString();
     return this.http.post<Rubros>(`${this.url}/api/Rubros`, rubro, httpOptions).pipe(
       tap((rubro: Rubros) => console.log(`added rubro w/ id=${rubro.id}`))
     )}

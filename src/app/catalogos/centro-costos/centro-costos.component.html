@@ -59,6 +59,14 @@
           </mat-select>
         </mat-form-field>
       </div>
+      <div class="col">
+        <mat-form-field>
+          <mat-label>Modelo de Negocio</mat-label>
+          <mat-select formControlName="modelo_negocio_id">
+            <mat-option *ngFor="let modelo of modelos" [value]="modelo.id">{{modelo.nombre}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
     </div>
     <button type="submit" [disabled]="!centroForm.valid"> Aceptar</button>
   </form>

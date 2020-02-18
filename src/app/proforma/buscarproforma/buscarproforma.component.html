@@ -30,6 +30,7 @@
           <th mat-header-cell *matHeaderCellDef> Acción </th>
           <td mat-cell *matCellDef="let element"> 
             <a [routerLink]="['details', element.id]">Ver detalles</a>
+            <button mat-raised-button color="warn" (click)="export(element.id)">Exportar Excel</button>
           </td>
         </ng-container>
 

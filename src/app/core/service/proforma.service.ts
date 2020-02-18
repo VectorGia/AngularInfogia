@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { GlobalVariable } from './../../shared/global';
 import { Observable } from 'rxjs';
 import { Proforma } from '../models/proforma';
+import { ProformaDetalle } from '../models/proformadetalle';
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -34,5 +35,9 @@ export class ProformaService {
    addProforma(proforma) {
      console.log('recibi proforma: ', proforma);
      return this.http.post<Proforma>(`${this.url}/api/ProformaGuardar`, proforma);
+   }
+
+   updateProforma(id, changes: Partial<ProformaDetalle>) {
+     return this.http.put(`${this.url}/api/ActualizaProforma/${id}`, changes, httpOptions);
    }
 }
