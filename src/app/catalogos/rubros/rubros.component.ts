@@ -58,7 +58,7 @@ export class RubrosComponent implements OnInit {
         id: this.id
       }
     });
- 
+
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
       this.ngOnInit();
@@ -81,7 +81,7 @@ reorderRubros(rubros) {
   const padres = this.getPadres(rubros);
   const padresSinHijos = [];
   for ( const padre of padres) {
-    padre.espadre = true;
+    padre.estilo = 'padre';
     if (!padre.hijos) {
       padresSinHijos.push(padre);
       continue;
@@ -89,6 +89,7 @@ reorderRubros(rubros) {
     rubrosReorder.push(padre);
     const hijos = this.getHijos(padre, rubros);
     for ( const hijo of hijos) {
+      padre.estilo = 'hijo';
       rubrosReorder.push(hijo);
     }
   }
