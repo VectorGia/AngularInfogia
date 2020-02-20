@@ -40,8 +40,7 @@ export class RubrosComponent implements OnInit {
       this.rS.getRubroByModeloId(this.id)
       .subscribe(data => {
         this.dataSource = new MatTableDataSource();
-        this.dataSource.data = data;
-        this.reorderRubros(this.dataSource.data);
+        this.dataSource.data = this.reorderRubros(data);
         console.log('datos', this.dataSource.data);
       });
     });
@@ -59,7 +58,7 @@ export class RubrosComponent implements OnInit {
         id: this.id
       }
     });
- 
+
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
       this.ngOnInit();
@@ -82,7 +81,7 @@ reorderRubros(rubros) {
   const padres = this.getPadres(rubros);
   const padresSinHijos = [];
   for ( const padre of padres) {
-    padre.espadre = true;
+    padre.estilo = 'padre';
     if (!padre.hijos) {
       padresSinHijos.push(padre);
       continue;
@@ -90,6 +89,7 @@ reorderRubros(rubros) {
     rubrosReorder.push(padre);
     const hijos = this.getHijos(padre, rubros);
     for ( const hijo of hijos) {
+      padre.estilo = 'hijo';
       rubrosReorder.push(hijo);
     }
   }
