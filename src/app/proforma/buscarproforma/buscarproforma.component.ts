@@ -8,7 +8,6 @@ import * as XLSX from 'xlsx';
   styleUrls: ['./buscarproforma.component.css']
 })
 export class BuscarproformaComponent implements OnInit {
-
   displayedColumns = ['id', 'nombre', 'fecha', 'action'];
   proforma: any;
   constructor(private proformaService: ProformaService, private exportService: ExcelService) { }

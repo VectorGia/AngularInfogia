@@ -50,12 +50,25 @@
             </mat-form-field>
             <section>
               <mat-checkbox class="example-margin" [formControl]="disableSelect">Agrupador</mat-checkbox>
-              <mat-form-field>
-                <mat-label>Cuentas</mat-label>
-                <mat-select [disabled]="!disableSelect.value" formControlName="hijos" multiple>
-                  <mat-option *ngFor="let item of rubros" [value]="item.id"> {{item.nombre}} </mat-option>
-                </mat-select>
-              </mat-form-field>
+              <div class="row">
+                <div class="col">
+                  <mat-form-field>
+                    <mat-label>Tipo de Agrupador</mat-label>
+                    <mat-select  [disabled]="!disableSelect.value" formControlName="naturleza">
+                        <mat-option value="ingreso">Ingresos</mat-option>
+                        <mat-option value="egreso">Egresos</mat-option>
+                      </mat-select>
+                  </mat-form-field>  
+                </div>
+                <div class="col">
+                  <mat-form-field>
+                    <mat-label>Cuentas</mat-label>
+                    <mat-select [disabled]="!disableSelect.value" formControlName="hijos" multiple>
+                      <mat-option *ngFor="let item of rubros" [value]="item.id"> {{item.nombre}} </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
             </section>
         </div>
         <div class="row">

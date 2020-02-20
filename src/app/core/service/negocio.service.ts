@@ -19,7 +19,7 @@ export class NegocioService {
   }
 
   getAllModelos(): Observable<Negocio[]>{
-    return this.http.get<Negocio[]>(`${this.url}/api/ModeloNegocio`)
+    return this.http.get<Negocio[]>(`${this.url}/api/ModeloNegocio`);
   }
 
   getModelo(id: string){

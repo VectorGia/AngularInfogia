@@ -47,15 +47,17 @@
       <table mat-table class="mat-elevation-z8" [dataSource]="dataSource">
         <!-- Position Column -->
         <ng-container matColumnDef="nombre">
-          <th mat-header-cell *matHeaderCellDef>Modelo</th>
+          <th mat-header-cell *matHeaderCellDef>Nombre</th>
           <td mat-cell *matCellDef="let element">{{ element.nombre }}</td>
         </ng-container>
-
-      
+        <ng-container matColumnDef="tipo">
+          <th mat-header-cell *matHeaderCellDef>Tipo</th>
+          <td mat-cell *matCellDef="let element">{{ element.nombre_tipo_captura }}</td>
+        </ng-container>
 
         <ng-container matColumnDef="action">
           <th mat-header-cell *matHeaderCellDef>Acción</th>
-          <td mat-cell *matCellDef="let element"> 
+          <td mat-cell *matCellDef="let element">
             <a mat-raised-button [routerLink]="['edit', element.id]">Editar</a>
             <a mat-raised-button [routerLink]="['rubros', element.id, element.nombre]">Ver rubros</a>
             <button mat-raised-button color="warn" (click)="deleteCentro(element.id)">Eliminar</button>

@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
 import { NegocioService } from 'src/app/core/service/negocio.service';
 import { FormGroup, FormBuilder, Validators, NgForm, FormControl } from '@angular/forms';
@@ -18,7 +18,7 @@ export interface Model {
 })
 
 export class NegocioComponent implements OnInit {
-  displayedColumns: string[] = ['nombre', 'action'];
+  displayedColumns: string[] = ['nombre', 'tipo', 'action'];
   dataSource: any;
   cuentas: any;
   modeloForm: FormGroup;

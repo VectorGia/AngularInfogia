@@ -5,11 +5,16 @@ import { FormGroup, FormBuilder, Validators, NgForm, FormControl } from '@angula
 import { NegocioService } from 'src/app/core/service/negocio.service';
 import { RubroService } from 'src/app/core/service/rubro.service';
 import { ActivatedRoute } from '@angular/router';
+import { RubroNode } from 'src/app/core/models/rubronode';
+
+const TREE_DATA: RubroNode[] = [];
+
 @Component({
   selector: 'app-dialog-overview-dialog',
   templateUrl: './dialog-overview-dialog.component.html',
   styleUrls: ['./dialog-overview-dialog.component.css']
 })
+
 export class DialogOverviewDialogComponent implements OnInit {
   cuentasForm: FormGroup;
   modelos: any;
@@ -34,6 +39,7 @@ export class DialogOverviewDialogComponent implements OnInit {
 
   ngOnInit() {
     this.fetchRubros();
+
   }
 
   buildCuenta() {
@@ -44,13 +50,14 @@ export class DialogOverviewDialogComponent implements OnInit {
       rangos_cuentas_incluidas: ['', Validators.required],
       rango_cuentas_excluidas: [''],
       aritmetica: ['', Validators.required],
+      naturleza: ['', Validators.required],
       hijos: ['', Validators.required],
       activo: [true],
       tipo_id: ['', Validators.required]
     });
   }
 
-  fetchRubros(){
+  fetchRubros() {
     this.rS.getRubroByModeloId(this.data.id)
     .subscribe(res => {
       this.rubros = res;
