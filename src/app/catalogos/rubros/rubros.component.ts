@@ -40,8 +40,7 @@ export class RubrosComponent implements OnInit {
       this.rS.getRubroByModeloId(this.id)
       .subscribe(data => {
         this.dataSource = new MatTableDataSource();
-        this.dataSource.data = data;
-        this.reorderRubros(this.dataSource.data);
+        this.dataSource.data = this.reorderRubros(data);
         console.log('datos', this.dataSource.data);
       });
     });
