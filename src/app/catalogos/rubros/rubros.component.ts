@@ -71,8 +71,6 @@ export class RubrosComponent implements OnInit {
     });
   }
 
-  // rubros = [{id:1,clave:'r1',hijos:''},{id:3,clave:'ag1',hijos:'1,2'},{id:2,clave:'r2',hijos:''},{id:4,clave:'r3',hijos:''},{id:5,clave:'ag2',hijos:'4'},{id:6,clave:'TOT',hijos:'',aritmetica:'1+2'}];
-
 // reorderRubros(rubros)
 
 reorderRubros(rubros) {
@@ -81,15 +79,16 @@ reorderRubros(rubros) {
   const padres = this.getPadres(rubros);
   const padresSinHijos = [];
   for ( const padre of padres) {
-    padre.estilo = 'padre';
     if (!padre.hijos) {
       padresSinHijos.push(padre);
+      padre.estilo = 'padre';
       continue;
     }
     rubrosReorder.push(padre);
+    padre.estilo = 'padre';
     const hijos = this.getHijos(padre, rubros);
     for ( const hijo of hijos) {
-      padre.estilo = 'hijo';
+      hijo.estilo = 'hijo';
       rubrosReorder.push(hijo);
     }
   }
@@ -100,10 +99,10 @@ reorderRubros(rubros) {
   return rubrosReorder;
 }
  getPadres(rubros) {
-  var padres = [];
-  for(var i=0;i<rubros.length;i++){
-    var actual=rubros[i];
-    if(actual.hijos||actual.aritmetica){
+  const padres = [];
+  for (let i = 0; i < rubros.length; i++ ) {
+    const actual = rubros[i];
+    if (actual.hijos || actual.aritmetica) {
       padres.push(actual);
     }
   }
@@ -111,12 +110,12 @@ reorderRubros(rubros) {
 }
 
 getHijos(padre, rubros) {
-  var hijos=[];
-  if(padre.hijos){
-    var arrhijos=padre.hijos.split(',');
-    for(var i=0;i<arrhijos.length;i++){
-      var found= this.findById(rubros,arrhijos[i].trim());
-      if(found){
+  const hijos = [];
+  if (padre.hijos) {
+    const arrhijos = padre.hijos.split(',');
+    for (var i=0;i<arrhijos.length;i++) {
+      const found = this.findById(rubros, arrhijos[i].trim());
+      if (found) {
         hijos.push(found);
       }
     }
@@ -124,10 +123,10 @@ getHijos(padre, rubros) {
   return hijos;
 }
 
- findById(rubros,id){
-  for(var i=0;i<rubros.length;i++){
-    var actual=rubros[i];
-    if(actual.id==id){
+ findById(rubros, id) {
+  for(let i=0;i<rubros.length;i++) {
+    const actual = rubros[i];
+    if (actual.id == id) {
       return actual;
     }
   }

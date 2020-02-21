@@ -102,6 +102,7 @@ export class CentroCostosComponent implements OnInit {
       res => {
         // tslint:disable-next-line: no-string-literal
         const id = res['STR_IDCENTROCOSTO'];
+        this.centroForm.reset();
         this.renderDataTable();
       });
   }

@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CentrosService } from 'src/app/core/service/centros.service';
 import { CompaniaService } from 'src/app/core/service/compania.service';
+import { NegocioService } from 'src/app/core/service/negocio.service';
 
 @Component({
   selector: 'app-centro-costos-edit',
@@ -13,11 +14,13 @@ export class CentroCostosEditComponent implements OnInit {
   form: FormGroup;
   id: string;
   companias: any;
-  
+  modelos: any;
   constructor(private aR: ActivatedRoute, private companiaService: CompaniaService,
-    private fB: FormBuilder, private cS: CentrosService, private router: Router) { 
+              private fB: FormBuilder, private cS: CentrosService, private router: Router,
+              private modeloService: NegocioService) {
     this.builForm();
     this.fetchCompania();
+    this.fetchModelos();
   }
 
   ngOnInit() {
@@ -26,8 +29,8 @@ export class CentroCostosEditComponent implements OnInit {
       console.log("aqui",params.id)
       this.cS.getCC(this.id)
         .subscribe(product => {
-          console.log(product)
-          this.form.patchValue(product)
+          console.log('product: ', product);
+          this.form.patchValue(product);
         })
     })
   }
@@ -58,19 +61,25 @@ export class CentroCostosEditComponent implements OnInit {
       categoria: [null, Validators.required],
       estatus: [null, Validators.required],
       gerente: [null, Validators.required],
-      empresa_id: [null, Validators.required]
+      empresa_id: [null, Validators.required],
+      modelo_negocio_id: ['', Validators.required]
     })
   }
   fetchCompania(){
     this.companiaService.getAllCompania()
     .subscribe(compania => {
       this.companias = compania;
-      console.log("compañias",this.companias)
+      console.log("compañias", this.companias);
     })
   }
 
-
-    
+  fetchModelos() {
+    this.modeloService.getAllModelos()
+    .subscribe( res => {
+      this.modelos = res;
+      console.log('modelos-edit: ', this.modelos);
+    });
+  }
    getIdProyecto(url){
       var inicioCad="costos/";
       var idxIni=url.indexOf(inicioCad);

@@ -21,7 +21,6 @@ const routes: Routes = [
       {
         path: 'catalogo',
         loadChildren: () => import('./catalogos/catalogos.module').then(m => m.CatalogosModule)
-    
       },
       {
         path: 'proforma',

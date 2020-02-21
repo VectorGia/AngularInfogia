@@ -27,10 +27,10 @@ const routes: Routes = [
     path: 'proyecto',
     component: ProyectoComponent
   },
- /*  {
+  {
     path: 'costos',
     component: CentroCostosComponent
-  }, */
+  },
   {
     path: 'negocio',
     component: NegocioComponent

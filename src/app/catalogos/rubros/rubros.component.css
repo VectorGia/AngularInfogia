@@ -1,6 +1,21 @@
 .padre{
+  background-color: #FAFAD2;
   font-weight:bold ;
 }
 .hijo{
-  margin-left: 10px;
+  padding-left: 50px !important;
+ 
+}
+table th{
+  text-align: center;
+  background-color: blue;
+  color: white;
+}
+
+.mat-column-nombre{
+  border-right:black 1px solid;
+}
+
+table td{
+  text-align: center;
 }
