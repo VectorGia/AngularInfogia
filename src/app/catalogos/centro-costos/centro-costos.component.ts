@@ -130,8 +130,18 @@ export class CentroCostosComponent implements OnInit {
 fetchModelos() {
   this.modeloService.getAllModelos()
   .subscribe( res => {
-    this.modelos = res;
+    this.modelos = this.restringirModelos(res);
     console.log('modelos: ', this.modelos);
   });
 }
+
+  restringirModelos(modelos) {
+    const nombresModelo = {};
+    for (const modelo of modelos) {
+       if (! nombresModelo[modelo.nombre]) {
+         nombresModelo [modelo.nombre] = modelo;
+       }
+    }
+    return Object.values(nombresModelo);
+  }
 }
