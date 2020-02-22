@@ -1,0 +1,348 @@
+<form [formGroup]="formProforma" (ngSubmit)="save(formProforma.value)">
+    <div class="row">
+        <div class="col-md-1">
+            <mat-form-field>
+                <mat-label>Año: </mat-label>
+                <select matNativeControl required formControlName="anio">
+                    <option value="2019">2019</option>
+                    <option value="2020">2020</option>
+                </select>
+            </mat-form-field>
+        </div>
+        <div class="col-md-1">
+            <mat-form-field>
+                <mat-label>Proforma: </mat-label>
+                <select matNativeControl required formControlName="tipo_proforma_id"  (ngModelChange)="onChange($event)">
+                    <option value="4">3+9</option>
+                    <option value="5">6+6</option>
+                    <option value="6">9+3</option>
+                    <option value="2">0+12</option>
+                </select>
+            </mat-form-field>
+        </div>
+        <div class="col-md-2 mt-3 pr-0">
+            <mat-radio-group aria-label="Select an option" formControlName="tipo_captura_id">
+                <mat-radio-button value="1" class="mr-2">Contble</mat-radio-button>
+                <mat-radio-button value="2" class="ml-2">Flujo</mat-radio-button>
+                <!-- <mat-radio-button value="3" class="ml-2">Metodo</mat-radio-button> -->
+            </mat-radio-group>
+        </div>
+        <!-- <div class="col-md-3 mt-3 pr-0">
+            <mat-radio-group aria-label="Select an option" formControlName="">
+                <mat-radio-button value="1" class="mr-2">Base</mat-radio-button>
+                <mat-radio-button value="2" class="ml-2">Shadow</mat-radio-button>
+                <mat-radio-button value="3" class="ml-2">Metodo</mat-radio-button>
+            </mat-radio-group>
+        </div> -->
+        <div class="col-md-2">
+            <mat-form-field>
+                <mat-label>Empresa: </mat-label>
+                <mat-select matNativeControl required formControlName="empresa_id">
+                    <mat-option *ngFor="let item of empresas" [value]="item.id"> {{item.nombre}} </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="col">
+            <mat-form-field>
+                <mat-label>Centro de Costo: </mat-label>
+                <mat-select matNativeControl required formControlName="centro_costo_id">
+                    <mat-option *ngFor="let item of centros" [value]="item.id"> {{item.nombre}} </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="col-sm-1">
+            <button mat-button color="primary">Buscar</button>
+        </div>
+        <div class="col">
+            <a mat-button color="primary">Nueva</a>
+        </div>
+    </div>
+</form>
+<div class="row">
+    <div class="col mt-3">
+                <table #table mat-table [dataSource]="proforma" class="mat-elevation-z8">
+                    <ng-container matColumnDef="nombre">
+                            <th mat-header-cell *matHeaderCellDef> Rubro </th>
+                            <td mat-cell *matCellDef="let user">
+                                <div *ngIf="user.hijo || user.aritmetica">
+                                  <strong>  {{ user.nombre }} </strong>
+                                </div>
+                                <div *ngIf="!user.hijo && !user.aritmetica">
+                                    {{user.nombre + ' ' + user.tipo}}
+                                </div>
+                                <div class="ari" *ngIf="user.aritmetica">
+                                    Operación: {{user.aritmetica}}
+                                </div>
+                            </td>
+                    </ng-container>
+                    <ng-container matColumnDef="total">
+                            <th mat-header-cell *matHeaderCellDef> Total </th>
+                            <td mat-cell *matCellDef="let user">
+                                <div *ngIf="!user.aritmetica">
+                                    {{(user.total) | currency}}
+                                </div>
+                                <div *ngIf="user.aritmetica">
+
+                                   <strong> {{(user.total / 1000) | currency}}</strong>
+                                </div>
+                            </td>
+                    </ng-container>
+                    <ng-container matColumnDef="aant">
+                            <th mat-header-cell *matHeaderCellDef> Años Anterioress </th>
+                            <td mat-cell *matCellDef="let user">
+                                <div *ngIf="!user.aritmetica">
+                                    {{user.aniosant | currency}}
+
+                                </div>
+                                <div *ngIf="user.aritmetica">
+
+                                   <strong> {{user.aniosant / 1000 | currency}}</strong>
+                                </div>
+                            </td>
+                    </ng-container>
+                    <ng-container matColumnDef="ejercicio">
+                            <th mat-header-cell *matHeaderCellDef> Ejercicio </th>
+                            <td mat-cell *matCellDef="let user">
+                                <div *ngIf="!user.aritmetica">
+                                    {{user.ejercicio  | currency}}
+                                </div>
+                                <div *ngIf="user.aritmetica">
+                                 <strong>  {{user.ejercicio / 1000 | currency}}</strong>
+                                </div>
+                            </td>
+                    </ng-container>
+                    <ng-container matColumnDef="enero">
+                            <th mat-header-cell *matHeaderCellDef> Enero </th>
+                            <td mat-cell *matCellDef="let user"> 
+                                <div *ngIf="!user.aritmetica">
+                                    <td mat-cell *matCellDef="let user">
+                                        <div *ngIf="doce">
+                                            <input type="text" value="0" ng-model="user.enero_monto_resultado" (change)="changeMonto(user, 'enero_monto_resultado', $event,table)">
+                                        </div>
+                                    </td>
+                                    <div *ngIf="!doce">
+                                        {{user.enero | currency}}
+                                    </div>
+                                </div>
+                                <div *ngIf="user.aritmetica">
+                                    <strong>{{user.enero / 1000 | currency}} </strong>
+                                </div>
+                            </td>
+                    </ng-container>
+                    <ng-container matColumnDef="febrero">
+                            <th mat-header-cell *matHeaderCellDef> Febrero </th>
+                            <td mat-cell *matCellDef="let user"> 
+                              <div *ngIf="!user.aritmetica">
+                                <div *ngIf="doce">
+                                    <input type="text" value="0" ng-model="user.febrero_monto_resultado" (change)="changeMonto(user, 'febrero_monto_resultado', $event,table)">
+                                </div>
+                                <div *ngIf="!doce">
+                                    {{user.febrero  | currency }}
+                                </div>
+
+                            </div>
+                            <div *ngIf="user.aritmetica">
+
+                               <strong> {{user.febrero / 1000 | currency }}</strong>
+                            </div>
+
+                             </td>
+                    </ng-container>
+                    <ng-container matColumnDef="marzo">
+                            <th mat-header-cell *matHeaderCellDef> Marzo </th>
+                            <td mat-cell *matCellDef="let user">
+                                <div *ngIf="!user.aritmetica">
+                                    <div *ngIf="doce">
+                                        <input type="text" value="0" ng-model="user.marzo_monto_resultado" (change)="changeMonto(user, 'marzo_monto_resultado', $event,table)">
+                                    </div>
+                                    <div *ngIf="!doce">
+                                        {{user.marzo | currency}}
+                                    </div>
+                                </div>
+                                <div *ngIf="user.aritmetica">
+                                    <strong>{{user.marzo / 1000 | currency}}</strong>
+                                </div>
+                            </td>
+                    </ng-container>
+                    <ng-container matColumnDef="abril">
+                            <th mat-header-cell *matHeaderCellDef> Abril </th>
+                            <td mat-cell *matCellDef="let user"> 
+                               <div *ngIf="user.tipo == 'proform' && !user.aritmetica">
+                                   <div *ngIf="tresnueve || doce">
+                                       <input type="text" value="0" ng-model="user.abril_monto_resultado" (change)="changeMonto(user, 'abril_monto_resultado', $event,table)">
+                                   </div>
+                                   <div *ngIf="!tresnueve && !doce">
+                                       {{user.abril  | currency}}
+                                   </div>
+                               </div>
+                               <div *ngIf="user.aritmetica">
+                                <div>
+                                   <strong> {{user.abril / 1000 | currency}}</strong>
+                                </div>
+                               </div>
+                            </td>
+                    </ng-container>
+                    <ng-container matColumnDef="mayo">
+                            <th mat-header-cell *matHeaderCellDef> Mayo </th>
+                            <td mat-cell *matCellDef="let user">
+                                <div *ngIf="user.tipo == 'proform' && !user.aritmetica">
+                                    <div *ngIf="tresnueve || doce">
+                                        <input type="text" value="0" ng-model="user.mayo_monto_resultado" (change)="changeMonto(user, 'mayo_monto_resultado', $event,table)">
+                                    </div>
+                                    <div *ngIf="!tresnueve && !doce">
+                                        {{user.mayo | currency}}
+                                    </div>
+                                </div>
+                                <div *ngIf="user.aritmetica">
+                                    <div>
+                                       <strong> {{user.mayo / 1000 | currency}}</strong>
+                                    </div>
+                                </div>
+                                </td>
+                    </ng-container>
+                    <ng-container matColumnDef="junio">
+                            <th mat-header-cell *matHeaderCellDef> Junio </th>
+                            <td mat-cell *matCellDef="let user">
+                                <div *ngIf="user.tipo == 'proform' && !user.aritmetica">
+                                    <div *ngIf="tresnueve || doce">
+                                        <input type="text" value="0" ng-model="user.junio_monto_resultado" (change)="changeMonto(user, 'junio_monto_resultado', $event,table)">
+                                    </div>
+                                    <div *ngIf="!tresnueve && !doce ">
+                                        {{user.junio | currency}} 
+                                    </div> 
+                                </div>
+                                <div *ngIf="user.aritmetica">
+                                    <div>
+                                        <strong>{{user.junio / 1000 | currency}} </strong>
+                                    </div> 
+                                </div>
+                            </td>
+                    </ng-container>
+                    <ng-container matColumnDef="julio">
+                            <th mat-header-cell *matHeaderCellDef> Julio </th>
+                            <td mat-cell *matCellDef="let user"> 
+                                <div *ngIf="user.tipo == 'proform' && !user.aritmetica">
+                                    <div *ngIf="tresnueve || seisseis || doce">
+                                        <input type="text" value="0" ng-model="user.julio_monto_resultado" (change)="changeMonto(user, 'julio_monto_resultado', $event,table)">
+                                    </div>
+                                    <div *ngIf="!tresnueve && !seisseis && !doce">
+                                        {{user.julio | currency}} 
+                                    </div>
+                                </div>
+                                <div *ngIf="user.aritmetica"> 
+                                    <div>
+                                      <strong>  {{user.julio / 1000 | currency}} </strong>
+                                    </div>
+                                </div>
+                            </td>
+                    </ng-container>
+                    <ng-container matColumnDef="agosto">
+                            <th mat-header-cell *matHeaderCellDef> Agosto </th>
+                            <td mat-cell *matCellDef="let user"> 
+                                <div *ngIf="user.tipo == 'proform' && !user.aritmetica">
+                                    <div *ngIf="tresnueve || seisseis || doce">
+                                        <input type="text" value="0" ng-model="user.agosto_monto_resultado" (change)="changeMonto(user, 'agosto_monto_resultado', $event,table)">
+                                    </div>
+                                    <div *ngIf="!tresnueve && !seisseis && !doce">
+                                        {{user.agosto | currency}} 
+                                    </div>
+                                </div>
+                                <div *ngIf="user.aritmetica">
+                                    <div>
+                                      <strong>  {{user.agosto / 1000 | currency}} </strong>
+                                    </div>
+                                </div>
+                            </td>
+                    </ng-container>
+                    <ng-container matColumnDef="septiembre">
+                            <th mat-header-cell *matHeaderCellDef> Septiembre </th>
+                            <td mat-cell *matCellDef="let user"> 
+                                <div *ngIf="user.tipo == 'proform' && !user.aritmetica">
+                                    <div *ngIf="tresnueve || seisseis || doce">
+                                        <input type="text" value="0" ng-model="user.septiembre_monto_resultado" (change)="changeMonto(user, 'septiembre_monto_resultado', $event,table)">
+                                    </div>
+                                    <div *ngIf="!tresnueve && !seisseis && !doce">
+                                        {{user.septiembre | currency}} 
+                                    </div>
+                                </div>
+                                <div *ngIf="user.aritmetica">
+                                    <div>
+                                        <strong>{{user.septiembre / 1000 | currency}} </strong>
+                                    </div>
+                                </div>
+                            </td>
+                    </ng-container>
+                    <ng-container matColumnDef="octubre">
+                            <th mat-header-cell *matHeaderCellDef> Octubre </th>
+                            <td mat-cell *matCellDef="let user"> 
+                                <div *ngIf="user.tipo == 'proform' && !user.aritmetica">
+                                    <div *ngIf="tresnueve || seisseis || nuevetres || doce">
+                                            <input type="text" value="0" ng-model="user.octubre_monto_resultado" (change)="changeMonto(user, 'octubre_monto_resultado', $event,table)">
+                                    </div>
+                                    <div *ngIf="!tresnueve && !seisseis && !nuevetres && !doce">
+                                        {{user.octubre | currency}} 
+                                    </div>
+                                </div>
+                                <div *ngIf="user.aritmetica">
+                                    <div>
+                                       <strong> {{user.octubre / 1000 | currency}} </strong>
+                                    </div>
+                                </div>
+                            </td>
+                    </ng-container>
+                    <ng-container matColumnDef="noviembre">
+                            <th mat-header-cell *matHeaderCellDef> Noviembre </th>
+                            <td mat-cell *matCellDef="let user"> 
+                                <div *ngIf="user.tipo == 'proform' && !user.aritmetica">
+                                    <div *ngIf="tresnueve || seisseis || nuevetres || doce">
+                                        <input type="text" value="0" ng-model="user.noviembre_monto_resultado" (change)="changeMonto(user, 'noviembre_monto_resultado', $event,table)">
+                                    </div>
+                                    <div *ngIf="!tresnueve && !seisseis && !nuevetres && !doce">
+                                        {{user.noviembre | currency}} 
+                                    </div>
+                                </div>
+                                <div *ngIf="user.aritmetica">
+                                    <div>
+                                       <strong> {{user.noviembre / 1000 | currency}} </strong>
+                                    </div>
+                                </div>
+                            </td>
+                    </ng-container>
+                    <ng-container matColumnDef="diciembre">
+                            <th mat-header-cell *matHeaderCellDef> Diciembre </th>
+                            <td mat-cell *matCellDef="let user"> 
+                                <div *ngIf="user.tipo == 'proform' && !user.aritmetica">
+                                    <div *ngIf="tresnueve || seisseis || nuevetres || doce">
+                                        <input type="text" value="0" ng-model="user.diciembre_monto_resultado" (change)="changeMonto(user, 'diciembre_monto_resultado', $event,table)">
+                                    </div>
+                                    <div *ngIf="!tresnueve && !seisseis && !nuevetres && !doce">
+                                        {{user.diciembre | currency}} 
+                                    </div>
+                                </div>
+                                <div *ngIf="user.aritmetica">
+                                    <div>
+                                       <strong> {{user.diciembre / 1000 | currency}} </strong>
+                                    </div>
+                                </div>
+                            </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="apost">
+                        <th mat-header-cell *matHeaderCellDef> Años Posteriores </th>
+                        <td mat-cell *matCellDef="let user">
+                            <div *ngIf="!user.aritmetica">
+                                {{user.anios_posteriores_resultado / 1000 | currency}}
+
+                            </div>
+                            <div *ngIf="user.aritmetica">
+
+                               <strong> {{user.anios_posteriores_resultado / 1000 | currency}}</strong>
+                            </div>
+                        </td>
+                </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+    </div>
+</div>

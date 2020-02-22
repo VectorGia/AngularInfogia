@@ -7,48 +7,44 @@ import { CompaniaService } from 'src/app/core/service/compania.service';
 import { CentrosService } from 'src/app/core/service/centros.service';
 
 export interface Numeros {
-  enero: number;
-  febrero: number;
-  marzo: number;
-  abril: number;
-  mayo: number;
-  junio: number;
-  julio: number;
-  agosto: number;
-  septiembre: number;
-  octubre: number;
-  noviembre: number;
-  diciembre: number;
+  nombre?: string;
+  total?: number;
+  aniosant?: number;
+  ejercicio?: number;
+  enero?: number;
+  febrero?: number;
+  marzo?: number;
+  abril?: number;
+  mayo?: number;
+  junio?: number;
+  julio?: number;
+  agosto?: number;
+  septiembre?: number;
+  octubre?: number;
+  noviembre?: number;
+  diciembre?: number;
+  hijo?: any;
+  aritmetica?: any;
 }
 
 const ELEMENT_DATA: Numeros[] = [
-  {enero: 0, febrero: 0, marzo: 0, abril: 0, mayo: 0, junio: 0, julio: 0, agosto: 0, septiembre: 0, octubre: 0, noviembre: 0, diciembre: 0},
-  {enero: 0, febrero: 0, marzo: 0, abril: 0, mayo: 0, junio: 0, julio: 0, agosto: 0, septiembre: 0, octubre: 0, noviembre: 0, diciembre: 0},
-  {enero: 0, febrero: 0, marzo: 0, abril: 0, mayo: 0, junio: 0, julio: 0, agosto: 0, septiembre: 0, octubre: 0, noviembre: 0, diciembre: 0},
-  {enero: 0, febrero: 0, marzo: 0, abril: 0, mayo: 0, junio: 0, julio: 0, agosto: 0, septiembre: 0, octubre: 0, noviembre: 0, diciembre: 0}
+  {nombre: 'Total Ingreso', total: 100, aniosant: 50, ejercicio: 50, enero: 0, febrero: 0, marzo: 0, abril: 0, mayo: 0, junio: 0,
+  julio: 0, agosto: 0, septiembre: 0, octubre: 0, noviembre: 0, diciembre: 0, hijo: 1},
+  {nombre: 'Ingreso', total: 100, aniosant: 50, ejercicio: 50, enero: 100, febrero: 200, marzo: 300, abril: 400, mayo: 500, junio: 600,
+  julio: 700, agosto: 800, septiembre: 900, octubre: 1000, noviembre: 1100, diciembre: 1200},
+  {nombre: 'Total Egreso', total: 100, aniosant: 50, ejercicio: 50, enero: 0, febrero: 0, marzo: 0, abril: 0, mayo: 0, junio: 0, julio: 0,
+  agosto: 0, septiembre: 0, octubre: 0, noviembre: 0, diciembre: 0, hijo: 2},
+  {nombre: 'Egreso', total: 100, aniosant: 50, ejercicio: 50, enero: 100, febrero: 200, marzo: 300, abril: 400, mayo: 500, junio: 600,
+  julio: 700, agosto: 800, septiembre: 900, octubre: 1000, noviembre: 1100, diciembre: 1200},
+  {nombre: 'Utilidad', total: 100, aniosant: 50, ejercicio: 50, enero: 0, febrero: 0, marzo: 0, abril: 0, mayo: 0, junio: 0, julio: 0,
+  agosto: 0, septiembre: 0, octubre: 0, noviembre: 0, diciembre: 0, aritmetica: 'ing + egr'}
 ];
 @Component({
   selector: 'app-proforma',
-  templateUrl: './proforma.component.html',
+  templateUrl: './proformademo.component.html',
   styleUrls: ['./proforma.component.css']
 })
 export class ProformaComponent implements OnInit {
-  // tslint:disable-next-line: max-line-length
-  displayedColumns: string[] = ['nombre', 'total', 'aant', 'ejercicio', 'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto',
-  'septiembre', 'octubre', 'noviembre', 'diciembre', 'apost'];
-  displayedColumn: string[] = ['aant', 'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto',
-  'septiembre', 'octubre', 'noviembre', 'diciembre', 'apost'];
-  dataSource: any;
-  tresnueve = false;
-  seisseis = false;
-  nuevetres = false;
-  doce = false;
-  condiciones: FormGroup;
-  proforma: any;
-  formProforma: FormGroup;
-  change: any;
-  empresas: any;
-  centros: any;
   // tslint:disable-next-line: max-line-length
   constructor(private montosServies: MontosconsolidadosService,
               private fB: FormBuilder, private proformaService: ProformaService,
@@ -56,11 +52,35 @@ export class ProformaComponent implements OnInit {
     // this.getProforma();
 
   }
+  // tslint:disable-next-line: max-line-length
+  displayedColumns: string[] = ['nombre', 'total', 'aant', 'ejercicio', 'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto',
+  'septiembre', 'octubre', 'noviembre', 'diciembre', 'apost'];
+  displayedColumn: string[] = ['aant', 'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto',
+  'septiembre', 'octubre', 'noviembre', 'diciembre', 'apost'];
+  dataSource = ELEMENT_DATA;
+  tresnueve = false;
+  seisseis = false;
+  nuevetres = false;
+  cero = false;
+  doce = false;
+  condiciones: FormGroup;
+  proforma: any;
+  formProforma: FormGroup;
+  change: any;
+  empresas: any;
+  centros: any;
+
+// var detalle={'total':300,'acumulado':200,'ejercicio':100,'enero':10,'febrero':10,'marzo':10,'abril':10,'mayo':60}
+// var detalle1={'total':3000,'acumulado':2000,'ejercicio':1000,'enero':100,'febrero':100,'marzo':100,'abril':100,'mayo':600}
+
+ponderacionCampos = { 'total': -1, 'aniosant ': -1,'ejercicio':-1,'enero':1,'febrero':1,'marzo':3,'abril':4,'mayo':5,
+                     'junio':6, 'julio':7, 'agosto':8, 'septiembre':9, 'octubre':10, 'noviembre':11, 'diciembre':12,};
 
   ngOnInit() {
     this.buildProforma();
     this.fetchCentros();
     this.fetchEmpresa();
+    this.proforma = this.splitDetalles(this.dataSource, 3);
   }
 
   buildProforma() {
@@ -284,5 +304,41 @@ recalculateAll(detalles) {
   return detallesTotales;
 }
 
+splitDetalles(dataSource, mesinicio) {
+  const alldetalles = [];
+  for (const detalle of dataSource) {
+    if(!detalle.hijo && !detalle.aritmetica) {
+      const detallesSplit = this.splitDetalle(detalle, mesinicio);
+      for (const det of detallesSplit) {
+        alldetalles.push(det);
+      }
+    } else {
+      alldetalles.push(detalle);
+    }
+  }
+  console.log(alldetalles);
+  return alldetalles;
+}
+
+splitDetalle(detalle, mesinicio) {
+
+   const detReal = Object.assign({}, detalle);
+   const detprof = Object.assign({}, detalle);
+   for (const prop in this.ponderacionCampos) {
+    if (this.ponderacionCampos[prop] > mesinicio) {
+      detReal[prop] = 0;
+      detReal.tipo = 'real';
+     // proformados
+    } else {
+      detprof[prop] = 0;
+      detprof.tipo = 'proform';
+      // reales
+    }
+  }
+   return [detReal, detprof];
+
+}
+
+// splitDetalles([detalle,detalle1], 3);
 
 }
