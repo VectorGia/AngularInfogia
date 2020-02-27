@@ -67,7 +67,7 @@ export class ProformaComponent implements OnInit {
   proforma: any;
   detallesProformaOriginal: any;
   ajustes: any;
-  tiposCambio: any;
+  tiposCambio = [];
   formProforma: FormGroup;
   change: any;
   empresas: any;
@@ -98,7 +98,7 @@ export class ProformaComponent implements OnInit {
       tipo_captura_id: [''],
       tipo_proforma_id: [''],
       empresa_id: [''],
-      centro_costo_id: ['']
+      centro_costo_id: [''],
     });
   }
 
@@ -154,8 +154,15 @@ export class ProformaComponent implements OnInit {
       console.log('getAjustes %o', res);
     });
     this.proformaService.getTiposCambio(form).subscribe(res => {
-      this.tiposCambio = res;
-      console.log('getTiposCambio %o', res);
+      const respuesta = res;
+     
+      // tslint:disable-next-line: forin
+      for (let key in respuesta) {
+        this.tiposCambio.push({etiqueta: key, valor: respuesta[key]});
+      }
+   
+      // this.tiposCambio = Object.values(res);
+      console.log('getTiposCambio %o', this.tiposCambio);
     });
   }
 
