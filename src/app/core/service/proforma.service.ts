@@ -23,7 +23,12 @@ export class ProformaService {
   getAllProformas(): Observable<Proforma[]> {
     return this.http.get<Proforma[]>(`${this.url}/api/Proforma`);
   }
-
+  getAjustes(proforma) {
+    return this.http.post<Proforma>(`${this.url}/api/Proforma/ajustes`, proforma);
+  }
+  getTiposCambio( proforma) {
+    return this.http.post<Proforma>(`${this.url}/api/Proforma/tipoCambio`, proforma);
+  }
   getProformaby(id) {
     return this.http.get<Proforma>(`${this.url}/api/Proforma/${id}`);
   }
