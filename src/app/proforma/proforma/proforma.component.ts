@@ -201,7 +201,7 @@ export class ProformaComponent implements OnInit {
       return;
     }
     /// HNA:dado que en las vista se divide entre 1000, aqui los montos ingresados se multiplicaran por 1000
-    detalle[nombrecol] = event.target.value * 1000;
+    detalle[nombrecol] = event.target.value;
     // HNA: ocurrio un cambio correcto en la proforma por lo que se recalcula el detalle impactado y los totales de proforma
     // verificar que en pantala se ven los cambios si no es asi hay que repintar toda la proforma
     this.recalculateDetalle(detalle, this.proforma);
@@ -339,9 +339,7 @@ splitDetalles(dataSource, mesinicio) {
       detalle.estilo = 'padre';
     }
   }
-  console.log('devuelve: ', alldetalles);
-  const reorder = this.reorderRubros(alldetalles);
-  console.log('despues: ', reorder);
+  // const alldetalles = this.reorderRubros(alldetalles);
   return alldetalles;
 }
 
@@ -415,10 +413,16 @@ getHijos(padre, rubros) {
 }
 
  findById(rubros, id) {
-  for(let i=0;i<rubros.length;i++) {
+  for (let i = 0; i< rubros.length; i++) {
     const actual = rubros[i];
-    if (actual.id == id) {
-      return actual;
+    if ( actual.rubro_id) {
+      if (actual.rubro_id === id) {
+        return actual;
+      }
+    } else {
+      if (actual.id === id) {
+        return actual;
+      }
     }
   }
   return null;
