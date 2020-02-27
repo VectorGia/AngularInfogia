@@ -65,6 +65,9 @@ export class ProformaComponent implements OnInit {
   doce = false;
   condiciones: FormGroup;
   proforma: any;
+  detallesProformaOriginal: any;
+  ajustes: any;
+  tiposCambio = [];
   formProforma: FormGroup;
   change: any;
   empresas: any;
@@ -80,7 +83,7 @@ export class ProformaComponent implements OnInit {
 
  ponderacionCampos = { 'total_resultado': -1, 'anios_posteriores_resultado ': -1,'ejercicio_resultado': -1,'enero_monto_resultado': 1,
                      'febrero_monto_resultado': 1, 'marzo_monto_resultado': 3,'abril_monto_resultado': 4,'mayo_monto_resultado': 5,
-                    'junio_monto_resultado': 6, 'julio_monto_resultado': 7, 'agosto_monto_resultado': 8, 'septiembre_monto_resultado': 9, 
+                    'junio_monto_resultado': 6, 'julio_monto_resultado': 7, 'agosto_monto_resultado': 8, 'septiembre_monto_resultado': 9,
                     'octubre_monto_resultado': 10, 'noviembre_monto_resultado': 11, 'diciembre_monto_resultado': 12};
 
   ngOnInit() {
@@ -95,7 +98,7 @@ export class ProformaComponent implements OnInit {
       tipo_captura_id: [''],
       tipo_proforma_id: [''],
       empresa_id: [''],
-      centro_costo_id: ['']
+      centro_costo_id: [''],
     });
   }
 
@@ -142,10 +145,24 @@ export class ProformaComponent implements OnInit {
 
   render(form: NgForm) {
     this.proformaService.getProforma(form).subscribe(res => {
-
-      // this.detallesProformaOriginal = res;
+      this.detallesProformaOriginal = res;
       this.proforma = this.splitDetalles(res, 3);
       console.log('Proforma: ', this.proforma);
+    });
+    this.proformaService.getAjustes(form).subscribe(res => {
+      this.ajustes = res;
+      console.log('getAjustes %o', res);
+    });
+    this.proformaService.getTiposCambio(form).subscribe(res => {
+      const respuesta = res;
+     
+      // tslint:disable-next-line: forin
+      for (let key in respuesta) {
+        this.tiposCambio.push({etiqueta: key, valor: respuesta[key]});
+      }
+   
+      // this.tiposCambio = Object.values(res);
+      console.log('getTiposCambio %o', this.tiposCambio);
     });
   }
 
