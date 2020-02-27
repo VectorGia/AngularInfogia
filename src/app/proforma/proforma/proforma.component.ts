@@ -142,6 +142,8 @@ export class ProformaComponent implements OnInit {
 
   render(form: NgForm) {
     this.proformaService.getProforma(form).subscribe(res => {
+
+      // this.detallesProformaOriginal = res;
       this.proforma = this.splitDetalles(res, 3);
       console.log('Proforma: ', this.proforma);
     });
