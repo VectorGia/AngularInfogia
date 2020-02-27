@@ -24,10 +24,10 @@ export class ProformaService {
     return this.http.get<Proforma[]>(`${this.url}/api/Proforma`);
   }
 
-  getProforma(id) {
+  getProformaby(id) {
     return this.http.get<Proforma>(`${this.url}/api/Proforma/${id}`);
   }
-   getTestProforma(proforma): Observable<Proforma> {
+   getProforma(proforma): Observable<Proforma> {
      console.log('recibi: ', proforma);
      return this.http.post<Proforma>(`${this.url}/api/Proforma`, proforma);
    }

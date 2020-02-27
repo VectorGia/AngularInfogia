@@ -95,7 +95,7 @@ export class ProformaDetailsComponent implements OnInit {
   } */
 
   save(form: NgForm) {
-    this.proformaService.getTestProforma(form).subscribe(res => {
+    this.proformaService.getProforma(form).subscribe(res => {
       this.proforma = res;
       console.log('Proforma: ', this.proforma);
     });

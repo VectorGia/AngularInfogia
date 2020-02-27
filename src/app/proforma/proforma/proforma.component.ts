@@ -140,9 +140,9 @@ export class ProformaComponent implements OnInit {
     });
   } */
 
-  save(form: NgForm) {
-    this.proformaService.getTestProforma(form).subscribe(res => {
-      this.proforma = this.splitDetalles(res, 6);
+  render(form: NgForm) {
+    this.proformaService.getProforma(form).subscribe(res => {
+      this.proforma = this.splitDetalles(res, 3);
       console.log('Proforma: ', this.proforma);
     });
   }
