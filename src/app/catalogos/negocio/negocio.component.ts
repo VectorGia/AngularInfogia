@@ -5,6 +5,7 @@ import { FormGroup, FormBuilder, Validators, NgForm, FormControl } from '@angula
 import { CompaniaService } from 'src/app/core/service/compania.service';
 import { CuentasService } from 'src/app/core/service/cuentas.service';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { UnidadnegocioService } from 'src/app/core/service/unidadnegocio.service';
 
 export interface Model {
   value: string;
@@ -25,17 +26,20 @@ export class NegocioComponent implements OnInit {
   negocioForm: FormGroup;
   toppings = new FormControl();
   companias = [];
+  unidades: any;
   select: boolean;
   nextClicked = false;
   constructor(private ns: NegocioService,
               private fb: FormBuilder,
               private cS: CompaniaService,
               private cuentaS: CuentasService,
+              private unidadService: UnidadnegocioService,
               public dialog: MatDialog) {
 
                 this.buildModelo();
   // this.fetchCuentas();
                 this.fetchCompania();
+                this.fetchUnidad();
   }
 
   ngOnInit() {
@@ -65,7 +69,7 @@ export class NegocioComponent implements OnInit {
         this.ngOnInit();
       },
       error => {
-        console.log('Ocurrio un error al extraer' + error);
+        console.log('Ocurrio un error al guardar, intente de nuevo.' + error);
       });
   }
 
@@ -83,6 +87,14 @@ export class NegocioComponent implements OnInit {
       console.log('empresas: ', this.companias);
     });
   }
+
+  fetchUnidad() {
+    this.unidadService.getAllUnidades()
+    .subscribe(uni => {
+      this.unidades = uni;
+      console.log('Unodades de Negocio: ', uni);
+    });
+  }
 /*   fetchCuentas(){
     this.cuentaS.getAllCuentas()
     .subscribe(x => {
@@ -94,6 +106,7 @@ export class NegocioComponent implements OnInit {
   buildModelo() {
     this.negocioForm = this.fb.group({
       nombre: ['', Validators.required],
+      unidad_negocio_id: ['', Validators.required],
       activo: [true]
     });
   }

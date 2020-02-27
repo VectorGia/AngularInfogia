@@ -41,7 +41,7 @@ const ELEMENT_DATA: Numeros[] = [
 ];
 @Component({
   selector: 'app-proforma',
-  templateUrl: './proformademo.component.html',
+  templateUrl: './proforma.component.html',
   styleUrls: ['./proforma.component.css']
 })
 export class ProformaComponent implements OnInit {
@@ -73,14 +73,20 @@ export class ProformaComponent implements OnInit {
 // var detalle={'total':300,'acumulado':200,'ejercicio':100,'enero':10,'febrero':10,'marzo':10,'abril':10,'mayo':60}
 // var detalle1={'total':3000,'acumulado':2000,'ejercicio':1000,'enero':100,'febrero':100,'marzo':100,'abril':100,'mayo':600}
 
-ponderacionCampos = { 'total': -1, 'aniosant ': -1,'ejercicio':-1,'enero':1,'febrero':1,'marzo':3,'abril':4,'mayo':5,
-                     'junio':6, 'julio':7, 'agosto':8, 'septiembre':9, 'octubre':10, 'noviembre':11, 'diciembre':12,};
+/* ponderacionCampos = { 'total': -1, 'aniosant ': -1,'ejercicio': -1,'enero': 1,
+                      'febrero': 1, 'marzo': 3,'abril': 4,'mayo': 5,
+                     'junio': 6, 'julio': 7, 'agosto': 8, 'septiembre': 9,
+                     'octubre': 10, 'noviembre': 11, 'diciembre': 12}; */
+
+ ponderacionCampos = { 'total_resultado': -1, 'anios_posteriores_resultado ': -1,'ejercicio_resultado': -1,'enero_monto_resultado': 1,
+                     'febrero_monto_resultado': 1, 'marzo_monto_resultado': 3,'abril_monto_resultado': 4,'mayo_monto_resultado': 5,
+                    'junio_monto_resultado': 6, 'julio_monto_resultado': 7, 'agosto_monto_resultado': 8, 'septiembre_monto_resultado': 9, 
+                    'octubre_monto_resultado': 10, 'noviembre_monto_resultado': 11, 'diciembre_monto_resultado': 12};
 
   ngOnInit() {
     this.buildProforma();
     this.fetchCentros();
     this.fetchEmpresa();
-    this.proforma = this.splitDetalles(this.dataSource, 3);
   }
 
   buildProforma() {
@@ -136,7 +142,7 @@ ponderacionCampos = { 'total': -1, 'aniosant ': -1,'ejercicio':-1,'enero':1,'feb
 
   save(form: NgForm) {
     this.proformaService.getTestProforma(form).subscribe(res => {
-      this.proforma = res;
+      this.proforma = this.splitDetalles(res, 6);
       console.log('Proforma: ', this.proforma);
     });
   }
@@ -304,19 +310,26 @@ recalculateAll(detalles) {
   return detallesTotales;
 }
 
+
+
 splitDetalles(dataSource, mesinicio) {
+  console.log('data: ', dataSource);
   const alldetalles = [];
   for (const detalle of dataSource) {
-    if(!detalle.hijo && !detalle.aritmetica) {
+    if (!detalle.hijos && !detalle.aritmetica) {
       const detallesSplit = this.splitDetalle(detalle, mesinicio);
       for (const det of detallesSplit) {
         alldetalles.push(det);
+        det.estilo = 'hijo';
       }
     } else {
       alldetalles.push(detalle);
+      detalle.estilo = 'padre';
     }
   }
-  console.log(alldetalles);
+  console.log('devuelve: ', alldetalles);
+  const reorder = this.reorderRubros(alldetalles);
+  console.log('despues: ', reorder);
   return alldetalles;
 }
 
@@ -339,6 +352,63 @@ splitDetalle(detalle, mesinicio) {
 
 }
 
-// splitDetalles([detalle,detalle1], 3);
+reorderRubros(rubros) {
+  console.log('recibi rubros: ', rubros);
+  const rubrosReorder = [];
+  const padres = this.getPadres(rubros);
+  const padresSinHijos = [];
+  //const padres = this.getPadres(rubros);
+  for (const order of rubros) {
+    if (!order.hijos) {
+      padresSinHijos.push(order);
+      continue;
+    }
+    rubrosReorder.push(order);
+    const hijos = this.getHijos(rubros, order)
+    for (const hijo of hijos) {
+      rubrosReorder.push(hijo);
+    }
 
+  }
+  for (const padreSinHijos of padresSinHijos) {
+    rubrosReorder.push(padreSinHijos);
+  }
+
+  console.log('reorden:', rubrosReorder);
+  return rubrosReorder;
+}
+getPadres(rubros) {
+  const padres = [];
+  for (let i = 0; i < rubros.length; i++ ) {
+    const actual = rubros[i];
+    if (actual.hijos || actual.aritmetica) {
+      padres.push(actual);
+    }
+  }
+  return padres;
+}
+// splitDetalles([detalle,detalle1], 3);
+getHijos(padre, rubros) {
+  const hijos = [];
+  if (padre.hijos) {
+    const arrhijos = padre.hijos.split(',');
+    for (var i=0;i<arrhijos.length;i++) {
+      const found = this.findById(rubros, arrhijos[i].trim());
+      if (found) {
+        hijos.push(found);
+      }
+    }
+  }
+  return hijos;
+}
+
+ findById(rubros, id) {
+  for(let i=0;i<rubros.length;i++) {
+    const actual = rubros[i];
+    if (actual.id == id) {
+      return actual;
+    }
+  }
+  return null;
+}
 }

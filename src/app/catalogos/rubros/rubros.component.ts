@@ -5,7 +5,6 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { DialogOverviewDialogComponent } from 'src/app/shared/dialog-overview-dialog/dialog-overview-dialog.component';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { MessageComponent } from 'src/app/shared/message/message.component';
 
 
 
@@ -40,6 +39,7 @@ export class RubrosComponent implements OnInit {
       this.rS.getRubroByModeloId(this.id)
       .subscribe(data => {
         this.dataSource = new MatTableDataSource();
+        console.log('antes: ', data);
         this.dataSource.data = this.reorderRubros(data);
         console.log('datos', this.dataSource.data);
       });
@@ -92,7 +92,7 @@ reorderRubros(rubros) {
       rubrosReorder.push(hijo);
     }
   }
-  for (const padreSinHijos of padresSinHijos){
+  for (const padreSinHijos of padresSinHijos) {
     rubrosReorder.push(padreSinHijos);
   }
   console.log('reorden:', rubrosReorder);

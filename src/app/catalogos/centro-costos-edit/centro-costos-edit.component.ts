@@ -26,10 +26,11 @@ export class CentroCostosEditComponent implements OnInit {
   ngOnInit() {
     this.aR.params.subscribe((params) => {
       this.id = params.id;
-      console.log("aqui",params.id)
+      console.log("aqui", params.id);
       this.cS.getCC(this.id)
         .subscribe(product => {
           console.log('product: ', product);
+
           this.form.patchValue(product);
         })
     })
@@ -38,9 +39,9 @@ export class CentroCostosEditComponent implements OnInit {
     let idProyecto=this.getIdProyecto(window.location.href);
     this.router.navigate(['./catalogo/costos/' + idProyecto])
    }
-  saveCentro(event: Event){
+  saveCentro(event: Event) {
     event.preventDefault();
-    if(this.form.valid){
+    if (this.form.valid) {
       const centro = this.form.value;
       this.cS.updateCentro(this.id, centro)
       .subscribe((newCentro) => {
@@ -62,7 +63,9 @@ export class CentroCostosEditComponent implements OnInit {
       estatus: [null, Validators.required],
       gerente: [null, Validators.required],
       empresa_id: [null, Validators.required],
-      modelo_negocio_id: ['', Validators.required]
+      modelo_negocio_id: ['', Validators.required],
+      porcentaje: [''],
+      proyeccion: ['']
     })
   }
   fetchCompania(){

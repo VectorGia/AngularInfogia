@@ -50,7 +50,8 @@ export class DialogOverviewDialogComponent implements OnInit {
       rangos_cuentas_incluidas: ['', Validators.required],
       rango_cuentas_excluidas: [''],
       aritmetica: ['', Validators.required],
-      naturleza: ['', Validators.required],
+      tipo_agrupador: ['', Validators.required],
+      tipo_cuenta: [''],
       hijos: ['', Validators.required],
       activo: [true],
       tipo_id: ['', Validators.required]

@@ -12,6 +12,14 @@
           <mat-radio-button value="extranjero">Extranjero</mat-radio-button>
         </mat-radio-group>
       </div>
+      <div class="col">
+        <mat-label>Proyección: </mat-label>
+        <mat-radio-group aria-label="Select an option" formControlName="proyeccion" disabled>
+          <mat-radio-button value="BASE" (click)="selec()" >Base</mat-radio-button>
+          <mat-radio-button value="SHADOW" (click)="selec()" >Shadow</mat-radio-button>
+          <mat-radio-button value="METODO" (click)="select()">Metodo</mat-radio-button>
+        </mat-radio-group>
+      </div>
     </div>
     <div class="row">
       <div class="col-sm-2">
@@ -43,6 +51,7 @@
           </select>
         </mat-form-field>
       </div>
+     
     </div>
         <div class="row">
           <div class="col-sm-3">
@@ -67,6 +76,11 @@
               </mat-select>
             </mat-form-field>
           </div>
+        <div class="col">
+          <mat-form-field>
+            <input matInput placeholder="Porcentaje: " formControlName="porcentaje"/>
+          </mat-form-field>
+        </div>
         </div>
   
     <div class="row">

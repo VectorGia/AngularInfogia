@@ -10,5 +10,6 @@ export interface CentroCostos {
     estatus: string;
     gerente: string;
     activo: boolean;
+    porcentaje?: string;
     position: number;
 }

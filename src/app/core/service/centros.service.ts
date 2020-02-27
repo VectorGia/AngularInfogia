@@ -32,6 +32,7 @@ export class CentrosService {
      return this.http.get<CentroCostos>(`${this.url}/api/CC/${id}`);
    }
     addCentro(centro): Observable<CentroCostos> {
+      console.log('mande: ', centro);
       return this.http.post<CentroCostos>(`${this.url}/api/Centro`, centro, httpOptions).pipe(
         // tslint:disable-next-line: no-shadowed-variable
         tap(( centro: CentroCostos) => console.log(`added product w/ id=${centro.nombre}`))

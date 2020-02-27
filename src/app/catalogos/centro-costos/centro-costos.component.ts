@@ -25,6 +25,7 @@ export class CentroCostosComponent implements OnInit {
   centros: any;
   id: any;
   modelos: any;
+  selected = false;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
   constructor(private cs: CentrosService,
@@ -35,7 +36,7 @@ export class CentroCostosComponent implements OnInit {
               private activeRoute: ActivatedRoute,
               private empresaproService: EmpresaProyectoService,
               private modeloService: NegocioService) {
-
+                
   }
 
   ngOnInit() {
@@ -60,6 +61,10 @@ export class CentroCostosComponent implements OnInit {
     });
     this.renderDataTable();
     this.fetchModelos();
+    this.buildCentro();
+  }
+
+  buildCentro() {
     this.centroForm = this.fb.group({
       tipo: [null, Validators.required],
       desc_id: [null, Validators.required],
@@ -69,11 +74,12 @@ export class CentroCostosComponent implements OnInit {
       gerente: [null, Validators.required],
       proyecto_id: [this.id],
       empresa_id: ['', Validators.required],
+      proyeccion: ['', Validators.required],
+      porcentaje: [1],
       modelo_negocio_id: ['', Validators.required],
       activo: [true]
     });
   }
-
   renderDataTable() {
     this.cs.getCentro(this.id)
     .subscribe(
@@ -96,13 +102,20 @@ export class CentroCostosComponent implements OnInit {
       this.array.paginator.firstPage();
     } */
   }
+  selec() {
+    this.selected = false;
+  }
+  select() {
+    this.selected = true;
+  }
   onFormSubmit(form: NgForm) {
 
     this.cs.addCentro(form).subscribe(
       res => {
         // tslint:disable-next-line: no-string-literal
         const id = res['STR_IDCENTROCOSTO'];
-        this.centroForm.reset();
+        alert('Se agrego correctamente.');
+        // this.centroForm.reset();
         this.renderDataTable();
       });
   }

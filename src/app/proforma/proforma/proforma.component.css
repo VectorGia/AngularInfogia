@@ -8,15 +8,76 @@
 table input {
   width: 40px;
 }
+.padre{
+  background-color: #FAFAD2;
+  font-weight:bold ;
+}
+.hijo{
+  padding-left: 50px !important;
+ 
+}
+.mat-column-nombre{
+  border-right:black 1px solid;
+}
+
+.mat-column-total {
+  text-align: center;
+  border-right:black 1px solid;
+}
+.mat-column-aant{
+  text-align: center;
+  border-right:black 1px solid;
+}
+.mat-column-ejercicio{
+  text-align: center;
+}
+.mat-column-enero{
+  text-align: center;
+}
+.mat-column-febrero{
+  text-align: center;
+}
+.mat-column-marzo{
+  text-align: center;
+}
+.mat-column-abril{
+  text-align: center;
+}
+.mat-column-mayo{
+  text-align: center;
+}
+.mat-column-junio{
+  text-align: center;
+}
+.mat-column-julio{
+  text-align: center;
+}
+.mat-column-agosto{
+  text-align: center;
+}
+.mat-column-septiembre{
+  text-align: center;
+}
+.mat-column-octubre{
+  text-align: center;
+}
+.mat-column-noviembre{
+  text-align: center;
+}
+.mat-column-diciembre{
+  text-align: center;
+  border-right:black 1px solid;
+}
 
 table td {
   font-size: 10px;
-  text-align: center;
+
 }
 table th{
   text-align: center;
   background-color: blue;
   color: white;
+  border-right: blue;
 }
 .display{
   display: none;

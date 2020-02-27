@@ -4,7 +4,7 @@ export interface Rubros{
     nombre: string;
     aritmetica?: string;
     clave: string;
-    naturaleza: string;
+    tipo_agrupador?: string;
     rango_cuentas_excludias?: string;
     rangos_cuentas_incluidas: string;
     tipo_id: string;

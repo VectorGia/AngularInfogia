@@ -8,6 +8,7 @@
                     <select matNativeControl required formControlName="anio">
                         <option value="2019">2019</option>
                         <option value="2020">2020</option>
+                        <option value="2021">2021</option>
                     </select>
                 </mat-form-field>
             </div>
@@ -80,13 +81,17 @@
                     <table #table mat-table [dataSource]="proforma" class="mat-elevation-z8">
                         <ng-container matColumnDef="nombre">
                                 <th mat-header-cell *matHeaderCellDef> Rubro </th>
-                                <td mat-cell *matCellDef="let user">
-                                    {{user.nombre_rubro}}
-
-                                    <div class="ari" *ngIf="user.aritmetica">
-                                        Operación: {{user.aritmetica}}
-                                    </div>
-                                </td>
+                               <td mat-cell *matCellDef="let user" [ngClass]="user['estilo']">
+                                <div *ngIf="user.hijos || user.aritmetica">
+                                  <strong>  {{ user.nombre_rubro }} </strong>
+                                </div>
+                                <div *ngIf="!user.hijos && !user.aritmetica">
+                                    {{user.nombre_rubro + ' ' + user.tipo}}
+                                </div>
+                                <div class="ari" *ngIf="user.aritmetica">
+                                    Operación: {{user.aritmetica}}
+                                </div>
+                            </td>
                         </ng-container>
                         <ng-container matColumnDef="total">
                                 <th mat-header-cell *matHeaderCellDef> Total </th>
@@ -178,7 +183,7 @@
                         <ng-container matColumnDef="abril">
                                 <th mat-header-cell *matHeaderCellDef> Abril </th>
                                 <td mat-cell *matCellDef="let user"> 
-                                   <div *ngIf="!user.aritmetica">
+                                   <div *ngIf="user.tipo == 'proform' && !user.aritmetica">
                                        <div *ngIf="tresnueve || doce">
                                            <input type="text" value="0" ng-model="user.abril_monto_resultado" (change)="changeMonto(user, 'abril_monto_resultado', $event,table)">
                                        </div>
@@ -196,7 +201,7 @@
                         <ng-container matColumnDef="mayo">
                                 <th mat-header-cell *matHeaderCellDef> Mayo </th>
                                 <td mat-cell *matCellDef="let user">
-                                    <div *ngIf="!user.aritmetica">
+                                    <div *ngIf="user.tipo == 'proform' && !user.aritmetica">
                                         <div *ngIf="tresnueve || doce">
                                             <input type="text" value="0" ng-model="user.mayo_monto_resultado" (change)="changeMonto(user, 'mayo_monto_resultado', $event,table)">
                                         </div>
@@ -214,7 +219,7 @@
                         <ng-container matColumnDef="junio">
                                 <th mat-header-cell *matHeaderCellDef> Junio </th>
                                 <td mat-cell *matCellDef="let user">
-                                    <div *ngIf="!user.aritmetica">
+                                    <div *ngIf="user.tipo == 'proform' && !user.aritmetica">
                                         <div *ngIf="tresnueve || doce">
                                             <input type="text" value="0" ng-model="user.junio_monto_resultado" (change)="changeMonto(user, 'junio_monto_resultado', $event,table)">
                                         </div>
@@ -232,7 +237,7 @@
                         <ng-container matColumnDef="julio">
                                 <th mat-header-cell *matHeaderCellDef> Julio </th>
                                 <td mat-cell *matCellDef="let user"> 
-                                    <div *ngIf="!user.aritmetica">
+                                    <div *ngIf="user.tipo == 'proform' && !user.aritmetica">
                                         <div *ngIf="tresnueve || seisseis || doce">
                                             <input type="text" value="0" ng-model="user.julio_monto_resultado" (change)="changeMonto(user, 'julio_monto_resultado', $event,table)">
                                         </div>
@@ -250,7 +255,7 @@
                         <ng-container matColumnDef="agosto">
                                 <th mat-header-cell *matHeaderCellDef> Agosto </th>
                                 <td mat-cell *matCellDef="let user"> 
-                                    <div *ngIf="!user.aritmetica">
+                                    <div *ngIf="user.tipo == 'proform' && !user.aritmetica">
                                         <div *ngIf="tresnueve || seisseis || doce">
                                             <input type="text" value="0" ng-model="user.agosto_monto_resultado" (change)="changeMonto(user, 'agosto_monto_resultado', $event,table)">
                                         </div>
@@ -268,7 +273,7 @@
                         <ng-container matColumnDef="septiembre">
                                 <th mat-header-cell *matHeaderCellDef> Septiembre </th>
                                 <td mat-cell *matCellDef="let user"> 
-                                    <div *ngIf="!user.aritmetica">
+                                    <div *ngIf="user.tipo == 'proform' && !user.aritmetica">
                                         <div *ngIf="tresnueve || seisseis || doce">
                                             <input type="text" value="0" ng-model="user.septiembre_monto_resultado" (change)="changeMonto(user, 'septiembre_monto_resultado', $event,table)">
                                         </div>
@@ -286,7 +291,7 @@
                         <ng-container matColumnDef="octubre">
                                 <th mat-header-cell *matHeaderCellDef> Octubre </th>
                                 <td mat-cell *matCellDef="let user"> 
-                                    <div *ngIf="!user.aritmetica">
+                                    <div *ngIf="user.tipo == 'proform' && !user.aritmetica">
                                         <div *ngIf="tresnueve || seisseis || nuevetres || doce">
                                             <input type="text" value="0" ng-model="user.octubre_monto_resultado" (change)="changeMonto(user, 'octubre_monto_resultado', $event,table)">
                                         </div>
@@ -304,7 +309,7 @@
                         <ng-container matColumnDef="noviembre">
                                 <th mat-header-cell *matHeaderCellDef> Noviembre </th>
                                 <td mat-cell *matCellDef="let user"> 
-                                    <div *ngIf="!user.aritmetica">
+                                    <div *ngIf="user.tipo == 'proform' && !user.aritmetica">
                                         <div *ngIf="tresnueve || seisseis || nuevetres || doce">
                                             <input type="text" value="0" ng-model="user.noviembre_monto_resultado" (change)="changeMonto(user, 'noviembre_monto_resultado', $event,table)">
                                         </div>
@@ -322,7 +327,7 @@
                         <ng-container matColumnDef="diciembre">
                                 <th mat-header-cell *matHeaderCellDef> Diciembre </th>
                                 <td mat-cell *matCellDef="let user"> 
-                                    <div *ngIf="!user.aritmetica">
+                                    <div *ngIf="user.tipo == 'proform' && !user.aritmetica">
                                         <div *ngIf="tresnueve || seisseis || nuevetres || doce">
                                             <input type="text" value="0" ng-model="user.diciembre_monto_resultado" (change)="changeMonto(user, 'diciembre_monto_resultado', $event,table)">
                                         </div>

@@ -6,10 +6,18 @@
   <form [formGroup]="centroForm" (ngSubmit)="onFormSubmit(centroForm.value)">
     <div class="row">
       <div class="col">
-        <mat-label>TIpo: </mat-label>
+        <mat-label>Tipo: </mat-label>
         <mat-radio-group aria-label="Select an option" formControlName="tipo">
           <mat-radio-button value="local">Local</mat-radio-button>
           <mat-radio-button value="extranjero">Extranjero</mat-radio-button>
+        </mat-radio-group>
+      </div>
+      <div class="col">
+        <mat-label>Proyección: </mat-label>
+        <mat-radio-group aria-label="Select an option" formControlName="proyeccion">
+          <mat-radio-button value="BASE" (click)="selec()" >Base</mat-radio-button>
+          <mat-radio-button value="SHADOW" (click)="selec()" >Shadow</mat-radio-button>
+          <mat-radio-button value="METODO" (click)="select()">Metodo</mat-radio-button>
         </mat-radio-group>
       </div>
     </div>
@@ -67,8 +75,20 @@
           </mat-select>
         </mat-form-field>
       </div>
+      <div *ngIf="selected">
+
+        <div class="col">
+          <mat-form-field>
+            <input matInput placeholder="Porcentaje: " formControlName="porcentaje"/>
+          </mat-form-field>
+        </div>
+      </div>
     </div>
-    <button type="submit" [disabled]="!centroForm.valid"> Aceptar</button>
+    <div class="col">
+      <div class="btn-group btn-group-sm" role="group" aria-label="...">
+        <button type="submit"  class="btn btn-outline-primary btn-sm btn-block">Guardar</button>
+      </div>
+  </div>
   </form>
     <div class="row">
       <div class="col">

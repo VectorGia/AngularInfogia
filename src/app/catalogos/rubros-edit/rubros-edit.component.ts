@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RubroService } from 'src/app/core/service/rubro.service';
-import { element } from 'protractor';
 
 @Component({
   selector: 'app-rubros-edit',
@@ -12,68 +11,78 @@ import { element } from 'protractor';
 export class RubrosEditComponent implements OnInit {
 editRubro: FormGroup;
 id: string;
-rubro: any;
-disabledC: boolean = true;
-disabledR: boolean = true;
+rubros: any;
+disabledC = true;
+disabledR = true;
   constructor(private formBuilder: FormBuilder, private activeRoute: ActivatedRoute,
-    private rubroService: RubroService, 
-    private router: Router) { 
+              private rubroService: RubroService,
+              private router: Router) {
       this.buildEditForm();
   }
 
   ngOnInit() {
     this.activeRoute.params.subscribe((params) => {
       this.id = params.id;
-      console.log("id rubros: ", this.id);
+      console.log(`id rubros: ${this.id}`);
       this.rubroService.getRubroById(this.id)
       .subscribe(data => {
-        console.log("data: ",data)
-        if(data[0].aritmetica != ""){
-          this.disabledC = false
+        console.log('data: ', data)
+        if (data[0].aritmetica != '') {
+          this.disabledC = false;
           this.disabledR = true;
-        }else{
+        } else {
           this.disabledR = false;
           this.disabledC = true;
         }
-        this.editRubro.patchValue(data[0])
-      })
-    })
+        this.editRubro.patchValue(data[0]);
+      });
+    });
+    this.getRubros();
   }
 
-  buildEditForm(){
+  buildEditForm() {
     this.editRubro = this.formBuilder.group({
       nombre: [null, Validators.required],
-      clave: ['',Validators.required],
+      clave: ['', Validators.required],
       rangos_cuentas_incluidas: [''],
       rango_cuentas_excluidas: [''],
+      hijos: [''],
       aritmetica: ['']
-    })
+    });
   }
 
-  return(){
-    this.router.navigate(['./catalogo/negocio/rubros/'+ this.getData(window.location.href,"rubros/","/edit") ])
+  getRubros() {
+    console.log('buscar id: ', this.id);
+    this.rubroService.getRubroByModeloId(this.id)
+    .subscribe( datos => {
+      this.rubros = datos;
+      console.log('rubro id: ', this.rubros);
+    });
+  }
+
+  return() {
+    this.router.navigate(['./catalogo/negocio/rubros/' + this.getData(window.location.href, 'rubros/', '/edit') ]);
    }
 
-  saveEdit(event: Event){
+  saveEdit(event: Event) {
     event.preventDefault();
-    if(this.editRubro.valid){
+    if (this.editRubro.valid) {
       const rubro = this.editRubro.value;
       this.rubroService.updateRubro(this.id, rubro)
       .subscribe((newRubro) => {
-        
-        this.router.navigate(['./catalogo/negocio/rubros/'+ this.getData(window.location.href,"rubros/","/edit") ])
-      })
+        this.router.navigate(['./catalogo/negocio/rubros/' + this.getData(window.location.href, 'rubros/', '/edit') ]);
+      });
     }
   }
 
-  getData(url,startDelimiter,endDelimiter){
-    var idxIni=url.indexOf(startDelimiter);
-    idxIni=idxIni+startDelimiter.length;
-    var idxFin=url.indexOf(endDelimiter);
-    if(idxFin===-1){
+  getData(url, startDelimiter, endDelimiter) {
+    let idxIni = url.indexOf(startDelimiter);
+    idxIni = idxIni + startDelimiter.length;
+    const idxFin = url.indexOf(endDelimiter);
+    if (idxFin === -1) {
         return url.substring(idxIni);
-    }else{
-        return url.substring(idxIni,idxFin)
+    } else {
+        return url.substring(idxIni, idxFin);
     }
 }
 }
