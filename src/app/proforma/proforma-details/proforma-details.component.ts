@@ -46,7 +46,7 @@ export class ProformaDetailsComponent implements OnInit {
 
     this.activeRoute.params.subscribe((params) => {
       this.id = params.id;
-      this.proformaService.getProforma(this.id)
+      this.proformaService.getProformaby(this.id)
       .subscribe(res => {
         this.proforma = res;
         console.log('proforma obtenida: ', this.proforma);

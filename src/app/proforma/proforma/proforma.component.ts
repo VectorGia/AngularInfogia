@@ -5,6 +5,7 @@ import { FormGroup, FormBuilder, NgForm, FormControl } from '@angular/forms';
 import { ProformaService } from 'src/app/core/service/proforma.service';
 import { CompaniaService } from 'src/app/core/service/compania.service';
 import { CentrosService } from 'src/app/core/service/centros.service';
+import { ActivatedRoute } from '@angular/router';
 
 export interface Numeros {
   nombre?: string;
@@ -48,7 +49,8 @@ export class ProformaComponent implements OnInit {
   // tslint:disable-next-line: max-line-length
   constructor(private montosServies: MontosconsolidadosService,
               private fB: FormBuilder, private proformaService: ProformaService,
-              private empresaService: CompaniaService, private centroService: CentrosService) {
+              private empresaService: CompaniaService, private centroService: CentrosService,
+              private activeRoute: ActivatedRoute) {
     // this.getProforma();
 
   }
@@ -72,7 +74,7 @@ export class ProformaComponent implements OnInit {
   change: any;
   empresas: any;
   centros: any;
-
+  id: any;
 // var detalle={'total':300,'acumulado':200,'ejercicio':100,'enero':10,'febrero':10,'marzo':10,'abril':10,'mayo':60}
 // var detalle1={'total':3000,'acumulado':2000,'ejercicio':1000,'enero':100,'febrero':100,'marzo':100,'abril':100,'mayo':600}
 
@@ -90,6 +92,15 @@ export class ProformaComponent implements OnInit {
     this.buildProforma();
     this.fetchCentros();
     this.fetchEmpresa();
+
+    this.activeRoute.params.subscribe((params) => {
+      this.id = params.id;
+      this.proformaService.getProformaby(this.id)
+      .subscribe(res => {
+        this.proforma = res;
+        console.log('proforma obtenida: ', this.proforma);
+      });
+    });
   }
 
   buildProforma() {

@@ -17,6 +17,10 @@ const routes: Routes = [
     component: ProformaComponent
   },
   {
+    path: 'proforma/:id',
+    component: ProformaComponent
+  },
+  {
     path: 'buscar/details/:id',
     component: ProformaDetailsComponent
   },
