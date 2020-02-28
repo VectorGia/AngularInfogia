@@ -26,14 +26,16 @@ export class ProformaComponent implements OnInit {
   seisseis = false;
   nuevetres = false;
   doce = false;
-  detallesProformaToRender: any;
-  detallesProformaOriginal: any;
-  detallesProformaOriginalIndexado: any;
+  detallesProfToRender: any;
+  detallesProforma: any;
+  detallesProformaIdxIdRubro: any;
+  detallesProformaIdxIdInterno: any;
   mesInicio: any;
   ajustes: any;
   tiposCambio = [];
   aniosProforma: any;
-  conAjusteSinAjuste = [{etiqueta:'Con ajuste',valor:true},{etiqueta:'Sin ajuste',valor:false}];
+  conAjusteSinAjuste = [{etiqueta:'Sin ajuste',valor:false},{etiqueta:'Con ajuste',valor:true}];
+  ajustarPorDefecto=false;
   formProforma: FormGroup;
   empresas: any;
   centros: any;
@@ -91,17 +93,18 @@ export class ProformaComponent implements OnInit {
 
   render(form: NgForm) {
     this.proformaService.getProforma(form).subscribe(res => {
-      this.detallesProformaOriginal = res;
-      this.detallesProformaOriginalIndexado = {};
-      //indexamos los detalles originales para acceder a ellos mediante el id interno(uid o id)
-      for (const detalle of this.detallesProformaOriginal) {
-        this.detallesProformaOriginalIndexado[detalle.idInterno] = detalle;
+      this.detallesProforma = res;
+      this.detallesProformaIdxIdInterno = {};
+      //indexamos los detalles originales para acceder a ellos mediante el id interno(uid o id) y otro indice por rubro id
+      for (const detalle of this.detallesProforma) {
+        this.detallesProformaIdxIdInterno[detalle.idInterno] = detalle;
+        this.detallesProformaIdxIdRubro[detalle.rubro_id] = detalle;
       }
-      if (this.detallesProformaOriginal.length > 0) {
-        this.mesInicio = this.detallesProformaOriginal[0].mes_inicio;
-        this.detallesProformaToRender = this.splitDetalles(this.detallesProformaOriginal, this.mesInicio);
+      if (this.detallesProforma.length > 0) {
+        this.mesInicio = this.detallesProforma[0].mes_inicio;
+        this.detallesProfToRender = this.splitDetalles(this.detallesProforma, this.mesInicio);
       }
-      console.log('Proforma: ', this.detallesProformaToRender);
+      console.log('Proforma: ', this.detallesProfToRender);
     });
     this.proformaService.getAjustes(form).subscribe(res => {
       this.ajustes = res;
@@ -132,8 +135,8 @@ export class ProformaComponent implements OnInit {
   }
 
   guardarProforma() {
-    if (this.isValidDetalles(this.detallesProformaToRender, ['nombre_rubro', 'fecha_captura', 'clave_rubro', 'aritmetica'])) {
-      this.proformaService.addProforma(this.detallesProformaToRender)
+    if (this.isValidDetalles(this.detallesProfToRender, ['nombre_rubro', 'fecha_captura', 'clave_rubro', 'aritmetica'])) {
+      this.proformaService.addProforma(this.detallesProfToRender)
         .subscribe(res => {
           alert('Se guardo');
         });
@@ -141,21 +144,32 @@ export class ProformaComponent implements OnInit {
   }
 /*a cada detalle de la proforma calculada, se le aplica un factor correspondiente al tipo de cambio */
   recalculaPorTipoCambio(factor: number) {
-    let detalles=this.detallesProformaOriginal;
+    let detalles=this.detallesProforma;
     for (let i = 0; i < detalles.length; i++) {
       let detActual=detalles[i];
       for (const prop in detActual) {
         let valor=detActual[prop];
         if (!isNaN(valor)) {
-          detalles[i]=valor*factor;
+          detActual[prop]=valor*factor;
         }
       }
     }
   }
-  recalculaPorAjusteBalanza(aplicar:boolean) {
-    if(aplicar){
-      console.log('Se aplicara ajustes');
-    }
+
+  recalculaPorAjusteBalanza(aplicar) {
+    this.ajustes.forEach(ajuste => {
+      let detalleProforma = this.detallesProformaIdxIdRubro[ajuste.rubro_id];
+      for (const prop in detalleProforma) {
+        let valor = detalleProforma[prop];
+        if (!isNaN(valor)) {
+          if (aplicar) {
+            detalleProforma[prop] = valor + ajuste[prop];
+          } else {
+            detalleProforma[prop] = valor - ajuste[prop];
+          }
+        }
+      }
+    });
   }
   changeMonto(detalle: any, nombrecol, event: any, table: any) {
     if (isNaN(event.target.value)) {
@@ -166,12 +180,12 @@ export class ProformaComponent implements OnInit {
       return;
     }
     /*se recibe un detalle de la pantalla es decir uno con split por lo que se debe obtener el detalle de donde proviene*/
-    let detalleSource = this.detallesProformaOriginalIndexado[detalle.idInterno];
+    let detalleSource = this.detallesProformaIdxIdInterno[detalle.idInterno];
     detalleSource[nombrecol] = event.target.value;
     // HNA: ocurrio un cambio correcto en la proforma por lo que se recalcula el detalle impactado y los totales de proforma
-    this.recalculateDetalle(detalleSource, this.detallesProformaOriginal);
+    this.recalculateDetalle(detalleSource, this.detallesProforma);
     //re re construlle los detalles para vista
-    this.detallesProformaToRender = this.splitDetalles(this.detallesProformaOriginal, this.mesInicio);
+    this.detallesProfToRender = this.splitDetalles(this.detallesProforma, this.mesInicio);
     console.log(detalle);
 
   }
