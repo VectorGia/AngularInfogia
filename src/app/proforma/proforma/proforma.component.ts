@@ -4,6 +4,8 @@ import {FormBuilder, FormGroup, NgForm} from '@angular/forms';
 import {ProformaService} from 'src/app/core/service/proforma.service';
 import {CompaniaService} from 'src/app/core/service/compania.service';
 import {CentrosService} from 'src/app/core/service/centros.service';
+import {TipoproformaService} from 'src/app/core/service/tipoproforma.service';
+import {TipocapturaService} from 'src/app/core/service/tipocaptura.service';
 
 @Component({
   selector: 'app-proforma',
@@ -13,7 +15,9 @@ import {CentrosService} from 'src/app/core/service/centros.service';
 export class ProformaComponent implements OnInit {
   constructor(private montosServies: MontosconsolidadosService,
               private fB: FormBuilder, private proformaService: ProformaService,
-              private empresaService: CompaniaService, private centroService: CentrosService) {
+              private empresaService: CompaniaService, private centroService: CentrosService,
+              private tipoproformaService: TipoproformaService,
+              private tipocapturaService: TipocapturaService) {
   }
 
   displayedColumns: string[] = ['nombre', 'total', 'aant', 'ejercicio', 'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto',
@@ -28,10 +32,13 @@ export class ProformaComponent implements OnInit {
   mesInicio: any;
   ajustes: any;
   tiposCambio = [];
+  aniosProforma: any;
   conAjusteSinAjuste = [{etiqueta:'Con ajuste',valor:true},{etiqueta:'Sin ajuste',valor:false}];
   formProforma: FormGroup;
   empresas: any;
   centros: any;
+  tiposProforma:any;
+  tiposCaptura:any;
   ponderacionCampos = {
     'total_resultado': -1, 'anios_posteriores_resultado ': -1, 'ejercicio_resultado': -1, 'enero_monto_resultado': 1,
     'febrero_monto_resultado': 1, 'marzo_monto_resultado': 3, 'abril_monto_resultado': 4, 'mayo_monto_resultado': 5,
@@ -41,6 +48,9 @@ export class ProformaComponent implements OnInit {
   esProformaContable = false;
 
   ngOnInit() {
+    this.proformaService.getAnios().subscribe(res => {this.aniosProforma = res; });
+    this.tipoproformaService.getAllTipoProformas().subscribe(res => {this.tiposProforma = res; });
+    this.tipocapturaService.getAllTipoCaptura().subscribe(res => {this.tiposCaptura = res; });
     this.fetchCentros();
     this.fetchEmpresa();
   }
@@ -48,7 +58,7 @@ export class ProformaComponent implements OnInit {
   onChangeTipoCaptura(value) {
     this.esProformaContable = (value == 1);
   }
-  onChange(value) {
+  onChangeTipoProforma(value) {
     console.log(value);
     switch (value) {
       case '4':
