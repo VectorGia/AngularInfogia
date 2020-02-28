@@ -52,7 +52,7 @@ export class ProformaComponent implements OnInit {
   ngOnInit() {
     this.fetchCentros();
     this.fetchEmpresa();
-
+    this.builForm();
     this.activeRoute.params.subscribe((params) => {
       this.id = params.id;
       this.proformaService.getProformaby(this.id)
@@ -62,7 +62,15 @@ export class ProformaComponent implements OnInit {
       });
     });
   }
-
+builForm(){
+  this.formProforma = this.fB.group({
+    anio: [''],
+    tipo_proforma_id: [''],
+    tipo_captura_id: [''],
+    empresa_id: [''],
+    centro_costo_id: ['']
+  });
+}
   onChangeTipoCaptura(value) {
     this.esProformaContable = (value == 1);
   }
@@ -100,8 +108,9 @@ export class ProformaComponent implements OnInit {
   render(form: NgForm) {
     this.proformaService.getProforma(form).subscribe(res => {
       this.detallesProformaOriginal = res;
+      console.log(res);
       this.detallesProformaOriginalIndexado = {};
-      //indexamos los detalles originales para acceder a ellos mediante el id interno(uid o id)
+      // indexamos los detalles originales para acceder a ellos mediante el id interno(uid o id)
       for (const detalle of this.detallesProformaOriginal) {
         this.detallesProformaOriginalIndexado[detalle.idInterno] = detalle;
       }
@@ -113,7 +122,7 @@ export class ProformaComponent implements OnInit {
     });
     this.proformaService.getAjustes(form).subscribe(res => {
       this.ajustes = res;
-      console.log('getAjustes %o', res);
+      console.log('getAjustess %o', res);
     });
     this.proformaService.getTiposCambio(form).subscribe(res => {
       const respuesta = res;
@@ -121,7 +130,7 @@ export class ProformaComponent implements OnInit {
       for (const key in respuesta) {
           this.tiposCambio.push({etiqueta: key, valor: respuesta[key]});
       }
-      console.log('getTiposCambio %o', this.tiposCambio);
+      console.log('getTiposCambioo %o', this.tiposCambio);
     });
   }
 
