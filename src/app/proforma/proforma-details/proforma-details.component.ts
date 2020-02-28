@@ -22,10 +22,8 @@ export class ProformaDetailsComponent implements OnInit {
   tresnueve = false;
   seisseis = false;
   nuevetres = false;
-  condiciones: FormGroup;
   proforma: any;
   formProforma: FormGroup;
-  change: any;
   id: any;
   empresas: any;
   centros: any;
@@ -82,18 +80,6 @@ export class ProformaDetailsComponent implements OnInit {
       this.nuevetres = true;
     }
   }
- /*  getMontos(form: NgForm){
-    return this.montosServies.getAllMontos(form)
-    .subscribe(data => {
-      this.dataSource = new MatTableDataSource();
-      this.dataSource.data = data;
-      console.log("Montos: ", this.dataSource.data)
-    },
-    error => {
-      console.log('Error al extraer los registros!' + error);
-    });
-  } */
-
   save(form: NgForm) {
     this.proformaService.getProforma(form).subscribe(res => {
       this.proforma = res;
@@ -114,16 +100,6 @@ export class ProformaDetailsComponent implements OnInit {
       this.centros = res;
     });
   }
-  /* getProforma(){
-    this.proformaService.getTestProforma()
-    .subscribe( res => {
-      this.proforma =  res;
-      console.log("Proforma: ", this.proforma)
-    },
-    error => {
-      console.log('Error al extraer los registros!' + error);
-    });
-  } */
 
   guardarProforma() {
     if (this.isValidDetalles(this.proforma, ['nombre_rubro', 'fecha_captura', 'clave_rubro', 'aritmetica'])) {
@@ -240,14 +216,12 @@ export class ProformaDetailsComponent implements OnInit {
       detalles.forEach(detalle => {
         const detalleClave = detalle.clave_rubro;
         if (detalleTotal.aritmetica.indexOf(detalleClave) !== -1) {
-          // tslint:disable-next-line: forin
           for (const prop in aritmeticas) {
             aritmeticas[prop] = aritmeticas[prop].replace(detalleClave, detalle[prop + '_resultado']);
           }
         }
 
       });
-      // tslint:disable-next-line: forin
       for (const prop in aritmeticas) {
         // console.log(prop+"_resultado="+aritmeticas[prop]);
         try {

@@ -123,13 +123,19 @@ getHijos(padre, rubros) {
   return hijos;
 }
 
- findById(rubros, id) {
-  for(let i=0;i<rubros.length;i++) {
-    const actual = rubros[i];
-    if (actual.id == id) {
-      return actual;
+  findById(rubros, id) {
+    for (let i = 0; i< rubros.length; i++) {
+      const actual = rubros[i];
+      if ( actual.rubro_id) {
+        if (actual.rubro_id === id) {
+          return actual;
+        }
+      } else {
+        if (actual.id === id) {
+          return actual;
+        }
+      }
     }
+    return null;
   }
-  return null;
-}
 }
