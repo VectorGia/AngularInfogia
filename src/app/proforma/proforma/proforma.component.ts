@@ -222,7 +222,7 @@ getAnios() {
     this.recalculateDetalle(detalleSource, this.detallesProforma);
     //re re construlle los detalles para vista
     this.detallesProfToRender = this.splitDetalles(this.detallesProforma, this.mesInicio);
-    detalle[nombrecol] = event.target.value;
+   
     console.log(detalle);
 
   }
