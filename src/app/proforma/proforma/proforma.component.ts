@@ -148,7 +148,7 @@ getAnios() {
     });
     this.proformaService.getTiposCambio(form).subscribe(res => {
       const respuesta = res;
-
+      this.tiposCambio = [];
       for (const key in respuesta) {
           this.tiposCambio.push({etiqueta: key, valor: respuesta[key]});
       }
