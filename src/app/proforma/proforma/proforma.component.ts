@@ -96,25 +96,25 @@ getAnios() {
   onChangeTipoProforma(value) {
     console.log(value);
     switch (value) {
-      case '4':
+      case 4:
         this.tresnueve = true;
         this.seisseis = false;
         this.nuevetres = false;
         this.doce = false;
         break;
-      case '5':
+      case 5:
         this.tresnueve = false;
         this.seisseis = true;
         this.nuevetres = false;
         this.doce = false;
         break;
-      case '6':
+      case 6:
         this.tresnueve = false;
         this.seisseis = false;
         this.nuevetres = true;
         this.doce = false;
         break;
-      case '2':
+      case 2:
         this.tresnueve = false;
         this.seisseis = false;
         this.nuevetres = false;
@@ -133,7 +133,6 @@ getAnios() {
       this.detallesProformaIdxIdRubro = {};
       // indexamos los detalles originales para acceder a ellos mediante el id interno(uid o id) y otro indice por rubro id
       for (const detalle of this.detallesProforma) {
-        console.log(detalle);
         this.detallesProformaIdxIdInterno[detalle.idInterno] = detalle;
         this.detallesProformaIdxIdRubro[detalle.rubro_id] = detalle;
       }
