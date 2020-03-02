@@ -133,7 +133,6 @@ getAnios() {
       this.detallesProformaIdxIdRubro = {};
       // indexamos los detalles originales para acceder a ellos mediante el id interno(uid o id) y otro indice por rubro id
       for (const detalle of this.detallesProforma) {
-        console.log(detalle);
         this.detallesProformaIdxIdInterno[detalle.idInterno] = detalle;
         this.detallesProformaIdxIdRubro[detalle.rubro_id] = detalle;
       }
