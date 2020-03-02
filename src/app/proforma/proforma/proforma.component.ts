@@ -96,25 +96,25 @@ getAnios() {
   onChangeTipoProforma(value) {
     console.log(value);
     switch (value) {
-      case '4':
+      case 4:
         this.tresnueve = true;
         this.seisseis = false;
         this.nuevetres = false;
         this.doce = false;
         break;
-      case '5':
+      case 5:
         this.tresnueve = false;
         this.seisseis = true;
         this.nuevetres = false;
         this.doce = false;
         break;
-      case '6':
+      case 6:
         this.tresnueve = false;
         this.seisseis = false;
         this.nuevetres = true;
         this.doce = false;
         break;
-      case '2':
+      case 2:
         this.tresnueve = false;
         this.seisseis = false;
         this.nuevetres = false;
