@@ -33,8 +33,9 @@ export class ProformaService {
     return this.http.get<Proforma>(`${this.url}/api/Proforma/anios`);
   }
   getProformaby(id) {
-    return this.http.get<Proforma>(`${this.url}/api/Proforma/${id}`);
+    return this.http.get<Proforma>(`${this.url}/api/ProformaDetalle/${id}`);
   }
+
    getProforma(proforma): Observable<Proforma> {
      console.log('recibi: ', proforma);
      return this.http.post<Proforma>(`${this.url}/api/Proforma`, proforma);

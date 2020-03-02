@@ -1,11 +1,16 @@
-import {Component, OnInit} from '@angular/core';
-import {MontosconsolidadosService} from 'src/app/core/service/montosconsolidados.service';
-import {FormBuilder, FormGroup, NgForm} from '@angular/forms';
-import {ProformaService} from 'src/app/core/service/proforma.service';
-import {CompaniaService} from 'src/app/core/service/compania.service';
-import {CentrosService} from 'src/app/core/service/centros.service';
-import {TipoproformaService} from 'src/app/core/service/tipoproforma.service';
-import {TipocapturaService} from 'src/app/core/service/tipocaptura.service';
+
+
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MontosconsolidadosService } from 'src/app/core/service/montosconsolidados.service';
+import {MatTableDataSource, MatSort, MatPaginator} from '@angular/material';
+import { FormGroup, FormBuilder, NgForm, FormControl } from '@angular/forms';
+import { ProformaService } from 'src/app/core/service/proforma.service';
+import { CompaniaService } from 'src/app/core/service/compania.service';
+import { CentrosService } from 'src/app/core/service/centros.service';
+import { ActivatedRoute } from '@angular/router';
+import { TipoproformaService } from 'src/app/core/service/tipoproforma.service';
+import { TipocapturaService } from 'src/app/core/service/tipocaptura.service';
+
 
 @Component({
   selector: 'app-proforma',
@@ -16,6 +21,8 @@ export class ProformaComponent implements OnInit {
   constructor(private montosServies: MontosconsolidadosService,
               private fB: FormBuilder, private proformaService: ProformaService,
               private empresaService: CompaniaService, private centroService: CentrosService,
+              private activeRoute: ActivatedRoute,
+    // this.getProforma();
               private tipoproformaService: TipoproformaService,
               private tipocapturaService: TipocapturaService) {
   }
@@ -38,7 +45,9 @@ export class ProformaComponent implements OnInit {
   ajustarPorDefecto=false;
   formProforma: FormGroup;
   empresas: any;
+  proforma: any;
   centros: any;
+  id: any;
   tiposProforma:any;
   tiposCaptura:any;
   ponderacionCampos = {
@@ -50,13 +59,37 @@ export class ProformaComponent implements OnInit {
   esProformaContable = false;
 
   ngOnInit() {
-    this.proformaService.getAnios().subscribe(res => {this.aniosProforma = res; });
-    this.tipoproformaService.getAllTipoProformas().subscribe(res => {this.tiposProforma = res; });
-    this.tipocapturaService.getAllTipoCaptura().subscribe(res => {this.tiposCaptura = res; });
+    this.builForm();
     this.fetchCentros();
     this.fetchEmpresa();
+    this.getAnios();
+    this.tipoproformaService.getAllTipoProformas().subscribe(res => {this.tiposProforma = res; });
+    this.tipocapturaService.getAllTipoCaptura().subscribe(res => {this.tiposCaptura = res; });
+    this.activeRoute.params.subscribe((params) => {
+      this.id = params.id;
+      this.proformaService.getProformaby(this.id)
+      .subscribe(res => {
+        this.proforma = res;
+        console.log('proforma obtenida: ', this.proforma);
+      });
+    });
   }
+builForm(){
+  this.formProforma = this.fB.group({
+    anio: [''],
+    tipo_proforma_id: [''],
+    tipo_captura_id: [''],
+    empresa_id: [''],
+    centro_costo_id: ['']
+  });
+}
 
+getAnios() {
+  this.proformaService.getAnios()
+  .subscribe(res => {
+    this.aniosProforma = res;
+  });
+}
   onChangeTipoCaptura(value) {
     this.esProformaContable = (value == 1);
   }
@@ -93,10 +126,14 @@ export class ProformaComponent implements OnInit {
 
   render(form: NgForm) {
     this.proformaService.getProforma(form).subscribe(res => {
+
       this.detallesProforma = res;
+      console.log('PROFORMA DETALLE: ', this.detallesProforma);
       this.detallesProformaIdxIdInterno = {};
-      //indexamos los detalles originales para acceder a ellos mediante el id interno(uid o id) y otro indice por rubro id
+      this.detallesProformaIdxIdRubro = {};
+      // indexamos los detalles originales para acceder a ellos mediante el id interno(uid o id) y otro indice por rubro id
       for (const detalle of this.detallesProforma) {
+        console.log(detalle);
         this.detallesProformaIdxIdInterno[detalle.idInterno] = detalle;
         this.detallesProformaIdxIdRubro[detalle.rubro_id] = detalle;
       }
@@ -108,7 +145,7 @@ export class ProformaComponent implements OnInit {
     });
     this.proformaService.getAjustes(form).subscribe(res => {
       this.ajustes = res;
-      console.log('getAjustes %o', res);
+      console.log('getAjustess %o', res);
     });
     this.proformaService.getTiposCambio(form).subscribe(res => {
       const respuesta = res;
@@ -116,7 +153,7 @@ export class ProformaComponent implements OnInit {
       for (const key in respuesta) {
           this.tiposCambio.push({etiqueta: key, valor: respuesta[key]});
       }
-      console.log('getTiposCambio %o', this.tiposCambio);
+      console.log('getTiposCambioo %o', this.tiposCambio);
     });
   }
 

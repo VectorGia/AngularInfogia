@@ -60,9 +60,10 @@
             </div>
         </div>
     </div>
-
-    <p class="mt-3"> Movimientos</p>
-    <div class="row">
+    <div class="row mt-3">
+        <div class="col-sm-1">
+            <p class="mt-3"> Movimientos</p>
+        </div>
         <div class="col-sm-2">
             <mat-form-field>
                 <mat-label>Tipo de cambio</mat-label>
@@ -81,6 +82,7 @@
       </div>
     </div>
     <div class="row">
+
         <div class="col mt-3">
                     <table #table mat-table [dataSource]="detallesProfToRender" class="mat-elevation-z8">
                         <ng-container matColumnDef="nombre">
@@ -189,7 +191,7 @@
                                 <td mat-cell *matCellDef="let detalle">
                                    <div *ngIf="detalle.tipo == 'proform' && !detalle.aritmetica">
                                        <div *ngIf="tresnueve || doce">
-                                           <input type="text" value="0" ng-model="detalle.abril_monto_resultado" (change)="changeMonto(detalle, 'abril_monto_resultado', $event,table)">
+                                           <input type="text" value="" ng-model="detalle.abril_monto_resultado" (change)="changeMonto(detalle, 'abril_monto_resultado', $event,table)">
                                        </div>
                                        <div *ngIf="!tresnueve && !doce">
                                            {{detalle.abril_monto_resultado  | currency}}
