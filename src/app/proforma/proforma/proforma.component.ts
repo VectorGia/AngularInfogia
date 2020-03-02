@@ -179,8 +179,7 @@ getAnios() {
     }
   }
 /*a cada detalle de la proforma calculada, se le aplica un factor correspondiente al tipo de cambio */
-  recalculaPorTipoCambio(event) {
-    let factor = event.target.value;
+  recalculaPorTipoCambio(factor) {
     let detalles = this.detallesProforma;
     for (let i = 0; i < detalles.length; i++) {
       let detActual = detalles[i];
