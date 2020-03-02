@@ -360,7 +360,7 @@ getAnios() {
 
     const detReal = Object.assign({}, detalle);
     const detprof = Object.assign({}, detalle);
-    for (const prop in this.ponderacionCampos) {
+   /* for (const prop in this.ponderacionCampos) {
       if (this.ponderacionCampos[prop] > mesinicio) {
         detReal[prop] = 0;
         detReal.tipo = 'real';
@@ -374,7 +374,7 @@ getAnios() {
         detprof.tipo = 'proform';
         // reales
       }
-    }
+    }*/
     return [detReal, detprof];
   }
 }
