@@ -1,4 +1,5 @@
 
+
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MontosconsolidadosService } from 'src/app/core/service/montosconsolidados.service';
 import {MatTableDataSource, MatSort, MatPaginator} from '@angular/material';
@@ -7,6 +8,9 @@ import { ProformaService } from 'src/app/core/service/proforma.service';
 import { CompaniaService } from 'src/app/core/service/compania.service';
 import { CentrosService } from 'src/app/core/service/centros.service';
 import { ActivatedRoute } from '@angular/router';
+import { TipoproformaService } from 'src/app/core/service/tipoproforma.service';
+import { TipocapturaService } from 'src/app/core/service/tipocaptura.service';
+
 
 @Component({
   selector: 'app-proforma',
@@ -17,9 +21,10 @@ export class ProformaComponent implements OnInit {
   constructor(private montosServies: MontosconsolidadosService,
               private fB: FormBuilder, private proformaService: ProformaService,
               private empresaService: CompaniaService, private centroService: CentrosService,
-              private activeRoute: ActivatedRoute) {
+              private activeRoute: ActivatedRoute,
     // this.getProforma();
-
+              private tipoproformaService: TipoproformaService,
+              private tipocapturaService: TipocapturaService) {
   }
 
   displayedColumns: string[] = ['nombre', 'total', 'aant', 'ejercicio', 'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto',
@@ -28,19 +33,23 @@ export class ProformaComponent implements OnInit {
   seisseis = false;
   nuevetres = false;
   doce = false;
-  detallesProformaToRender: any;
-  detallesProformaOriginal: any;
-  detallesProformaOriginalIndexado: any;
+  detallesProfToRender: any;
+  detallesProforma: any;
+  detallesProformaIdxIdRubro: any;
+  detallesProformaIdxIdInterno: any;
   mesInicio: any;
   ajustes: any;
   tiposCambio = [];
-  conAjusteSinAjuste = [{etiqueta:'Con ajuste',valor:true},{etiqueta:'Sin ajuste',valor:false}];
+  aniosProforma: any;
+  conAjusteSinAjuste = [{etiqueta:'Sin ajuste',valor:false},{etiqueta:'Con ajuste',valor:true}];
+  ajustarPorDefecto=false;
   formProforma: FormGroup;
   empresas: any;
   proforma: any;
   centros: any;
   id: any;
-
+  tiposProforma:any;
+  tiposCaptura:any;
   ponderacionCampos = {
     'total_resultado': -1, 'anios_posteriores_resultado ': -1, 'ejercicio_resultado': -1, 'enero_monto_resultado': 1,
     'febrero_monto_resultado': 1, 'marzo_monto_resultado': 3, 'abril_monto_resultado': 4, 'mayo_monto_resultado': 5,
@@ -50,9 +59,12 @@ export class ProformaComponent implements OnInit {
   esProformaContable = false;
 
   ngOnInit() {
+    this.builForm();
     this.fetchCentros();
     this.fetchEmpresa();
-    this.builForm();
+    this.getAnios();
+    this.tipoproformaService.getAllTipoProformas().subscribe(res => {this.tiposProforma = res; });
+    this.tipocapturaService.getAllTipoCaptura().subscribe(res => {this.tiposCaptura = res; });
     this.activeRoute.params.subscribe((params) => {
       this.id = params.id;
       this.proformaService.getProformaby(this.id)
@@ -71,10 +83,17 @@ builForm(){
     centro_costo_id: ['']
   });
 }
+
+getAnios() {
+  this.proformaService.getAnios()
+  .subscribe(res => {
+    this.aniosProforma = res;
+  });
+}
   onChangeTipoCaptura(value) {
     this.esProformaContable = (value == 1);
   }
-  onChange(value) {
+  onChangeTipoProforma(value) {
     console.log(value);
     switch (value) {
       case '4':
@@ -107,18 +126,21 @@ builForm(){
 
   render(form: NgForm) {
     this.proformaService.getProforma(form).subscribe(res => {
-      this.detallesProformaOriginal = res;
-      console.log(res);
-      this.detallesProformaOriginalIndexado = {};
-      // indexamos los detalles originales para acceder a ellos mediante el id interno(uid o id)
-      for (const detalle of this.detallesProformaOriginal) {
-        this.detallesProformaOriginalIndexado[detalle.idInterno] = detalle;
+
+      this.detallesProforma = res;
+      console.log('PROFORMA DETALLE: ', this.detallesProforma);
+      this.detallesProformaIdxIdInterno = {};
+      // indexamos los detalles originales para acceder a ellos mediante el id interno(uid o id) y otro indice por rubro id
+      for (const detalle of this.detallesProforma) {
+        console.log(detalle);
+        this.detallesProformaIdxIdInterno[detalle.idInterno] = detalle;
+        this.detallesProformaIdxIdRubro[detalle.rubro_id] = detalle;
       }
-      if (this.detallesProformaOriginal.length > 0) {
-        this.mesInicio = this.detallesProformaOriginal[0].mes_inicio;
-        this.detallesProformaToRender = this.splitDetalles(this.detallesProformaOriginal, this.mesInicio);
+      if (this.detallesProforma.length > 0) {
+        this.mesInicio = this.detallesProforma[0].mes_inicio;
+        this.detallesProfToRender = this.splitDetalles(this.detallesProforma, this.mesInicio);
       }
-      console.log('Proforma: ', this.detallesProformaToRender);
+      console.log('Proforma: ', this.detallesProfToRender);
     });
     this.proformaService.getAjustes(form).subscribe(res => {
       this.ajustes = res;
@@ -149,8 +171,8 @@ builForm(){
   }
 
   guardarProforma() {
-    if (this.isValidDetalles(this.detallesProformaToRender, ['nombre_rubro', 'fecha_captura', 'clave_rubro', 'aritmetica'])) {
-      this.proformaService.addProforma(this.detallesProformaToRender)
+    if (this.isValidDetalles(this.detallesProfToRender, ['nombre_rubro', 'fecha_captura', 'clave_rubro', 'aritmetica'])) {
+      this.proformaService.addProforma(this.detallesProfToRender)
         .subscribe(res => {
           alert('Se guardo');
         });
@@ -158,21 +180,32 @@ builForm(){
   }
 /*a cada detalle de la proforma calculada, se le aplica un factor correspondiente al tipo de cambio */
   recalculaPorTipoCambio(factor: number) {
-    let detalles=this.detallesProformaOriginal;
+    let detalles=this.detallesProforma;
     for (let i = 0; i < detalles.length; i++) {
       let detActual=detalles[i];
       for (const prop in detActual) {
         let valor=detActual[prop];
         if (!isNaN(valor)) {
-          detalles[i]=valor*factor;
+          detActual[prop]=valor*factor;
         }
       }
     }
   }
-  recalculaPorAjusteBalanza(aplicar:boolean) {
-    if(aplicar){
-      console.log('Se aplicara ajustes');
-    }
+
+  recalculaPorAjusteBalanza(aplicar) {
+    this.ajustes.forEach(ajuste => {
+      let detalleProforma = this.detallesProformaIdxIdRubro[ajuste.rubro_id];
+      for (const prop in detalleProforma) {
+        let valor = detalleProforma[prop];
+        if (!isNaN(valor)) {
+          if (aplicar) {
+            detalleProforma[prop] = valor + ajuste[prop];
+          } else {
+            detalleProforma[prop] = valor - ajuste[prop];
+          }
+        }
+      }
+    });
   }
   changeMonto(detalle: any, nombrecol, event: any, table: any) {
     if (isNaN(event.target.value)) {
@@ -183,12 +216,12 @@ builForm(){
       return;
     }
     /*se recibe un detalle de la pantalla es decir uno con split por lo que se debe obtener el detalle de donde proviene*/
-    let detalleSource = this.detallesProformaOriginalIndexado[detalle.idInterno];
+    let detalleSource = this.detallesProformaIdxIdInterno[detalle.idInterno];
     detalleSource[nombrecol] = event.target.value;
     // HNA: ocurrio un cambio correcto en la proforma por lo que se recalcula el detalle impactado y los totales de proforma
-    this.recalculateDetalle(detalleSource, this.detallesProformaOriginal);
+    this.recalculateDetalle(detalleSource, this.detallesProforma);
     //re re construlle los detalles para vista
-    this.detallesProformaToRender = this.splitDetalles(this.detallesProformaOriginal, this.mesInicio);
+    this.detallesProfToRender = this.splitDetalles(this.detallesProforma, this.mesInicio);
     console.log(detalle);
 
   }

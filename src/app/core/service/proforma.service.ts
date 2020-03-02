@@ -29,6 +29,9 @@ export class ProformaService {
   getTiposCambio( proforma) {
     return this.http.post<Proforma>(`${this.url}/api/Proforma/tipoCambio`, proforma);
   }
+  getAnios() {
+    return this.http.get<Proforma>(`${this.url}/api/Proforma/anios`);
+  }
   getProformaby(id) {
     return this.http.get<Proforma>(`${this.url}/api/ProformaDetalle/${id}`);
   }
