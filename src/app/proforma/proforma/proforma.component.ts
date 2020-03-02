@@ -253,7 +253,11 @@ getAnios() {
     let suma = 0;
     for (let j = 0; j < columnsNames.length; j++) {
       const colName = columnsNames[j];
-      suma += detalle[colName];
+      if(!isNaN(detalle[colName])) {
+        suma += parseFloat(detalle[colName]);
+      }else{
+        console.warn('La columna ' + colName + 'del detalle ' + detalle.nombre_rubro + ', no es numero');
+      }
     }
     detalle[targetColumn] = suma;
 
