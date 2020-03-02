@@ -138,7 +138,7 @@ getAnios() {
       }
       if (this.detallesProforma.length > 0) {
         this.mesInicio = this.detallesProforma[0].mes_inicio;
-        this.detallesProfToRender = this.splitDetalles(this.detallesProforma, this.mesInicio);
+        this.detallesProfToRender = this.splitDetalles(this.detallesProforma, this.mesInicio,true);
       }
       console.log('Proforma: ', this.detallesProfToRender);
     });
@@ -221,7 +221,8 @@ getAnios() {
     // HNA: ocurrio un cambio correcto en la proforma por lo que se recalcula el detalle impactado y los totales de proforma
     this.recalculateDetalle(detalleSource, this.detallesProforma);
     //re re construlle los detalles para vista
-    this.detallesProfToRender = this.splitDetalles(this.detallesProforma, this.mesInicio);
+    this.detallesProfToRender = this.splitDetalles(this.detallesProforma, this.mesInicio,false);
+    detalle[nombrecol] = event.target.value;
     console.log(detalle);
 
   }
@@ -337,12 +338,12 @@ getAnios() {
   }
 
 
-  splitDetalles(dataSource, mesinicio) {
+  splitDetalles(dataSource, mesinicio,resetMontos:boolean) {
     console.log('data: ', dataSource);
     const alldetalles = [];
     for (const detalle of dataSource) {
       if (!detalle.hijos && !detalle.aritmetica) {
-        const detallesSplit = this.splitDetalle(detalle, mesinicio);
+        const detallesSplit = this.splitDetalle(detalle, mesinicio,resetMontos);
         for (const det of detallesSplit) {
           alldetalles.push(det);
           det.estilo = 'hijo';
@@ -355,7 +356,7 @@ getAnios() {
     return alldetalles;
   }
 
-  splitDetalle(detalle, mesinicio) {
+  splitDetalle(detalle, mesinicio,resetMontos:boolean) {
 
     const detReal = Object.assign({}, detalle);
     const detprof = Object.assign({}, detalle);
@@ -365,7 +366,11 @@ getAnios() {
         detReal.tipo = 'real';
         // proformados
       } else {
-        detprof[prop] = 0;
+        if(resetMontos) {
+          detprof[prop] = 0;
+        }else{
+          detprof[prop] = detalle[prop];
+        }
         detprof.tipo = 'proform';
         // reales
       }
