@@ -138,7 +138,7 @@ getAnios() {
       }
       if (this.detallesProforma.length > 0) {
         this.mesInicio = this.detallesProforma[0].mes_inicio;
-        this.detallesProfToRender = this.splitDetalles(this.detallesProforma, this.mesInicio,true);
+        this.detallesProfToRender = this.splitDetalles(this.detallesProforma, this.mesInicio);
       }
       console.log('Proforma: ', this.detallesProfToRender);
     });
@@ -221,7 +221,7 @@ getAnios() {
     // HNA: ocurrio un cambio correcto en la proforma por lo que se recalcula el detalle impactado y los totales de proforma
     this.recalculateDetalle(detalleSource, this.detallesProforma);
     //re re construlle los detalles para vista
-    this.detallesProfToRender = this.splitDetalles(this.detallesProforma, this.mesInicio,false);
+    this.detallesProfToRender = this.splitDetalles(this.detallesProforma, this.mesInicio);
     detalle[nombrecol] = event.target.value;
     console.log(detalle);
 
@@ -338,12 +338,12 @@ getAnios() {
   }
 
 
-  splitDetalles(dataSource, mesinicio,resetMontos:boolean) {
+  splitDetalles(dataSource, mesinicio) {
     console.log('data: ', dataSource);
     const alldetalles = [];
     for (const detalle of dataSource) {
       if (!detalle.hijos && !detalle.aritmetica) {
-        const detallesSplit = this.splitDetalle(detalle, mesinicio,resetMontos);
+        const detallesSplit = this.splitDetalle(detalle, mesinicio);
         for (const det of detallesSplit) {
           alldetalles.push(det);
           det.estilo = 'hijo';
@@ -356,25 +356,21 @@ getAnios() {
     return alldetalles;
   }
 
-  splitDetalle(detalle, mesinicio,resetMontos:boolean) {
+  splitDetalle(detalle, mesinicio) {
 
     const detReal = Object.assign({}, detalle);
     const detprof = Object.assign({}, detalle);
-   /* for (const prop in this.ponderacionCampos) {
+    for (const prop in this.ponderacionCampos) {
       if (this.ponderacionCampos[prop] > mesinicio) {
-        detReal[prop] = 0;
+        //detReal[prop] = 0;
         detReal.tipo = 'real';
-        // proformados
+        //-> proformados
       } else {
-        if(resetMontos) {
-          detprof[prop] = 0;
-        }else{
-          detprof[prop] = detalle[prop];
-        }
+        //detprof[prop] = 0;
         detprof.tipo = 'proform';
-        // reales
+        //-> reales
       }
-    }*/
+    }
     return [detReal, detprof];
   }
 }
