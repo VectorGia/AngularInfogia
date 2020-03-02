@@ -222,7 +222,7 @@ getAnios() {
     this.recalculateDetalle(detalleSource, this.detallesProforma);
     //re re construlle los detalles para vista
     this.detallesProfToRender = this.splitDetalles(this.detallesProforma, this.mesInicio);
-   
+
     console.log(detalle);
 
   }
@@ -297,7 +297,25 @@ getAnios() {
 
   calculaDetTot(detalles, detallesTotales) {
     console.log('##### detalles=%o, detallesTotales=%o', detalles, detallesTotales);
+    let detallesTotalesNoEvaluados=[];
+    let detallesTotalesEvaluados=[];
     detallesTotales.forEach(detalleTotal => {
+      let evaluado=this.evaluaDetalleTotal(detalleTotal, detalles);
+      if(!evaluado) {
+        detallesTotalesNoEvaluados.push(detalleTotal);
+      }else{
+        detallesTotalesEvaluados.push(detalleTotal);
+      }
+    });
+    let allDetalles=detalles.concat(detallesTotalesEvaluados);
+    detallesTotalesNoEvaluados.forEach(detalleTotal => {
+      this.evaluaDetalleTotal(detalleTotal, allDetalles);
+    });
+    return detallesTotales;
+  }
+
+  evaluaDetalleTotal(detalleTotal,allDetalles){
+      let evaluado=false;
       const aritmeticas = {};
       aritmeticas['enero_monto'] = detalleTotal.aritmetica;
       aritmeticas['febrero_monto'] = detalleTotal.aritmetica;
@@ -314,27 +332,26 @@ getAnios() {
       aritmeticas['ejercicio'] = detalleTotal.aritmetica;
       aritmeticas['acumulado'] = detalleTotal.aritmetica;
       aritmeticas['total'] = detalleTotal.aritmetica;
-      detalles.forEach(detalle => {
+      allDetalles.forEach(detalle => {
         const detalleClave = detalle.clave_rubro;
         if (detalleTotal.aritmetica.indexOf(detalleClave) !== -1) {
           for (const prop in aritmeticas) {
             aritmeticas[prop] = aritmeticas[prop].replace(detalleClave, '(' + detalle[prop + '_resultado'] + ')');
           }
         }
-
       });
       for (const prop in aritmeticas) {
         try {
           // tslint:disable-next-line: no-eval
           detalleTotal[prop + '_resultado'] = eval(aritmeticas[prop]);
+          evaluado = true;
         } catch (e) {
           console.error('Error de evaluacion de la expresion', e);
+          evaluado = false;
+          break;
         }
       }
-    });
-
-
-    return detallesTotales;
+      return evaluado;
   }
 
 
