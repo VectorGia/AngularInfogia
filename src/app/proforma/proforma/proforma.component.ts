@@ -180,7 +180,10 @@ getAnios() {
   }
 /*a cada detalle de la proforma calculada, se le aplica un factor correspondiente al tipo de cambio */
   recalculaPorTipoCambio(factor) {
-    const detalles = Object.assign({}, this.detallesProforma);
+    let detalles=[];
+    for(let i=0;i<this.detallesProforma.length;i++){
+      detalles.push( Object.assign({}, this.detallesProforma[i]));
+    }
     if ( factor != 1 ) {
       for (let i = 0; i < detalles.length; i++) {
         let detActual = detalles[i];
