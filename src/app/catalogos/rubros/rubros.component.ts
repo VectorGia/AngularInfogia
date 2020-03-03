@@ -127,11 +127,11 @@ getHijos(padre, rubros) {
     for (let i = 0; i< rubros.length; i++) {
       const actual = rubros[i];
       if ( actual.rubro_id) {
-        if (actual.rubro_id === id) {
+        if (actual.rubro_id == id) {
           return actual;
         }
       } else {
-        if (actual.id === id) {
+        if (actual.id == id) {
           return actual;
         }
       }
