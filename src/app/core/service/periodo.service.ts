@@ -23,11 +23,14 @@ export class PeriodoService {
   getAllPeriodos(): Observable<Periodo[]> {
     return this.http.get<Periodo[]>(`${this.url}/api/Periodo`);
   }
-
+  getPeriodo(id): Observable<Periodo> {
+    return this.http.get<Periodo>(`${this.url}/api/Periodo/${id}`);
+  }
   postPeriodo(periodo): Observable<Periodo> {
     console.log('recibi periodo: ', periodo);
     return this.http.post<Periodo>(`${this.url}/api/Periodo`, periodo, httpOptions);
   }
+  
   updatePeriodo(id, changes: Partial<Periodo>) {
     console.log('recibi id:', id);
     console.log('estatus: ', changes);

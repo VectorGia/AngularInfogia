@@ -17,13 +17,12 @@ import { MatDialog, MatSlideToggleChange } from '@angular/material';
   styleUrls: ['./estatus.component.css']
 })
 export class EstatusComponent implements OnInit {
-  displayedColumns: string[] = ['tcp', 'tp', 'fech', 'actions'];
+  displayedColumns: string[] = ['activo', 'tcp', 'tp', 'fech', 'actions'];
   fecha: number[] = [2020, 2021, 2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030];
   periodos: any;
   tcaptura: any;
   proformar: any;
   periodoForm: FormGroup;
-  checked = false;
   estatus: any;
   constructor(private periodoService: PeriodoService, private capturaService: TipocapturaService,
               private proformarService: TipoproformaService, private formBuilder: FormBuilder, public dialog: MatDialog) {
@@ -34,7 +33,6 @@ export class EstatusComponent implements OnInit {
     this.fetchTipoCaptura();
     this.fetchPeriodos();
     this.fetchTipoProformar();
-    console.log('slide', this.checked);
   }
 
   buildFormPeriodo() {
@@ -43,7 +41,7 @@ export class EstatusComponent implements OnInit {
       tipo_proforma_id: ['', Validators.required],
       anio_periodo: ['', Validators.required],
       activo: [true],
-      estatus: [this.checked]
+      estatus: [true]
     });
   }
   fetchPeriodos() {
