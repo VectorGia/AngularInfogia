@@ -180,16 +180,19 @@ getAnios() {
   }
 /*a cada detalle de la proforma calculada, se le aplica un factor correspondiente al tipo de cambio */
   recalculaPorTipoCambio(factor) {
-    let detalles = this.detallesProforma;
-    for (let i = 0; i < detalles.length; i++) {
-      let detActual = detalles[i];
-      for (const prop in detActual) {
-        let valor = detActual[prop];
-        if (!isNaN(valor)) {
-          detActual[prop] = valor * factor;
+    const detalles = Object.assign({}, this.detallesProforma);
+    if ( factor != 1 ) {
+      for (let i = 0; i < detalles.length; i++) {
+        let detActual = detalles[i];
+        for (const prop in detActual) {
+          let valor = detActual[prop];
+          if (!isNaN(valor)) {
+            detActual[prop] = valor * factor;
+          }
         }
       }
     }
+    this.detallesProfToRender = this.splitDetalles(detalles, this.mesInicio);
   }
 
   recalculaPorAjusteBalanza(aplicar) {
