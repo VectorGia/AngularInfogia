@@ -67,7 +67,7 @@
         <div class="col-sm-2">
             <mat-form-field>
                 <mat-label>Tipo de cambio</mat-label>
-                <mat-select name="tipo_cambo" (selectionChange)="recalculaPorTipoCambio($event)" >
+                <mat-select name="tipo_cambo" (selectionChange)="recalculaPorTipoCambio($event.value)" >
                     <mat-option *ngFor="let item of tiposCambio" [value]="item.valor"> {{item.etiqueta}} </mat-option>
                 </mat-select>
 
