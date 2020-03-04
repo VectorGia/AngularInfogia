@@ -173,7 +173,7 @@ getAnios() {
   }
 
   guardarProforma() {
-    if (this.isValidDetalles(this.detallesProfToRender, ['nombre_rubro', 'fecha_captura', 'clave_rubro', 'aritmetica'])) {
+    if (this.isValidDetalles(this.detallesProfToRender, ['nombre_rubro', 'fecha_captura', 'clave_rubro', 'aritmetica', 'idInterno', 'editable', 'campoEnAjustes', 'hijos', 'estilo', 'tipo'])) {
       this.proformaService.addProforma(this.detallesProfToRender)
         .subscribe(res => {
           alert('Se guardo');
@@ -181,7 +181,7 @@ getAnios() {
     }
   }
   updateProforma() {
-    if (this.isValidDetalles(this.proforma, ['nombre_rubro', 'fecha_captura', 'clave_rubro', 'aritmetica'])) {
+    if (this.isValidDetalles(this.proforma, ['nombre_rubro', 'fecha_captura', 'clave_rubro', 'aritmetica', 'idInterno', 'editable', 'campoEnAjustes', 'hijos', 'estilo','tipo'])) {
       this.recalculateAll(this.proforma); // /HNA:Antes de mandar a guardar la proforma se recalcula completa
       this.proformaService.updateProforma(this.id, this.proforma)
         .subscribe( res => {
@@ -233,7 +233,7 @@ getAnios() {
       return;
     }
     /*se recibe un detalle de la pantalla es decir uno con split por lo que se debe obtener el detalle de donde proviene*/
-    let detalleSource = this.detallesProformaIdxIdInterno[detalle.idInterno];
+    const detalleSource = this.detallesProformaIdxIdInterno[detalle.idInterno];
     detalleSource[nombrecol] = event.target.value;
     // HNA: ocurrio un cambio correcto en la proforma por lo que se recalcula el detalle impactado y los totales de proforma
     this.recalculateDetalle(detalleSource, this.detallesProforma);
