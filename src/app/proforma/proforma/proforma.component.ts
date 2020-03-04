@@ -2,7 +2,6 @@
 
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MontosconsolidadosService } from 'src/app/core/service/montosconsolidados.service';
-import {MatTableDataSource, MatSort, MatPaginator} from '@angular/material';
 import { FormGroup, FormBuilder, NgForm, FormControl } from '@angular/forms';
 import { ProformaService } from 'src/app/core/service/proforma.service';
 import { CompaniaService } from 'src/app/core/service/compania.service';
@@ -27,8 +26,9 @@ export class ProformaComponent implements OnInit {
               private tipocapturaService: TipocapturaService) {
   }
 
-  displayedColumns: string[] = ['nombre', 'total', 'aant', 'ejercicio', 'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto',
-    'septiembre', 'octubre', 'noviembre', 'diciembre', 'apost'];
+  displayedColumns: string[] = ['nombre', 'total', 'aant', 'ejercicio', 'enero', 'febrero', 'marzo',
+                                'abril', 'mayo', 'junio', 'julio', 'agosto',
+                                'septiembre', 'octubre', 'noviembre', 'diciembre', 'apost'];
   tresnueve = false;
   seisseis = false;
   nuevetres = false;

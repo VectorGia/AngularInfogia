@@ -12,7 +12,11 @@ import { EstatusEditComponent } from './estatus-edit/estatus-edit.component';
 
 
 @NgModule({
-  declarations: [EstatusComponent, ExtraccionComponent, ProformaComponent, BuscarproformaComponent, EstatusEditComponent],
+  declarations: [EstatusComponent,
+                ExtraccionComponent,
+                ProformaComponent,
+                BuscarproformaComponent,
+                EstatusEditComponent],
   imports: [
     CommonModule,
     ProformaRoutingModule,
