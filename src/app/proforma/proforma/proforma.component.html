@@ -53,7 +53,8 @@
     <div class="row">
         <div class="col">
             <div class="boton">
-               <button mat-flat-button color="primary" (click)="guardarProforma()" [disabled]="proformaEditable" >Guardar</button>
+               <button mat-flat-button color="primary" (click)="guardarProforma()" [disabled]="proformaEditable" *ngIf="!id">Guardar</button>
+              <button mat-flat-button color="primary" (click)="updateProforma()" [disabled]="proformaEditable" *ngIf="id">Actualizar</button>
  <!--              <button mat-flat-button color="primary">Modificar</button>
                <button mat-flat-button color="primary">Eliminar</button>-->
                <button mat-flat-button color="primary">EXCEL</button>

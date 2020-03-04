@@ -48,7 +48,7 @@ export class ProformaComponent implements OnInit {
   empresas: any;
   proforma: any;
   centros: any;
-  id: any;
+  id: any = null;
   tiposProforma:any;
   tiposCaptura:any;
   ponderacionCampos = {
