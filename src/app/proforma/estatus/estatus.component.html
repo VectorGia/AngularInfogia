@@ -50,7 +50,7 @@
               <td mat-cell *matCellDef="let element">
                 <mat-slide-toggle 
                 class="example-margin"
-                (change)="onChange($event)"
+                (change)="onChange($event, element.id)"
                 [color]="color"
                 [checked]="element.estatus">
                 Activar

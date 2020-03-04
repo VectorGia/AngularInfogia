@@ -8,12 +8,11 @@ import { ProformaComponent } from './proforma/proforma.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../material/material.module';
 import { BuscarproformaComponent } from './buscarproforma/buscarproforma.component';
-import { ProformaDetailsComponent } from './proforma-details/proforma-details.component';
 import { EstatusEditComponent } from './estatus-edit/estatus-edit.component';
 
 
 @NgModule({
-  declarations: [EstatusComponent, ExtraccionComponent, ProformaComponent, BuscarproformaComponent, ProformaDetailsComponent, EstatusEditComponent],
+  declarations: [EstatusComponent, ExtraccionComponent, ProformaComponent, BuscarproformaComponent, EstatusEditComponent],
   imports: [
     CommonModule,
     ProformaRoutingModule,
