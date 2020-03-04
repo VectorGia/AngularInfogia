@@ -43,7 +43,7 @@ export class ProformaService {
 
    addProforma(proforma) {
      console.log('recibi proforma: ', proforma);
-     return this.http.post<Proforma>(`${this.url}/api/ProformaGuardar`, proforma);
+     return this.http.post<Proforma>(`${this.url}/api/Proforma/save`, proforma);
    }
 
    updateProforma(id, changes: Partial<ProformaDetalle>) {
