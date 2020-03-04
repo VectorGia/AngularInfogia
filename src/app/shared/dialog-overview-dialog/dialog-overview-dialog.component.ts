@@ -94,12 +94,25 @@ export class DialogOverviewDialogComponent implements OnInit {
     return false;
   }
 
+  existAgrupador(rubros, agrupador) {
+    for (let i = 0; i < rubros.length; i++) {
+      if ( rubros[i].tipo_agrupador === agrupador) {
+        return true;
+      }
+    }
+    return false;
+  }
   saveRubro(form: any) {
     if ( form.aritmetica ) {
       this.rS.getRubroByModeloId(this.data.id).subscribe( res => {
         const rubros = res;
+        console.log('Datos obtenidos por id: ', rubros);
         if ( this.existClaveIn(rubros, form.clave) ) {
           alert('Ya existe un rubro con la clave ' + form.clave + ' favor de verificar.');
+          return;
+        }
+        if ( this.existAgrupador(rubros, form.tipo_agrupador) ) {
+          alert('Ya existe un agrupador de ' + form.tipo_agrupador + ' favor de verificar.');
           return;
         }
         const msg = this.isValidExpresion( {aritmetica: form.aritmetica} , rubros);
