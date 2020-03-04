@@ -1,15 +1,12 @@
-
-
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { MontosconsolidadosService } from 'src/app/core/service/montosconsolidados.service';
-import {MatTableDataSource, MatSort, MatPaginator} from '@angular/material';
-import { FormGroup, FormBuilder, NgForm, FormControl } from '@angular/forms';
-import { ProformaService } from 'src/app/core/service/proforma.service';
-import { CompaniaService } from 'src/app/core/service/compania.service';
-import { CentrosService } from 'src/app/core/service/centros.service';
-import { ActivatedRoute } from '@angular/router';
-import { TipoproformaService } from 'src/app/core/service/tipoproforma.service';
-import { TipocapturaService } from 'src/app/core/service/tipocaptura.service';
+import {Component, OnInit} from '@angular/core';
+import {MontosconsolidadosService} from 'src/app/core/service/montosconsolidados.service';
+import {FormBuilder, FormGroup} from '@angular/forms';
+import {ProformaService} from 'src/app/core/service/proforma.service';
+import {CompaniaService} from 'src/app/core/service/compania.service';
+import {CentrosService} from 'src/app/core/service/centros.service';
+import {ActivatedRoute} from '@angular/router';
+import {TipoproformaService} from 'src/app/core/service/tipoproforma.service';
+import {TipocapturaService} from 'src/app/core/service/tipocaptura.service';
 
 
 @Component({
@@ -49,6 +46,7 @@ export class ProformaComponent implements OnInit {
   proforma: any;
   centros: any;
   id: any = null;
+  proformaExistente:any=false;
   tiposProforma:any;
   tiposCaptura:any;
   ponderacionCampos = {
@@ -68,11 +66,12 @@ export class ProformaComponent implements OnInit {
     this.tipocapturaService.getAllTipoCaptura().subscribe(res => {this.tiposCaptura = res; });
     this.activeRoute.params.subscribe((params) => {
       this.id = params.id;
+      this.proformaExistente = true;
       this.proformaService.getProformaby(this.id)
-      .subscribe(res => {
-        this.proforma = res;
-        console.log('proforma obtenida: ', this.proforma);
-      });
+        .subscribe(res => {
+          this.renderDetallesProforma(res);
+          this.getTiposCambio({centro_costo_id: res[0].centro_costo_id, anio: res[0].anio, tipo_captura_id: res[0].tipo_captura_id});
+        });
     });
   }
 builForm(){
@@ -85,6 +84,15 @@ builForm(){
   });
 }
 
+getTiposCambio(form){
+  this.proformaService.getTiposCambio(form).subscribe(res => {
+    this.tiposCambio = [];
+    for (const key in res) {
+      this.tiposCambio.push({etiqueta: key, valor: res[key]});
+    }
+    console.log('getTiposCambioo %o', this.tiposCambio);
+  });
+}
 getAnios() {
   this.proformaService.getAnios()
   .subscribe(res => {
@@ -125,37 +133,32 @@ getAnios() {
   }
 
 
-  render(form: NgForm) {
-    this.proformaService.getProforma(form).subscribe(res => {
 
-      this.detallesProforma = res;
-      console.log('PROFORMA DETALLE: ', this.detallesProforma);
-      this.detallesProformaIdxIdInterno = {};
-      this.detallesProformaIdxIdRubro = {};
-      // indexamos los detalles originales para acceder a ellos mediante el id interno(uid o id) y otro indice por rubro id
-      for (const detalle of this.detallesProforma) {
-        this.detallesProformaIdxIdInterno[detalle.idInterno] = detalle;
-        this.detallesProformaIdxIdRubro[detalle.rubro_id] = detalle;
-      }
-      if (this.detallesProforma.length > 0) {
-        this.mesInicio = this.detallesProforma[0].mes_inicio;
-        this.proformaEditable = !this.detallesProforma[0].editable;
-        this.detallesProfToRender = this.splitDetalles(this.detallesProforma, this.mesInicio);
-      }
-      console.log('Proforma: ', this.detallesProfToRender);
-    });
-    this.proformaService.getAjustes(form).subscribe(res => {
-      this.ajustes = res;
-      console.log('getAjustess %o', res);
-    });
-    this.proformaService.getTiposCambio(form).subscribe(res => {
-      const respuesta = res;
-      this.tiposCambio = [];
-      for (const key in respuesta) {
-          this.tiposCambio.push({etiqueta: key, valor: respuesta[key]});
-      }
-      console.log('getTiposCambioo %o', this.tiposCambio);
-    });
+  proformar(form: any) {
+    this.proformaService.getProforma(form).subscribe(res => {this.renderDetallesProforma(res);});
+    if(this.esProformaContable) {
+      this.proformaService.getAjustes(form).subscribe(res => {
+        this.ajustes = res;
+        console.log('getAjustess %o', res);
+      });
+    }
+  }
+  renderDetallesProforma(detallesProforma){
+    this.detallesProforma = detallesProforma;
+    console.log('PROFORMA DETALLE: ', this.detallesProforma);
+    this.detallesProformaIdxIdInterno = {};
+    this.detallesProformaIdxIdRubro = {};
+    // indexamos los detalles originales para acceder a ellos mediante el id interno(uid o id) y otro indice por rubro id
+    for (const detalle of this.detallesProforma) {
+      this.detallesProformaIdxIdInterno[detalle.idInterno] = detalle;
+      this.detallesProformaIdxIdRubro[detalle.rubro_id] = detalle;
+    }
+    if (this.detallesProforma.length > 0) {
+      this.mesInicio = this.detallesProforma[0].mes_inicio;
+      this.proformaEditable = !this.detallesProforma[0].editable;
+      this.detallesProfToRender = this.splitDetalles(this.detallesProforma, this.mesInicio);
+    }
+    console.log('Proforma: ', this.detallesProfToRender);
   }
 
   fetchEmpresa() {
@@ -174,7 +177,7 @@ getAnios() {
 
   guardarProforma() {
     if (this.isValidDetalles(this.detallesProfToRender, ['nombre_rubro', 'fecha_captura', 'clave_rubro', 'aritmetica'])) {
-      this.proformaService.addProforma(this.detallesProfToRender)
+      this.proformaService.addProforma(this.detallesProforma)
         .subscribe(res => {
           alert('Se guardo');
         });
