@@ -95,8 +95,4 @@ export class EstatusComponent implements OnInit {
     );
   }
 
-  onChange(value: MatSlideToggleChange) {
-    const { checked } = value;
-    this.checked = checked;
-  }
 }
