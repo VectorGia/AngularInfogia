@@ -20,33 +20,33 @@ export class ProformaService {
     this.header = new HttpHeaders(headerSettings);
    }
 
-  getAllProformas(): Observable<Proforma[]> {
-    return this.http.get<Proforma[]>(`${this.url}/api/Proforma`);
+  getAllProformas(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.url}/api/Proforma`);
   }
   getAjustes(proforma) {
-    return this.http.post<Proforma>(`${this.url}/api/Proforma/ajustes`, proforma);
+    return this.http.post<any>(`${this.url}/api/Proforma/ajustes`, proforma);
   }
   getTiposCambio( proforma) {
-    return this.http.post<Proforma>(`${this.url}/api/Proforma/tipoCambio`, proforma);
+    return this.http.post<any>(`${this.url}/api/Proforma/tipoCambio`, proforma);
   }
   getAnios() {
-    return this.http.get<Proforma>(`${this.url}/api/Proforma/anios`);
+    return this.http.get<any>(`${this.url}/api/Proforma/anios`);
   }
   getProformaby(id) {
-    return this.http.get<Proforma>(`${this.url}/api/ProformaDetalle/${id}`);
+    return this.http.get<any>(`${this.url}/api/Proforma/${id}`);
   }
 
    getProforma(proforma): Observable<Proforma> {
      console.log('recibi: ', proforma);
-     return this.http.post<Proforma>(`${this.url}/api/Proforma`, proforma);
+     return this.http.post<any>(`${this.url}/api/Proforma`, proforma);
    }
 
    addProforma(proforma) {
      console.log('recibi proforma: ', proforma);
-     return this.http.post<Proforma>(`${this.url}/api/ProformaGuardar`, proforma);
+     return this.http.post<any>(`${this.url}/api/Proforma/save`, proforma);
    }
 
-   updateProforma(id, changes: Partial<ProformaDetalle>) {
-     return this.http.put(`${this.url}/api/ActualizaProforma/${id}`, changes, httpOptions);
+   updateProforma(id, proforma) {
+     return this.http.put(`${this.url}/api/Proforma/${id}`, proforma);
    }
 }

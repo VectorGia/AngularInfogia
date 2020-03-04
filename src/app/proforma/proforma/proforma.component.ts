@@ -180,6 +180,15 @@ getAnios() {
         });
     }
   }
+  updateProforma() {
+    if (this.isValidDetalles(this.proforma, ['nombre_rubro', 'fecha_captura', 'clave_rubro', 'aritmetica'])) {
+      this.recalculateAll(this.proforma); // /HNA:Antes de mandar a guardar la proforma se recalcula completa
+      this.proformaService.updateProforma(this.id, this.proforma)
+        .subscribe( res => {
+          alert('Se actualizo');
+        });
+    }
+  }
 /*a cada detalle de la proforma calculada, se le aplica un factor correspondiente al tipo de cambio */
   recalculaPorTipoCambio(factor) {
     let detalles=[];
@@ -308,10 +317,10 @@ getAnios() {
     let detallesTotalesNoEvaluados=[];
     let detallesTotalesEvaluados=[];
     detallesTotales.forEach(detalleTotal => {
-      let evaluado=this.evaluaDetalleTotal(detalleTotal, detalles);
-      if(!evaluado) {
+      let evaluado = this.evaluaDetalleTotal(detalleTotal, detalles);
+      if (!evaluado) {
         detallesTotalesNoEvaluados.push(detalleTotal);
-      }else{
+      } else {
         detallesTotalesEvaluados.push(detalleTotal);
       }
     });
