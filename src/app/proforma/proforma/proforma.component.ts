@@ -38,6 +38,7 @@ export class ProformaComponent implements OnInit {
   detallesProformaIdxIdRubro: any;
   detallesProformaIdxIdInterno: any;
   mesInicio: any;
+  proformaEditable:any;
   ajustes: any;
   tiposCambio = [];
   aniosProforma: any;
@@ -138,6 +139,7 @@ getAnios() {
       }
       if (this.detallesProforma.length > 0) {
         this.mesInicio = this.detallesProforma[0].mes_inicio;
+        this.proformaEditable=this.detallesProforma[0].editable;
         this.detallesProfToRender = this.splitDetalles(this.detallesProforma, this.mesInicio);
       }
       console.log('Proforma: ', this.detallesProfToRender);
