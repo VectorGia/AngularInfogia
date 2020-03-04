@@ -23,6 +23,7 @@ export class EstatusComponent implements OnInit {
   tcaptura: any;
   proformar: any;
   periodoForm: FormGroup;
+  periodo:any;
   estatus: any;
   constructor(private periodoService: PeriodoService, private capturaService: TipocapturaService,
               private proformarService: TipoproformaService, private formBuilder: FormBuilder, public dialog: MatDialog) {
@@ -93,6 +94,30 @@ export class EstatusComponent implements OnInit {
        this.ngOnInit();
       }
     );
+  }
+
+  onChange(event: Event, id) {
+    this.periodoService.getPeriodo(id)
+    .subscribe(data => {
+      this.periodo = data;
+      console.log('periodo: ', this.periodo);
+
+      if(this.periodo.estatus) {
+        this.periodo.estatus = false;
+        console.log('tiene estatus', this.periodo);
+        this.periodoService.updatePeriodo(id, this.periodo)
+      .subscribe(periodoup => {
+        console.log('estatus: ', periodoup);
+      })
+      } else {
+        this.periodo.estatus = true;
+        this.periodoService.updatePeriodo(id, this.periodo)
+      .subscribe(periodoup => {
+        console.log('estatus: ', periodoup);
+      })
+      }
+    })
+
   }
 
 }

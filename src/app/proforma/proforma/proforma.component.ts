@@ -139,7 +139,7 @@ getAnios() {
       }
       if (this.detallesProforma.length > 0) {
         this.mesInicio = this.detallesProforma[0].mes_inicio;
-        this.proformaEditable=this.detallesProforma[0].editable;
+        this.proformaEditable = !this.detallesProforma[0].editable;
         this.detallesProfToRender = this.splitDetalles(this.detallesProforma, this.mesInicio);
       }
       console.log('Proforma: ', this.detallesProfToRender);
@@ -183,7 +183,7 @@ getAnios() {
 /*a cada detalle de la proforma calculada, se le aplica un factor correspondiente al tipo de cambio */
   recalculaPorTipoCambio(factor) {
     let detalles=[];
-    for(let i=0;i<this.detallesProforma.length;i++){
+    for(let i = 0; i < this.detallesProforma.length;i++){
       detalles.push( Object.assign({}, this.detallesProforma[i]));
     }
     if ( factor != 1 ) {
@@ -228,7 +228,7 @@ getAnios() {
     detalleSource[nombrecol] = event.target.value;
     // HNA: ocurrio un cambio correcto en la proforma por lo que se recalcula el detalle impactado y los totales de proforma
     this.recalculateDetalle(detalleSource, this.detallesProforma);
-    //re re construlle los detalles para vista
+    // re re construlle los detalles para vista
     this.detallesProfToRender = this.splitDetalles(this.detallesProforma, this.mesInicio);
 
     console.log(detalle);
