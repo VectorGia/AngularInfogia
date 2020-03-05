@@ -31,7 +31,7 @@ export class ProformaComponent implements OnInit {
   seisseis = false;
   nuevetres = false;
   doce = false;
-  detallesProfToRender: any=[];
+  detallesProfToRender: any = [];
   detallesProforma: any;
   detallesProformaIdxIdRubro: any;
   detallesProformaIdxIdInterno: any;
@@ -70,6 +70,7 @@ export class ProformaComponent implements OnInit {
         this.id = params.id;
         this.proformaService.getProformaby(this.id)
           .subscribe(res => {
+            this.formProforma.patchValue(res[0]);
             this.proformaExistente = true;
             this.renderDetallesProforma(res);
             this.getTiposCambio({centro_costo_id: res[0].centro_costo_id, anio: res[0].anio, tipo_captura_id: res[0].tipo_captura_id});
