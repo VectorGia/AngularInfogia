@@ -1,3 +1,6 @@
+<div >
+  <button mat-button color="primary" (click)="exitAlert()">Generar nueva proforma</button>
+</div>
 <mat-card class="container">
     <mat-card-content>
     <form [formGroup]="formProforma" (ngSubmit)="proformar(formProforma.value)">
@@ -5,7 +8,7 @@
             <div class="col-md-1">
                 <mat-form-field>
                     <mat-label>Año: </mat-label>
-                  <mat-select matNativeControl required formControlName="anio">
+                  <mat-select matNativeControl required formControlName="anio" [disabled]="consulta" >
                     <mat-option *ngFor="let anio of aniosProforma" [value]="anio"> {{anio}} </mat-option>
                   </mat-select>
                 </mat-form-field>
@@ -13,20 +16,20 @@
             <div class="col-md-1">
               <mat-form-field>
                 <mat-label>Proforma:</mat-label>
-                <mat-select matNativeControl required formControlName="tipo_proforma_id" (ngModelChange)="onChangeTipoProforma($event)">
+                <mat-select matNativeControl required formControlName="tipo_proforma_id" (ngModelChange)="onChangeTipoProforma($event)" [disabled]="consulta">
                   <mat-option *ngFor="let item of tiposProforma" [value]="item.id"> {{item.nombre}} </mat-option>
                 </mat-select>
               </mat-form-field>
             </div>
             <div class="col-md-2 mt-3 pr-0">
-                <mat-radio-group aria-label="Select an option" formControlName="tipo_captura_id" (ngModelChange)="onChangeTipoCaptura($event)">
+                <mat-radio-group aria-label="Select an option" formControlName="tipo_captura_id" (ngModelChange)="onChangeTipoCaptura($event)" [disabled]="consulta">
                   <mat-radio-button class="ml-2" *ngFor="let item of tiposCaptura" [value]="item.id"> {{item.clave}} </mat-radio-button>
                 </mat-radio-group>
             </div>
             <div class="col-md-2">
                 <mat-form-field>
                     <mat-label>Empresa: </mat-label>
-                    <mat-select matNativeControl required formControlName="empresa_id">
+                    <mat-select matNativeControl required formControlName="empresa_id" [disabled]="consulta">
                         <mat-option *ngFor="let item of empresas" [value]="item.id"> {{item.nombre}} </mat-option>
                     </mat-select>
                 </mat-form-field>
@@ -34,13 +37,13 @@
             <div class="col">
                 <mat-form-field>
                     <mat-label>Centro de Costo: </mat-label>
-                    <mat-select matNativeControl required formControlName="centro_costo_id">
+                    <mat-select matNativeControl required formControlName="centro_costo_id" [disabled]="consulta">
                         <mat-option *ngFor="let item of centros" [value]="item.id"> {{item.nombre}} </mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>
             <div class="col-sm-1">
-                <button mat-button color="primary">Proformar</button>
+                <button mat-button color="primary" [disabled]="consulta">Proformar</button>
             </div>
         </div>
     </form>
@@ -50,11 +53,11 @@
     <div class="row">
         <div class="col">
             <div class="boton">
-               <button mat-flat-button color="primary" (click)="guardarProforma()" [disabled]="proformaEditable" *ngIf="!proformaExistente&&detallesProfToRender.length>0">Guardar</button>
-              <button mat-flat-button color="primary" (click)="updateProforma()" [disabled]="proformaEditable" *ngIf="proformaExistente&&detallesProfToRender.length>0">Actualizar</button>
+               <button mat-button color="primary" (click)="guardarProforma()" [disabled]="proformaEditable" *ngIf="!proformaExistente&&detallesProfToRender.length>0">Guardar</button>
+              <button mat-button color="primary" (click)="alertUpdate()" [disabled]="proformaEditable" *ngIf="proformaExistente&&detallesProfToRender.length>0">Actualizar</button>
  <!--              <button mat-flat-button color="primary">Modificar</button>
                <button mat-flat-button color="primary">Eliminar</button>-->
-               <button mat-flat-button color="primary" *ngIf="detallesProfToRender.length>0">EXCEL</button>
+               <button mat-button color="primary" *ngIf="detallesProfToRender.length>0">Exportar a EXCEL</button>
             </div>
         </div>
     </div>

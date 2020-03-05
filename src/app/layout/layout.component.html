@@ -11,34 +11,34 @@
                 <!-- <li><a  routerLink="/catalogo/costos">Centro de Costos</a></li> -->
                 <li><a  routerLink="/catalogo/negocio">Modelo de Negocio</a></li>
                 <li><a  routerLink="/catalogo/proyecto">Proyecto</a></li>
-                <li><a  routerLink="/catalogo/cambio">Tipos de Cambio</a></li>
-              </ul>
-            </li>
-            <li><a>Modulos</a>
-              <ul>
-                <li><a  routerLink="/proforma/buscar">Consultar Proformas</a></li>
-                <li><a  routerLink="/proforma/proforma">Proformas</a></li>
-                <li><a  routerLink="/proforma/estatus">Estatus del proyecto</a></li>
-                <li><a  routerLink="/proforma/extraccion">Extracción</a></li>
-              </ul>
-            </li>
-          </ul>
-    </mat-nav-list>
-  </mat-sidenav>
-  <mat-sidenav-content>
-    <mat-toolbar color="primary">
-      <img src="./../../assets/data.png" alt="">
-      <button mat-icon-button (click)="sidenav.toggle()">
-        <mat-icon>menu</mat-icon>
-      </button>
-      <div class="ml-2">
-        <span>Sistema InfoGIA 2.0 - Proformas</span>
-      </div>
-      <div class="col offset-6">
-        <span class="usuario">Usuario: {{id}}</span> 
-        <button mat-stroked-button color="accent" (click)="logout()">Salir</button >
-      </div>
-    </mat-toolbar>
-    <router-outlet></router-outlet>
-  </mat-sidenav-content>
+                <!--<li><a  routerLink="/catalogo/cambio">Tipos de Cambio</a></li> -->
+             </ul>
+           </li>
+           <li><a>Modulos</a>
+             <ul>
+               <li><a  routerLink="/proforma/buscar">Consultar Proformas</a></li>
+               <li><a  routerLink="/proforma/proforma">Proformas</a></li>
+               <li><a  routerLink="/proforma/estatus">Estatus del proyecto</a></li>
+               <li><a  routerLink="/proforma/extraccion">Extracción</a></li>
+             </ul>
+           </li>
+         </ul>
+   </mat-nav-list>
+ </mat-sidenav>
+ <mat-sidenav-content>
+   <mat-toolbar color="primary">
+     <img src="./../../assets/data.png" alt="">
+     <button mat-icon-button (click)="sidenav.toggle()">
+       <mat-icon>menu</mat-icon>
+     </button>
+     <div class="ml-2">
+       <span>Sistema InfoGIA 2.0 - Proformas</span>
+     </div>
+     <div class="col offset-6">
+       <span class="usuario">Usuario: {{id}}</span>
+       <button mat-stroked-button color="accent" (click)="logout()">Salir</button >
+     </div>
+   </mat-toolbar>
+   <router-outlet></router-outlet>
+ </mat-sidenav-content>
 </mat-sidenav-container>

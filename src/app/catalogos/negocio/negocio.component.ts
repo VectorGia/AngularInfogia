@@ -6,6 +6,7 @@ import { CompaniaService } from 'src/app/core/service/compania.service';
 import { CuentasService } from 'src/app/core/service/cuentas.service';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { UnidadnegocioService } from 'src/app/core/service/unidadnegocio.service';
+import Swal from 'sweetalert2';
 
 export interface Model {
   value: string;
@@ -65,7 +66,11 @@ export class NegocioComponent implements OnInit {
       res => {
         // tslint:disable-next-line: no-string-literal
         const nombre = res['nombre'];
-        alert('Se guardo exitosamente!');
+        Swal.fire(
+          'Listo!',
+          'Se guardo el modelo!',
+          'success'
+        );
         this.ngOnInit();
       },
       error => {
@@ -73,7 +78,55 @@ export class NegocioComponent implements OnInit {
       });
   }
 
-  deleteCentro(id: string) {
+  openDialog(id): void {
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: 'btn btn-success',
+        cancelButton: 'btn btn-danger'
+      },
+      buttonsStyling: false
+    })
+
+    swalWithBootstrapButtons.fire({
+      title: 'Estas seguro?',
+      text: 'No podras deshacer este cambio!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Si, eliminar!',
+      cancelButtonText: 'No, cancelar!',
+      reverseButtons: true
+    }).then((result) => {
+      if (result.value) {
+        this.deleteModelo(id);
+        swalWithBootstrapButtons.fire(
+          'Eliminado!',
+          'El modelo se ha borrado.',
+          'success'
+        );
+      } else if (
+        /* Read more about handling dismissals below */
+        result.dismiss === Swal.DismissReason.cancel
+      ) {
+        swalWithBootstrapButtons.fire(
+          'Cancelado',
+          'El modelo no se elimino :)',
+          'error'
+        );
+      }
+    });
+    /*const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      width: '550px',
+      data: 'Estas seguro de eliminar este grupo?'
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log('Yes clicked');
+        this.delete(id);
+        // DO SOMETHING
+      }
+    });*/
+  }
+  deleteModelo(id: string) {
     this.ns.deleteModelo(id).subscribe(
       res => {
         this.ngOnInit();
