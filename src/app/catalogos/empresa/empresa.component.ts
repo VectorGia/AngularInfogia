@@ -4,8 +4,9 @@ import { MatTableDataSource } from '@angular/material/table';
 import { FormGroup, FormBuilder, Validators, NgForm } from '@angular/forms';
 import { CompaniaService } from 'src/app/core/service/compania.service';
 import { Compania } from 'src/app/core/models/compania';
-import { ConfirmationDialogComponent } from './../../shared/confirmation-dialog/confirmation-dialog.component'
+import { ConfirmationDialogComponent } from './../../shared/confirmation-dialog/confirmation-dialog.component';
 import { MatDialog } from '@angular/material';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-empresa',
@@ -13,7 +14,7 @@ import { MatDialog } from '@angular/material';
   styleUrls: ['./empresa.component.css']
 })
 export class EmpresaComponent implements OnInit {
-  displayedColumns: string[] = ['idDB','id', 'empresa', 'abrev', 'etl','cadconexion','cambio', 'action'];
+  displayedColumns: string[] = ['idDB', 'id', 'empresa', 'abrev', 'etl', 'cadconexion', 'cambio', 'action'];
   mostrarDatos: boolean;
   compania: Compania[] = [];
   form: FormGroup;
@@ -34,7 +35,7 @@ export class EmpresaComponent implements OnInit {
       moneda_id: ['', Validators.required],
       activo: [true, Validators.required],
       id_centro_costo: ['1', Validators.required]
-    })
+    });
 
 
   }
@@ -44,40 +45,41 @@ export class EmpresaComponent implements OnInit {
     this.obtener();
   }
 
-  obtener(){
+  obtener() {
     this.cs.getAllCompania()
     .subscribe(
       x => {
         this.dataSource = new MatTableDataSource();
         this.dataSource.data = x;
-        console.log("empresas: ", this.dataSource.data);
+        console.log('empresas: ', this.dataSource.data);
       },
       error => {
         console.log('Error al extraer los registros!' + error);
-      }
-    )
+      });
   }
-  delete(id){
-    console.log(id)
+  delete(id) {
+    console.log(id);
     this.cs.deleteCompania(id).subscribe(
       (data) => {
         this.ngOnInit();
-      }
-    )
+      });
   }
-  saveDatos(form: NgForm){
+  saveDatos(form: NgForm) {
     this.cs.addCompania(form).subscribe(
       res => {
-        let id = res['STR_IDCOMPANIA'];
-        alert("Agregado correctamente");
+        const id = res['STR_IDCOMPANIA'];
+        Swal.fire(
+          'Listo!',
+          'Se guardo la empresa!',
+          'success'
+        );
         this.ngOnInit();
-      }
-    )
+      });
   }
-  activar():void{
+  activar(): void {
     this.mostrarDatos = true;
   }
-  desactivar():void{
+  desactivar(): void {
     this.mostrarDatos = false;
   }
   applyFilter(filterValue: string) {
@@ -85,21 +87,54 @@ export class EmpresaComponent implements OnInit {
     filterValue = filterValue.toLowerCase();
     this.dataSource.filter = filterValue;
   }
-  extraccion(id){
 
-  }
   openDialog(id): void {
-    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      width: '550px',
-      data: "Esta seguro de eliminar este grupo?"
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if(result) {
-        console.log('Yes clicked');
-        this.delete(id)
-        // DO SOMETHING
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: 'btn btn-success',
+        cancelButton: 'btn btn-danger'
+      },
+      buttonsStyling: false
+    })
+
+    swalWithBootstrapButtons.fire({
+      title: 'Estas seguro?',
+      text: 'No podras deshacer este cambio!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Si, eliminar!',
+      cancelButtonText: 'No, cancelar!',
+      reverseButtons: true
+    }).then((result) => {
+      if (result.value) {
+        this.delete(id);
+        swalWithBootstrapButtons.fire(
+          'Eliminado!',
+          'La empresa ha sido borrada.',
+          'success'
+        );
+      } else if (
+        /* Read more about handling dismissals below */
+        result.dismiss === Swal.DismissReason.cancel
+      ) {
+        swalWithBootstrapButtons.fire(
+          'Cancelado',
+          'La empresa no se elimino :)',
+          'error'
+        );
       }
     });
+    /*const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      width: '550px',
+      data: 'Estas seguro de eliminar este grupo?'
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log('Yes clicked');
+        this.delete(id);
+        // DO SOMETHING
+      }
+    });*/
   }
 }
 

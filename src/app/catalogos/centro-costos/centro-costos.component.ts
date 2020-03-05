@@ -1,16 +1,14 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { CentrosService } from 'src/app/core/service/centros.service';
-import { CentroCostos } from 'src/app/core/models/centro.model';
 import { FormBuilder, FormGroup, Validators, NgForm } from '@angular/forms';
 import {MatTableDataSource, MatSort, MatPaginator} from '@angular/material';
-import {SelectionModel} from '@angular/cdk/collections';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ConfirmationDialogComponent } from './../../shared/confirmation-dialog/confirmation-dialog.component';
 import { MatDialog } from '@angular/material';
 import { CompaniaService } from 'src/app/core/service/compania.service';
 import { EmpresaProyectoService } from 'src/app/core/service/empresa-proyecto.service';
-import { isNull } from 'util';
 import { NegocioService } from 'src/app/core/service/negocio.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-centro-costos',
@@ -36,7 +34,7 @@ export class CentroCostosComponent implements OnInit {
               private activeRoute: ActivatedRoute,
               private empresaproService: EmpresaProyectoService,
               private modeloService: NegocioService) {
-                
+
   }
 
   ngOnInit() {
@@ -114,7 +112,11 @@ export class CentroCostosComponent implements OnInit {
       res => {
         // tslint:disable-next-line: no-string-literal
         const id = res['STR_IDCENTROCOSTO'];
-        alert('Se agrego correctamente.');
+        Swal.fire(
+          'Listo!',
+          'Se guardo el Centro de Costos!',
+          'success'
+        )
         // this.centroForm.reset();
         this.renderDataTable();
       });

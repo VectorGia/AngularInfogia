@@ -5,6 +5,9 @@ import { FormGroup, FormBuilder, Validators, NgForm, FormControl } from '@angula
 import { ProyectoService } from 'src/app/core/service/proyecto.service';
 import { ConfirmationDialogComponent } from './../../shared/confirmation-dialog/confirmation-dialog.component';
 import { MatDialog } from '@angular/material';
+import Swal from 'sweetalert2';
+
+
 @Component({
   selector: 'app-proyecto',
   templateUrl: './proyecto.component.html',
@@ -53,7 +56,11 @@ export class ProyectoComponent implements OnInit {
   saveProyecto(form: NgForm) {
     this.ps.addProyecto(form).subscribe(
       res => {
-        alert('Se guardo exitosamente');
+        Swal.fire(
+          'Listo!',
+          'Se guardo el proyecto!',
+          'success'
+        );
         this.ngOnInit();
       });
   }
@@ -76,15 +83,39 @@ export class ProyectoComponent implements OnInit {
     } */
   }
   openDialog(id): void {
-    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      width: '550px',
-      data: 'Esta seguro de eliminar este grupo?'
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: 'btn btn-success',
+        cancelButton: 'btn btn-danger'
+      },
+      buttonsStyling: false
     });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        console.log('Yes clicked');
+
+    swalWithBootstrapButtons.fire({
+      title: 'Estas seguro?',
+      text: 'No podras deshacer este cambio!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Si, eliminar!',
+      cancelButtonText: 'No, cancelar!',
+      reverseButtons: true
+    }).then((result) => {
+      if (result.value) {
         this.delete(id);
-        // DO SOMETHING
+        swalWithBootstrapButtons.fire(
+          'Eliminado!',
+          'El proyecto se ha borrado.',
+          'success'
+        );
+      } else if (
+        /* Read more about handling dismissals below */
+        result.dismiss === Swal.DismissReason.cancel
+      ) {
+        swalWithBootstrapButtons.fire(
+          'Cancelado',
+          'El proyecto no sera eliminado :)',
+          'error'
+        );
       }
     });
   }

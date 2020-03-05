@@ -9,8 +9,7 @@ import { CentrosService } from 'src/app/core/service/centros.service';
 import { ActivatedRoute } from '@angular/router';
 import { TipoproformaService } from 'src/app/core/service/tipoproforma.service';
 import { TipocapturaService } from 'src/app/core/service/tipocaptura.service';
-
-
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-proforma',
   templateUrl: './proforma.component.html',
@@ -176,7 +175,12 @@ getAnios() {
     if (this.isValidDetalles(this.detallesProfToRender, ['nombre_rubro', 'fecha_captura', 'clave_rubro', 'aritmetica', 'idInterno', 'editable', 'campoEnAjustes', 'hijos', 'estilo', 'tipo'])) {
       this.proformaService.addProforma(this.detallesProfToRender)
         .subscribe(res => {
-          alert('Se guardo');
+          Swal.fire(
+            'Listo!',
+             'La proforma se guardo!',
+            'success'
+          );
+          // alert('Se guardo');
         });
     }
   }
