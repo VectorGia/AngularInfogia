@@ -229,6 +229,10 @@ getAnios() {
         }
       }
     });
+    if(this.ajustes.length>0) {
+      this.recalculateAll(this.detallesProforma);
+      this.detallesProfToRender = this.splitDetalles(this.detallesProforma, this.mesInicio);
+    }
   }
   changeMonto(detalle: any, nombrecol, event: any, table: any) {
     if (isNaN(event.target.value)) {
