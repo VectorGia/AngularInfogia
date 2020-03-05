@@ -66,13 +66,15 @@ export class ProformaComponent implements OnInit {
     this.tipoproformaService.getAllTipoProformas().subscribe(res => {this.tiposProforma = res; });
     this.tipocapturaService.getAllTipoCaptura().subscribe(res => {this.tiposCaptura = res; });
     this.activeRoute.params.subscribe((params) => {
-      this.id = params.id;
-      this.proformaExistente = true;
-      this.proformaService.getProformaby(this.id)
-        .subscribe(res => {
-          this.renderDetallesProforma(res);
-          this.getTiposCambio({centro_costo_id: res[0].centro_costo_id, anio: res[0].anio, tipo_captura_id: res[0].tipo_captura_id});
-        });
+      if(params.id){
+        this.id = params.id;
+        this.proformaService.getProformaby(this.id)
+          .subscribe(res => {
+            this.proformaExistente = true;
+            this.renderDetallesProforma(res);
+            this.getTiposCambio({centro_costo_id: res[0].centro_costo_id, anio: res[0].anio, tipo_captura_id: res[0].tipo_captura_id});
+          });
+      }
     });
   }
 builForm(){
