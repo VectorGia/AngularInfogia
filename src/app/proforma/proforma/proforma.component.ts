@@ -4,7 +4,7 @@ import {FormBuilder, FormGroup} from '@angular/forms';
 import {ProformaService} from 'src/app/core/service/proforma.service';
 import {CompaniaService} from 'src/app/core/service/compania.service';
 import {CentrosService} from 'src/app/core/service/centros.service';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {TipoproformaService} from 'src/app/core/service/tipoproforma.service';
 import {TipocapturaService} from 'src/app/core/service/tipocaptura.service';
 import Swal from 'sweetalert2';
@@ -19,7 +19,7 @@ export class ProformaComponent implements OnInit {
               private fB: FormBuilder, private proformaService: ProformaService,
               private empresaService: CompaniaService, private centroService: CentrosService,
               private activeRoute: ActivatedRoute,
-    // this.getProforma();
+              private router: Router,
               private tipoproformaService: TipoproformaService,
               private tipocapturaService: TipocapturaService) {
   }
@@ -46,6 +46,7 @@ export class ProformaComponent implements OnInit {
   empresas: any;
   proforma: any;
   centros: any;
+  consulta: any = false;
   id: any = null;
   proformaExistente:any=false;
   tiposProforma:any;
@@ -71,6 +72,7 @@ export class ProformaComponent implements OnInit {
         this.proformaService.getProformaby(this.id)
           .subscribe(res => {
             this.formProforma.patchValue(res[0]);
+            this.consulta = true;
             this.proformaExistente = true;
             this.renderDetallesProforma(res);
             this.getTiposCambio({centro_costo_id: res[0].centro_costo_id, anio: res[0].anio, tipo_captura_id: res[0].tipo_captura_id});
@@ -192,12 +194,50 @@ getAnios() {
         });
     }
   }
+  exitAlert() {
+    Swal.fire({
+      title: 'Estas seguro de salir?',
+      text: 'Se perderan los datos sin guardar!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      cancelButtonText: 'No',
+      confirmButtonText: 'Si!'
+    }).then((result) => {
+      if (result.value) {
+          this.router.navigate(['/proforma/proforma']);
+      }
+    });
+  }
+
+  alertUpdate() {
+    Swal.fire({
+      title: 'Estas seguro de guardar los cambios?',
+      text: 'Se modificara la proforma!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      cancelButtonText: 'No',
+      confirmButtonText: 'Si, actualiza!'
+    }).then((result) => {
+      if (result.value) {
+        this.updateProforma();
+      }
+    })
+  }
   updateProforma() {
-    if (this.isValidDetalles(this.proforma, ['nombre_rubro', 'fecha_captura', 'clave_rubro', 'aritmetica', 'idInterno', 'editable', 'campoEnAjustes', 'hijos', 'estilo','tipo'])) {
-      this.recalculateAll(this.proforma); // /HNA:Antes de mandar a guardar la proforma se recalcula completa
-      this.proformaService.updateProforma(this.id, this.proforma)
+    if (this.isValidDetalles(this.detallesProforma, ['nombre_rubro', 'fecha_captura', 'clave_rubro', 'aritmetica', 'idInterno', 'editable', 'campoEnAjustes', 'hijos', 'estilo','tipo'])) {
+      this.recalculateAll(this.detallesProforma); // /HNA:Antes de mandar a guardar la proforma se recalcula completa
+      this.proformaService.updateProforma(this.id, this.detallesProforma)
         .subscribe( res => {
-          alert('Se actualizo');
+          Swal.fire(
+            'Actualizada!',
+            'Se guardaron los cambios.',
+            'success'
+          )
+          console.log(res);
         });
     }
   }
