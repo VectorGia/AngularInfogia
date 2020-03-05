@@ -76,8 +76,8 @@
       <div class="col-sm-2" *ngIf="esProformaContable">
         <mat-form-field>
           <mat-label>Ajuste</mat-label>
-          <mat-select name="consin_ajuste"  [(value)]="ajustarPorDefecto" >
-            <mat-option *ngFor="let item of conAjusteSinAjuste" [value]="item.valor" (change)="recalculaPorAjusteBalanza(item.valor)" > {{item.etiqueta}} </mat-option>
+          <mat-select name="consin_ajuste"  [(value)]="ajustarPorDefecto" (selectionChange)="recalculaPorAjusteBalanza($event.value)">
+            <mat-option *ngFor="let item of conAjusteSinAjuste" [value]="item.valor" > {{item.etiqueta}} </mat-option>
           </mat-select>
         </mat-form-field>
       </div>

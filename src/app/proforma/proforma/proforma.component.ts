@@ -275,6 +275,7 @@ getAnios() {
         }
       }
     });
+
   }
   changeMonto(detalle: any, nombrecol, event: any, table: any) {
     if (isNaN(event.target.value)) {
