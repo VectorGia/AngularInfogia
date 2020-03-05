@@ -54,7 +54,7 @@
               <button mat-flat-button color="primary" (click)="updateProforma()" [disabled]="proformaEditable" *ngIf="proformaExistente&&detallesProfToRender.length>0">Actualizar</button>
  <!--              <button mat-flat-button color="primary">Modificar</button>
                <button mat-flat-button color="primary">Eliminar</button>-->
-               <button mat-flat-button color="primary">EXCEL</button>
+               <button mat-flat-button color="primary" *ngIf="detallesProfToRender.length>0">EXCEL</button>
             </div>
         </div>
     </div>

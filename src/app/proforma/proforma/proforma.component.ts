@@ -31,7 +31,7 @@ export class ProformaComponent implements OnInit {
   seisseis = false;
   nuevetres = false;
   doce = false;
-  detallesProfToRender: any;
+  detallesProfToRender: any=[];
   detallesProforma: any;
   detallesProformaIdxIdRubro: any;
   detallesProformaIdxIdInterno: any;
