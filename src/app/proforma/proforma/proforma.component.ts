@@ -266,7 +266,7 @@ getAnios() {
       let detalleProforma = this.detallesProformaIdxIdRubro[ajuste.rubro_id];
       for (const prop in detalleProforma) {
         let valor = detalleProforma[prop];
-        if (!isNaN(valor)) {
+        if (valor&&!isNaN(valor)) {
           if (aplicar) {
             detalleProforma[prop] = valor + ajuste[prop];
           } else {
