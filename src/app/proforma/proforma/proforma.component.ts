@@ -36,21 +36,21 @@ export class ProformaComponent implements OnInit {
   detallesProformaIdxIdRubro: any;
   detallesProformaIdxIdInterno: any;
   mesInicio: any;
-  proformaEditable:any;
+  proformaEditable: any;
   ajustes: any;
   tiposCambio = [];
   aniosProforma: any;
   conAjusteSinAjuste = [{etiqueta:'Sin ajuste',valor:false},{etiqueta:'Con ajuste',valor:true}];
-  ajustarPorDefecto=false;
+  ajustarPorDefecto = false;
   formProforma: FormGroup;
   empresas: any;
   proforma: any;
   centros: any;
   consulta: any = false;
   id: any = null;
-  proformaExistente:any=false;
-  tiposProforma:any;
-  tiposCaptura:any;
+  proformaExistente: any = false;
+  tiposProforma: any;
+  tiposCaptura: any;
   ponderacionCampos = {
     'total_resultado': -1, 'anios_posteriores_resultado ': -1, 'ejercicio_resultado': -1, 'enero_monto_resultado': 1,
     'febrero_monto_resultado': 1, 'marzo_monto_resultado': 3, 'abril_monto_resultado': 4, 'mayo_monto_resultado': 5,
@@ -80,7 +80,7 @@ export class ProformaComponent implements OnInit {
       }
     });
   }
-builForm(){
+builForm() {
   this.formProforma = this.fB.group({
     anio: [''],
     tipo_proforma_id: [''],

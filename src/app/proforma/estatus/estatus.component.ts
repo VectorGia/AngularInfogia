@@ -10,6 +10,7 @@ import { TipoproformaService } from 'src/app/core/service/tipoproforma.service';
 import { FormGroup, FormBuilder, Validators, NgForm } from '@angular/forms';
 import { ConfirmationDialogComponent } from 'src/app/shared/confirmation-dialog/confirmation-dialog.component';
 import { MatDialog, MatSlideToggleChange } from '@angular/material';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-estatus',
@@ -70,25 +71,53 @@ export class EstatusComponent implements OnInit {
   save(form: NgForm) {
     this.periodoService.postPeriodo(form)
     .subscribe(res => {
-      alert('Se guardo con exito!');
+      Swal.fire(
+        'Listo!',
+        'Se guardo el modelo!',
+        'success'
+      );
       this.ngOnInit();
     });
   }
 
   openDialog(id): void {
-    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      width: '550px',
-      data: 'Esta seguro de eliminar este grupo?'
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        console.log('Yes clicked');
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: 'btn btn-success',
+        cancelButton: 'btn btn-danger'
+      },
+      buttonsStyling: false
+    })
+
+    swalWithBootstrapButtons.fire({
+      title: 'Estas seguro?',
+      text: 'No podras deshacer este cambio!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Si, eliminar!',
+      cancelButtonText: 'No, cancelar!',
+      reverseButtons: true
+    }).then((result) => {
+      if (result.value) {
         this.delete(id);
-        // DO SOMETHING
+        swalWithBootstrapButtons.fire(
+          'Eliminado!',
+          'El periodo se ha borrado.',
+          'success'
+        );
+      } else if (
+        /* Read more about handling dismissals below */
+        result.dismiss === Swal.DismissReason.cancel
+      ) {
+        swalWithBootstrapButtons.fire(
+          'Cancelado',
+          'El periodo no se elimino :)',
+          'error'
+        );
       }
     });
   }
-  delete(id){
+  delete(id) {
     this.periodoService.delete(id).subscribe(
       (res) => {
        this.ngOnInit();

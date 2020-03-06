@@ -6,19 +6,21 @@ import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-
 import { DialogOverviewDialogComponent } from './dialog-overview-dialog/dialog-overview-dialog.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MessageComponent } from './message/message.component';
+import { LoaderComponent } from './loader/loader.component';
 
 
 @NgModule({
-  declarations: [ConfirmationDialogComponent, DialogOverviewDialogComponent, MessageComponent],
+  declarations: [ConfirmationDialogComponent, DialogOverviewDialogComponent, MessageComponent, LoaderComponent],
   imports: [
-    CommonModule, 
-    MaterialModule, 
+    CommonModule,
+    MaterialModule,
     RouterModule,
     ReactiveFormsModule
   ],
-  exports: [
-    ConfirmationDialogComponent
-  ],
+    exports: [
+        ConfirmationDialogComponent,
+        LoaderComponent
+    ],
   entryComponents: [
     ConfirmationDialogComponent,
     DialogOverviewDialogComponent

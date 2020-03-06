@@ -1,9 +1,10 @@
-<mat-card class="example-container">
+<mat-card class="container">
   <mat-card-header>
     <mat-card-title>
       Extracción Programada
     </mat-card-title>
   </mat-card-header>
+  <mat-card-content>
     <mat-tab-group>
       <mat-tab label="Extracción Programada">
         <form [formGroup]="formFecha" (ngSubmit)="save(formFecha.value)">
@@ -95,12 +96,13 @@
         </div>
       </mat-tab>
       <mat-tab label="Extracción Manual">
-        <div class="row offset-3">
+        <div class="row offset-4">
           <div class="col">
+            <app-loader></app-loader>
             <button  mat-fab color="warn" (click)="extraccion()">Extraer</button>
           </div>
         </div>
       </mat-tab>
-
     </mat-tab-group>
+    </mat-card-content>
 </mat-card>

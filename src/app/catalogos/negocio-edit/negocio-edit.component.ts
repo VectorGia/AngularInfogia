@@ -4,6 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { NegocioService } from 'src/app/core/service/negocio.service';
 import { Negocio } from 'src/app/core/models/negocio';
 import { CompaniaService } from 'src/app/core/service/compania.service';
+import {UnidadnegocioService} from '../../core/service/unidadnegocio.service';
 
 @Component({
   selector: 'app-negocio-edit',
@@ -14,9 +15,16 @@ export class NegocioEditComponent implements OnInit {
   modelo: FormGroup;
   negocio: Negocio[];
   companias = [];
+  unidades: any;
   id: string
-  constructor(private cS: CompaniaService, private fb: FormBuilder, private router: Router, private nS: NegocioService, private aR: ActivatedRoute) { 
+  constructor(private cS: CompaniaService,
+              private fb: FormBuilder,
+              private router: Router,
+              private nS: NegocioService,
+              private aR: ActivatedRoute,
+              private unidadService: UnidadnegocioService) {
     this.buildForm();
+    this.fetchUnidad();
   }
 
   ngOnInit() {
@@ -44,20 +52,27 @@ export class NegocioEditComponent implements OnInit {
     }
   }
 
-  fetchEmpresa(){
+  fetchEmpresa() {
     this.cS.getAllCompania()
     .subscribe(compania => {
       this.companias = compania;
-      console.log(compania)
-    })
+      console.log(compania);
+    });
   }
-  private buildForm(){
+  fetchUnidad() {
+    this.unidadService.getAllUnidades()
+      .subscribe(uni => {
+        this.unidades = uni;
+        console.log('Unodades de Negocio: ', uni);
+      });
+    }
+    buildForm() {
     this.modelo = this.fb.group({
       nombre: [null, Validators.required],
-      
-    })
+      unidad_negocio_id: [''],
+    });
   }
-  return(){
+  return() {
     this.router.navigate(['./catalogo/negocio'])
    }
 }
