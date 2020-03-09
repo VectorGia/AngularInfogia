@@ -24,7 +24,7 @@ export class ExcelService {
      return this.http.post<any>(`${this.url}/api/ProformaExcel/export`, detallesProfToRender);
      // window.open(`${this.url}/api/ProformaExcel/export`, '_blank')
    }
-  imporProforma() {
-
+  imporProforma(detallesProfToRender) {
+    return this.http.post<any>(`${this.url}/api/ProformaExcel/import`, detallesProfToRender);
   }
 }
