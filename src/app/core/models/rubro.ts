@@ -7,7 +7,7 @@ export interface Rubros{
     tipo_agrupador?: string;
     rango_cuentas_excludias?: string;
     rangos_cuentas_incluidas: string;
-    tipo_id: string;
-    hijos: any;
+    tipo_id?: string;
+    hijos?: any;
     id_modelo_neg
 }

@@ -8,6 +8,7 @@ import { EtlprogService } from 'src/app/core/service/etlprog.service';
 import { PreproformaService } from 'src/app/core/service/preproforma.service';
 import Swal from 'sweetalert2';
 import { NgxSpinnerService } from 'ngx-spinner';
+import {LoaderService} from '../../core/service/loader.service';
 @Component({
   selector: 'app-extraccion',
   templateUrl: './extraccion.component.html',
@@ -22,7 +23,8 @@ export class ExtraccionComponent implements OnInit {
               private fB: FormBuilder,
               private eS: EtlprogService,
               private pProformaService: PreproformaService,
-              private spinner: NgxSpinnerService) {
+              private load: LoaderService,
+              ) {
     this.buildForm();
   }
 

@@ -9,6 +9,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../material/material.module';
 import { BuscarproformaComponent } from './buscarproforma/buscarproforma.component';
 import { EstatusEditComponent } from './estatus-edit/estatus-edit.component';
+import {SharedModule} from '../shared/shared.module';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { EstatusEditComponent } from './estatus-edit/estatus-edit.component';
     CommonModule,
     ProformaRoutingModule,
     MaterialModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SharedModule
   ]
 })
 export class ProformaModule { }

@@ -5,7 +5,7 @@
     <mat-card-content>
     <form [formGroup]="formProforma" (ngSubmit)="proformar(formProforma.value)">
         <div class="row">
-            <div class="col-md-1">
+            <div class="col-sm-1">
                 <mat-form-field>
                     <mat-label>Año: </mat-label>
                   <mat-select matNativeControl required formControlName="anio" [disabled]="consulta" >
@@ -13,7 +13,7 @@
                   </mat-select>
                 </mat-form-field>
             </div>
-            <div class="col-md-1">
+            <div class="col-sm-1">
               <mat-form-field>
                 <mat-label>Proforma:</mat-label>
                 <mat-select matNativeControl required formControlName="tipo_proforma_id" (ngModelChange)="onChangeTipoProforma($event)" [disabled]="consulta">
@@ -21,12 +21,12 @@
                 </mat-select>
               </mat-form-field>
             </div>
-            <div class="col-md-2 mt-3 pr-0">
+            <div class="col-sm-3 mt-3 align-content-center">
                 <mat-radio-group aria-label="Select an option" formControlName="tipo_captura_id" (ngModelChange)="onChangeTipoCaptura($event)" [disabled]="consulta">
                   <mat-radio-button class="ml-2" *ngFor="let item of tiposCaptura" [value]="item.id"> {{item.clave}} </mat-radio-button>
                 </mat-radio-group>
             </div>
-            <div class="col-md-2">
+            <div class="col-sm-2">
                 <mat-form-field>
                     <mat-label>Empresa: </mat-label>
                     <mat-select matNativeControl required formControlName="empresa_id" [disabled]="consulta">
@@ -34,7 +34,7 @@
                     </mat-select>
                 </mat-form-field>
             </div>
-            <div class="col">
+            <div class="col-sm-2">
                 <mat-form-field>
                     <mat-label>Centro de Costo: </mat-label>
                     <mat-select matNativeControl required formControlName="centro_costo_id" [disabled]="consulta">
@@ -50,17 +50,6 @@
     </mat-card-content>
 </mat-card>
 <div class="container-fluid">
-    <div class="row">
-        <div class="col">
-            <div class="boton">
-               <button mat-button color="primary" (click)="guardarProforma()" [disabled]="proformaEditable" *ngIf="!proformaExistente&&detallesProfToRender.length>0">Guardar</button>
-              <button mat-button color="primary" (click)="alertUpdate()" [disabled]="proformaEditable" *ngIf="proformaExistente&&detallesProfToRender.length>0">Actualizar</button>
- <!--              <button mat-flat-button color="primary">Modificar</button>
-               <button mat-flat-button color="primary">Eliminar</button>-->
-               <button mat-button color="primary" *ngIf="detallesProfToRender.length>0">Exportar a EXCEL</button>
-            </div>
-        </div>
-    </div>
     <div class="row mt-3">
         <div class="col-sm-1">
             <p class="mt-3"> Movimientos</p>
@@ -76,15 +65,25 @@
       <div class="col-sm-2" *ngIf="esProformaContable">
         <mat-form-field>
           <mat-label>Ajuste</mat-label>
-          <mat-select name="consin_ajuste"  [(value)]="ajustarPorDefecto" >
-            <mat-option *ngFor="let item of conAjusteSinAjuste" [value]="item.valor" (change)="recalculaPorAjusteBalanza(item.valor)" > {{item.etiqueta}} </mat-option>
+          <mat-select name="consin_ajuste"  [(value)]="ajustarPorDefecto" (selectionChange)="recalculaPorAjusteBalanza($event.value)">
+            <mat-option *ngFor="let item of conAjusteSinAjuste" [value]="item.valor" > {{item.etiqueta}} </mat-option>
           </mat-select>
         </mat-form-field>
       </div>
     </div>
+  <div class="row">
+    <div class="col">
+      <div class="boton">
+        <button mat-button color="primary" (click)="guardarProforma()" [disabled]="proformaEditable" *ngIf="!proformaExistente&&detallesProfToRender.length>0">Guardar</button>
+        <button mat-button color="primary" (click)="alertUpdate()" [disabled]="proformaEditable" *ngIf="proformaExistente&&detallesProfToRender.length>0">Actualizar</button>
+        <!--              <button mat-flat-button color="primary">Modificar</button>
+                      <button mat-flat-button color="primary">Eliminar</button>-->
+        <button mat-button color="primary" *ngIf="detallesProfToRender.length>0">Exportar a EXCEL</button>
+      </div>
+    </div>
+  </div>
     <div class="row">
-
-        <div class="col mt-3">
+      <div class="col mt-3">
                     <table #table mat-table [dataSource]="detallesProfToRender" class="mat-elevation-z8">
                         <ng-container matColumnDef="nombre">
                                 <th mat-header-cell *matHeaderCellDef> Rubro </th>

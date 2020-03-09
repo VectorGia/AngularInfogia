@@ -111,9 +111,11 @@ export class DialogOverviewDialogComponent implements OnInit {
           alert('Ya existe un rubro con la clave ' + form.clave + ' favor de verificar.');
           return;
         }
-        if ( this.existAgrupador(rubros, form.tipo_agrupador) ) {
-          alert('Ya existe un agrupador de ' + form.tipo_agrupador + ' favor de verificar.');
-          return;
+        if (!this.disableSelect) {
+          if ( this.existAgrupador(rubros, form.tipo_agrupador) ) {
+            alert('Ya existe un agrupador de ' + form.tipo_agrupador + ' favor de verificar.');
+            return;
+          }
         }
         const msg = this.isValidExpresion( {aritmetica: form.aritmetica} , rubros);
         if (msg) {

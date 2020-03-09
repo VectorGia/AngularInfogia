@@ -14,7 +14,7 @@ table input {
 }
 .hijo{
   padding-left: 50px !important;
- 
+
 }
 .mat-column-nombre{
   border-right:black 1px solid;
@@ -86,3 +86,4 @@ table th{
 table td .ari{
   font-size: 9px;
 }
+
