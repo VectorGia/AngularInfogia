@@ -78,10 +78,11 @@
         <button mat-button color="primary" (click)="alertUpdate()" [disabled]="proformaEditable" *ngIf="proformaExistente&&detallesProfToRender.length>0">Actualizar</button>
         <!--              <button mat-flat-button color="primary">Modificar</button>
                       <button mat-flat-button color="primary">Eliminar</button>-->
-        <button mat-button color="primary" *ngIf="detallesProfToRender.length>0">Exportar a EXCEL</button>
+        <button mat-button color="primary" *ngIf="detallesProfToRender.length>0" (click)="export()">Exportar a EXCEL</button>
       </div>
     </div>
   </div>
+  <input id="file" type="file" (change)="getBase64($event)">
     <div class="row">
       <div class="col mt-3">
                     <table #table mat-table [dataSource]="detallesProfToRender" class="mat-elevation-z8">
@@ -348,24 +349,22 @@
                                     </div>
                                 </td>
                         </ng-container>
-
                         <ng-container matColumnDef="apost">
                             <th mat-header-cell *matHeaderCellDef> Años Posteriores </th>
                             <td mat-cell *matCellDef="let detalle">
                                 <div *ngIf="!detalle.aritmetica">
                                     {{detalle.anios_posteriores_resultado  | currency}}
-
                                 </div>
                                 <div *ngIf="detalle.aritmetica">
-
                                    <strong> {{detalle.anios_posteriores_resultado  | currency}}</strong>
                                 </div>
                             </td>
                     </ng-container>
-
                         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                     </table>
         </div>
     </div>
 </div>
+
+<br><br>
