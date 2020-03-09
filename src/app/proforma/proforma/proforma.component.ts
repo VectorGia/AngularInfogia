@@ -283,7 +283,7 @@ getAnios() {
       this.detallesProfToRender = this.splitDetalles(this.detallesProforma, this.mesInicio);
     }
   }
-  changeMonto(detalle: any, nombrecol, event: any, table: any) {
+  changeMonto(detalle: any, nombrecol, event: any) {
     if (isNaN(event.target.value)) {
       alert('Dato invalido, favor de verificar.');
       event.target.focus();
@@ -325,9 +325,13 @@ getAnios() {
     return detalles;
   }
   export() {
-    this.exportService.exportProforma(this.detallesProfToRender).subscribe( res => {
-      console.log('res', res);
-      alert('se exporto');
+    this.exportService.exportProforma(this.detallesProfToRender);
+  }
+
+  import(fileList: FileList) {
+    let self=this;
+    this.exportService.importExcel(fileList,function(res) {
+      self.detallesProfToRender=res;
     });
   }
 
