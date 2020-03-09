@@ -24,11 +24,6 @@ export class BuscarproformaComponent implements OnInit {
     });
   }
 
-  export(id) {
-    this.exportService.getId(id).subscribe( res => {
-      console.log('res', res);
-      alert('se exporto');
-    });
-  }
+
 
 }

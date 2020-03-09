@@ -8,7 +8,9 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {TipoproformaService} from 'src/app/core/service/tipoproforma.service';
 import {TipocapturaService} from 'src/app/core/service/tipocaptura.service';
 import Swal from 'sweetalert2';
-
+import * as XLSX from 'xlsx';
+import {ExcelService} from '../../core/service/excel.service';
+type AOA = any[][];
 @Component({
   selector: 'app-proforma',
   templateUrl: './proforma.component.html',
@@ -21,7 +23,8 @@ export class ProformaComponent implements OnInit {
               private activeRoute: ActivatedRoute,
               private router: Router,
               private tipoproformaService: TipoproformaService,
-              private tipocapturaService: TipocapturaService) {
+              private tipocapturaService: TipocapturaService,
+              private exportService: ExcelService) {
   }
 
   displayedColumns: string[] = ['nombre', 'total', 'aant', 'ejercicio', 'enero', 'febrero', 'marzo',
@@ -40,7 +43,7 @@ export class ProformaComponent implements OnInit {
   ajustes: any;
   tiposCambio = [];
   aniosProforma: any;
-  conAjusteSinAjuste = [{etiqueta:'Sin ajuste',valor:false},{etiqueta:'Con ajuste',valor:true}];
+  conAjusteSinAjuste = [{etiqueta: 'Sin ajuste', valor: false}, { etiqueta: 'Con ajuste', valor: true}];
   ajustarPorDefecto = false;
   formProforma: FormGroup;
   empresas: any;
@@ -149,7 +152,7 @@ getAnios() {
       });
     }
   }
-  renderDetallesProforma(detallesProforma){
+  renderDetallesProforma(detallesProforma) {
     this.detallesProforma = detallesProforma;
     console.log('PROFORMA DETALLE: ', this.detallesProforma);
     this.detallesProformaIdxIdInterno = {};
@@ -321,6 +324,23 @@ getAnios() {
     }
     return detalles;
   }
+  export() {
+    this.exportService.exportProforma(this.detallesProfToRender).subscribe( res => {
+      console.log('res', res);
+      alert('se exporto');
+    });
+  }
+
+  getBase64(file) {
+    let reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      console.log(reader.result);
+    };
+    reader.onerror = (error) => {
+      console.log('Error', error);
+    };
+  }
 
   sumColumnsForDetalle(detalle, targetColumn, columnsNames) {
     let suma = 0;
@@ -387,8 +407,8 @@ getAnios() {
     return detallesTotales;
   }
 
-  evaluaDetalleTotal(detalleTotal,allDetalles){
-      let evaluado=false;
+  evaluaDetalleTotal(detalleTotal, allDetalles) {
+      let evaluado = false;
       const aritmeticas = {};
       aritmeticas['enero_monto'] = detalleTotal.aritmetica;
       aritmeticas['febrero_monto'] = detalleTotal.aritmetica;
@@ -463,4 +483,6 @@ getAnios() {
     }
     return [detReal, detprof];
   }
+
+
 }

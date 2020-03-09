@@ -19,9 +19,12 @@ export class ExcelService {
     this.header = new HttpHeaders(headerSettings);
    }
 
-   getId(id) {
-     console.log('recibi: ', id);
-     window.open(`${this.url}/api/ProformaExcel/${id}`, '_blank');
-     return id;
+   exportProforma(detallesProfToRender) {
+     console.log('detallesProfToRender to export: ', detallesProfToRender);
+     return this.http.post<any>(`${this.url}/api/ProformaExcel/export`, detallesProfToRender);
+     // window.open(`${this.url}/api/ProformaExcel/export`, '_blank')
    }
+  imporProforma() {
+
+  }
 }
