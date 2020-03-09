@@ -24,4 +24,28 @@ export class ExcelService {
      window.open(`${this.url}/api/ProformaExcel/${id}`, '_blank');
      return id;
    }
+
+
+
+  public exportExcel(detalleProforma){
+    return this.http.post<any>(`${this.url}/api/ProformaExcel/export`, detalleProforma).subscribe(contenidoB64 =>{
+      this.downloadExcel("proforma.xlsx",contenidoB64);
+    });
+  }
+  public importExcel(fileList: FileList, callback): void {
+    let file = fileList[0];
+    let fileReader: FileReader = new FileReader();
+    let self=this;
+    fileReader.onloadend = function(x) {
+      let urlB64= fileReader.result.toString();
+      let b64Data=urlB64.substring(urlB64.indexOf('base64,')+7);
+      console.log("enviando excel:",b64Data);
+      self.http.post<any>(`${self.url}/api/ProformaExcel/import`, b64Data).subscribe(callback);
+    };
+    fileReader.readAsDataURL(file);
+  }
+  downloadExcel(filename, contenidoB64) {
+    let url = 'data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,' + contenidoB64;
+    FileSaver.saveAs(url, filename);
+  }
 }
