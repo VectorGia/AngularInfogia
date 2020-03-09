@@ -19,15 +19,8 @@ export class ExcelService {
     this.header = new HttpHeaders(headerSettings);
    }
 
-   exportProforma(detallesProfToRender) {
-     console.log('detallesProfToRender to export: ', detallesProfToRender);
-     return this.http.post<any>(`${this.url}/api/ProformaExcel/export`, detallesProfToRender);
-     // window.open(`${this.url}/api/ProformaExcel/export`, '_blank')
-   }
 
-
-
-  public exportExcel(detalleProforma){
+  public exportProforma(detalleProforma){
     return this.http.post<any>(`${this.url}/api/ProformaExcel/export`, detalleProforma).subscribe(contenidoB64 =>{
       this.downloadExcel("proforma.xlsx",contenidoB64);
     });
