@@ -22,6 +22,7 @@ export class ExcelService {
 
   public exportProforma(detalleProforma){
     return this.http.post<any>(`${this.url}/api/ProformaExcel/export`, detalleProforma).subscribe(contenidoB64 =>{
+      console.log("excel B64 ",contenidoB64);
       this.downloadExcel("proforma.xlsx",contenidoB64);
     });
   }
