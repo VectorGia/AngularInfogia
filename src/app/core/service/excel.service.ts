@@ -32,9 +32,9 @@ export class ExcelService {
     let self=this;
     fileReader.onloadend = function(x) {
       let urlB64= fileReader.result.toString();
-      let b64Data=urlB64.substring(urlB64.indexOf('base64,')+7);
+      let b64=urlB64.substring(urlB64.indexOf('base64,')+7);
       console.log("enviando excel:",b64Data);
-      self.http.post<any>(`${self.url}/api/ProformaExcel/import`, b64Data).subscribe(callback);
+      self.http.post<any>(`${self.url}/api/ProformaExcel/import`, {b64Data:b64}).subscribe(callback);
     };
     fileReader.readAsDataURL(file);
   }
