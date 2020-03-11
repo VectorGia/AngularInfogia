@@ -334,6 +334,7 @@ getAnios() {
       let datosProforma = res[0];
       self.formProforma.patchValue(datosProforma);
       self.renderDetallesProforma(res);
+      self.recalculateAll(self.detallesProforma);
       if (datosProforma.id_proforma > 0) {
         self.consulta = true;
         self.proformaExistente = true;
