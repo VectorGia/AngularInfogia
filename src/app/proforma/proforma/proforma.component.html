@@ -147,7 +147,7 @@
                                 <td mat-cell *matCellDef="let detalle">
                                     <div *ngIf="!detalle.aritmetica">
                                         <div *ngIf="doce && detalle.tipo == 'proform' ">
-                                            <input type="text" [value]="detalle.enero_monto_resultado" [disabled]="!detalle.editable" (change)="changeMonto(detalle, 'enero_monto_resultado', $event,table)">
+                                            <input type="text" [value]="detalle.enero_monto_resultado" [disabled]="!detalle.editable" (change)="changeMonto(detalle, 'enero_monto_resultado', $event)">
                                         </div>
                                         <div *ngIf="!doce  && detalle.tipo == 'real'">
                                             {{detalle.enero_monto_resultado  | currency}}
@@ -163,7 +163,7 @@
                                 <td mat-cell *matCellDef="let detalle">
                                   <div *ngIf="!detalle.aritmetica">
                                     <div *ngIf="doce && detalle.tipo == 'proform'">
-                                        <input type="text" [value]="detalle.febrero_monto_resultado" [disabled]="!detalle.editable" (change)="changeMonto(detalle, 'febrero_monto_resultado', $event,table)">
+                                        <input type="text" [value]="detalle.febrero_monto_resultado" [disabled]="!detalle.editable" (change)="changeMonto(detalle, 'febrero_monto_resultado', $event)">
                                     </div>
                                     <div *ngIf="!doce  && detalle.tipo == 'real'">
                                         {{detalle.febrero_monto_resultado  | currency }}
@@ -182,7 +182,7 @@
                                 <td mat-cell *matCellDef="let detalle">
                                     <div *ngIf="!detalle.aritmetica">
                                         <div *ngIf="doce && detalle.tipo == 'proform'">
-                                            <input type="text" [value]="detalle.marzo_monto_resultado" [disabled]="!detalle.editable" (change)="changeMonto(detalle, 'marzo_monto_resultado', $event,table)">
+                                            <input type="text" [value]="detalle.marzo_monto_resultado" [disabled]="!detalle.editable" (change)="changeMonto(detalle, 'marzo_monto_resultado', $event)">
                                         </div>
                                         <div *ngIf="!doce  && detalle.tipo == 'real'">
                                             {{detalle.marzo_monto_resultado  | currency}}
@@ -198,7 +198,7 @@
                                 <td mat-cell *matCellDef="let detalle">
                                    <div *ngIf="detalle.tipo == 'proform' && !detalle.aritmetica">
                                        <div *ngIf="tresnueve || doce">
-                                           <input type="text" [value]="detalle.abril_monto_resultado" [disabled]="!detalle.editable" (change)="changeMonto(detalle, 'abril_monto_resultado', $event,table)">
+                                           <input type="text" [value]="detalle.abril_monto_resultado" [disabled]="!detalle.editable" (change)="changeMonto(detalle, 'abril_monto_resultado', $event)">
                                        </div>
                                        <div *ngIf="!tresnueve && !doce">
                                            {{detalle.abril_monto_resultado  | currency}}
@@ -216,7 +216,7 @@
                                 <td mat-cell *matCellDef="let detalle">
                                     <div *ngIf="detalle.tipo == 'proform' && !detalle.aritmetica">
                                         <div *ngIf="tresnueve || doce">
-                                            <input type="text" [value]="detalle.mayo_monto_resultado" [disabled]="!detalle.editable" (change)="changeMonto(detalle, 'mayo_monto_resultado', $event,table)">
+                                            <input type="text" [value]="detalle.mayo_monto_resultado" [disabled]="!detalle.editable" (change)="changeMonto(detalle, 'mayo_monto_resultado', $event)">
                                         </div>
                                         <div *ngIf="!tresnueve && !doce">
                                             {{detalle.mayo_monto_resultado  | currency}}
@@ -234,7 +234,7 @@
                                 <td mat-cell *matCellDef="let detalle">
                                     <div *ngIf="detalle.tipo == 'proform' && !detalle.aritmetica">
                                         <div *ngIf="tresnueve || doce">
-                                            <input type="text" [value]="detalle.junio_monto_resultado" [disabled]="!detalle.editable" (change)="changeMonto(detalle, 'junio_monto_resultado', $event,table)">
+                                            <input type="text" [value]="detalle.junio_monto_resultado" [disabled]="!detalle.editable" (change)="changeMonto(detalle, 'junio_monto_resultado', $event)">
                                         </div>
                                         <div *ngIf="!tresnueve && !doce ">
                                             {{detalle.junio_monto_resultado  | currency}}
@@ -252,7 +252,7 @@
                                 <td mat-cell *matCellDef="let detalle">
                                     <div *ngIf="detalle.tipo == 'proform' && !detalle.aritmetica">
                                         <div *ngIf="tresnueve || seisseis || doce">
-                                            <input type="text" [value]="detalle.julio_monto_resultado" [disabled]="!detalle.editable" (change)="changeMonto(detalle, 'julio_monto_resultado', $event,table)">
+                                            <input type="text" [value]="detalle.julio_monto_resultado" [disabled]="!detalle.editable" (change)="changeMonto(detalle, 'julio_monto_resultado', $event)">
                                         </div>
                                         <div *ngIf="!tresnueve && !seisseis && !doce">
                                             {{detalle.julio_monto_resultado  | currency}}
@@ -270,7 +270,7 @@
                                 <td mat-cell *matCellDef="let detalle">
                                     <div *ngIf="detalle.tipo == 'proform' && !detalle.aritmetica">
                                         <div *ngIf="tresnueve || seisseis || doce">
-                                            <input type="text" [value]="detalle.agosto_monto_resultado" [disabled]="!detalle.editable"  (change)="changeMonto(detalle, 'agosto_monto_resultado', $event,table)">
+                                            <input type="text" [value]="detalle.agosto_monto_resultado" [disabled]="!detalle.editable"  (change)="changeMonto(detalle, 'agosto_monto_resultado', $event)">
                                         </div>
                                         <div *ngIf="!tresnueve && !seisseis && !doce">
                                             {{detalle.agosto_monto_resultado  | currency}}
@@ -288,7 +288,7 @@
                                 <td mat-cell *matCellDef="let detalle">
                                     <div *ngIf="detalle.tipo == 'proform' && !detalle.aritmetica">
                                         <div *ngIf="tresnueve || seisseis || doce">
-                                            <input type="text" [value]="detalle.septiembre_monto_resultado" [disabled]="!detalle.editable" (change)="changeMonto(detalle, 'septiembre_monto_resultado', $event,table)">
+                                            <input type="text" [value]="detalle.septiembre_monto_resultado" [disabled]="!detalle.editable" (change)="changeMonto(detalle, 'septiembre_monto_resultado', $event)">
                                         </div>
                                         <div *ngIf="!tresnueve && !seisseis && !doce">
                                             {{detalle.septiembre_monto_resultado  | currency}}
@@ -306,7 +306,7 @@
                                 <td mat-cell *matCellDef="let detalle">
                                     <div *ngIf="detalle.tipo == 'proform' && !detalle.aritmetica">
                                         <div *ngIf="tresnueve || seisseis || nuevetres || doce">
-                                            <input type="text" [value]="detalle.octubre_monto_resultado" [disabled]="!detalle.editable" (change)="changeMonto(detalle, 'octubre_monto_resultado', $event,table)">
+                                            <input type="text" [value]="detalle.octubre_monto_resultado" [disabled]="!detalle.editable" (change)="changeMonto(detalle, 'octubre_monto_resultado', $event)">
                                         </div>
                                         <div *ngIf="!tresnueve && !seisseis && !nuevetres && !doce">
                                             {{detalle.octubre_monto_resultado  | currency}}
@@ -324,7 +324,7 @@
                                 <td mat-cell *matCellDef="let detalle">
                                     <div *ngIf="detalle.tipo == 'proform' && !detalle.aritmetica">
                                         <div *ngIf="tresnueve || seisseis || nuevetres || doce">
-                                            <input type="text" [value]="detalle.noviembre_monto_resultado" [disabled]="!detalle.editable" (change)="changeMonto(detalle, 'noviembre_monto_resultado', $event,table)">
+                                            <input type="text" [value]="detalle.noviembre_monto_resultado" [disabled]="!detalle.editable" (change)="changeMonto(detalle, 'noviembre_monto_resultado', $event)">
                                         </div>
                                         <div *ngIf="!tresnueve && !seisseis && !nuevetres && !doce">
                                             {{detalle.noviembre_monto_resultado  | currency}}
@@ -342,7 +342,7 @@
                                 <td mat-cell *matCellDef="let detalle">
                                     <div *ngIf="detalle.tipo == 'proform' && !detalle.aritmetica">
                                         <div *ngIf="tresnueve || seisseis || nuevetres || doce">
-                                            <input type="text" [value]="detalle.diciembre_monto_resultado" [disabled]="!detalle.editable" (change)="changeMonto(detalle, 'diciembre_monto_resultado', $event,table)">
+                                            <input type="text" [value]="detalle.diciembre_monto_resultado" [disabled]="!detalle.editable" (change)="changeMonto(detalle, 'diciembre_monto_resultado', $event)">
                                         </div>
                                         <div *ngIf="!tresnueve && !seisseis && !nuevetres && !doce">
                                             {{detalle.diciembre_monto_resultado  | currency}}

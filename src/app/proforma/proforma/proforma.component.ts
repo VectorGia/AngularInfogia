@@ -333,8 +333,18 @@ getAnios() {
   import(fileList: FileList) {
     let self = this;
     this.exportService.importExcel(fileList, function(res) {
-      console.log('lista import: ', res);
-      self.detallesProfToRender= res;
+      let datosProforma = res[0];
+      self.formProforma.patchValue(datosProforma);
+      self.renderDetallesProforma(res);
+      self.recalculateAll(self.detallesProforma);
+      if (datosProforma.id_proforma > 0) {
+        self.consulta = true;
+        self.proformaExistente = true;
+        self.getTiposCambio({centro_costo_id: datosProforma.centro_costo_id, anio: datosProforma.anio, tipo_captura_id: datosProforma.tipo_captura_id});
+      }else{
+        self.consulta = false;
+        self.proformaExistente = false;
+      }
     });
   }
 
