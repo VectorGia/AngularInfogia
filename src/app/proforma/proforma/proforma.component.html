@@ -71,18 +71,23 @@
         </mat-form-field>
       </div>
     </div>
-  <div class="row">
-    <div class="col">
+  <div class="row container-fluid">
+    <div class="col-sm-3">
       <div class="boton">
         <button mat-button color="primary" (click)="guardarProforma()" [disabled]="proformaEditable" *ngIf="!proformaExistente&&detallesProfToRender.length>0">Guardar</button>
         <button mat-button color="primary" (click)="alertUpdate()" [disabled]="proformaEditable" *ngIf="proformaExistente&&detallesProfToRender.length>0">Actualizar</button>
         <!--              <button mat-flat-button color="primary">Modificar</button>
                       <button mat-flat-button color="primary">Eliminar</button>-->
-        <button mat-button color="primary" *ngIf="detallesProfToRender.length>0" (click)="export()">Exportar a EXCEL</button>
+        <button mat-button color="primary" *ngIf="detallesProfToRender.length>0" (click)="export()" >Exportar a EXCEL</button>
       </div>
     </div>
+    <div class="col-sm-2 mt-0 input__row uploader" *ngIf="!proformaExistente&&detallesProfToRender.length>0">
+      <div id="inputval" class="input-value">Importar Archivo</div>
+        <label for="file"></label>
+      <input id="file" type="file" class="upload" (change)="import($event.target.files)" >
+    </div>
   </div>
-  <input id="file" type="file" (change)="getBase64($event)">
+
     <div class="row">
       <div class="col mt-3">
                     <table #table mat-table [dataSource]="detallesProfToRender" class="mat-elevation-z8">
@@ -103,7 +108,8 @@
                         <ng-container matColumnDef="total">
                                 <th mat-header-cell *matHeaderCellDef> Total </th>
                                 <td mat-cell *matCellDef="let detalle">
-                                    <div *ngIf="!detalle.aritmetica">
+
+                                    <div *ngIf="!detalle.aritmetica && detalle.tipo == 'real'">
                                         {{(detalle.total_resultado ) | currency}}
                                     </div>
                                     <div *ngIf="detalle.aritmetica">
@@ -115,7 +121,7 @@
                         <ng-container matColumnDef="aant">
                                 <th mat-header-cell *matHeaderCellDef> Años Anteriores </th>
                                 <td mat-cell *matCellDef="let detalle">
-                                    <div *ngIf="!detalle.aritmetica">
+                                    <div *ngIf="!detalle.aritmetica  && detalle.tipo == 'real'">
                                         {{detalle.acumulado_resultado  | currency}}
 
                                     </div>
@@ -128,7 +134,7 @@
                         <ng-container matColumnDef="ejercicio">
                                 <th mat-header-cell *matHeaderCellDef> Ejercicio </th>
                                 <td mat-cell *matCellDef="let detalle">
-                                    <div *ngIf="!detalle.aritmetica">
+                                    <div *ngIf="!detalle.aritmetica  && detalle.tipo == 'real'">
                                         {{detalle.ejercicio_resultado  | currency}}
                                     </div>
                                     <div *ngIf="detalle.aritmetica">
@@ -143,7 +149,7 @@
                                         <div *ngIf="doce && detalle.tipo == 'proform' ">
                                             <input type="text" [value]="detalle.enero_monto_resultado" [disabled]="!detalle.editable" (change)="changeMonto(detalle, 'enero_monto_resultado', $event,table)">
                                         </div>
-                                        <div *ngIf="!doce">
+                                        <div *ngIf="!doce  && detalle.tipo == 'real'">
                                             {{detalle.enero_monto_resultado  | currency}}
                                         </div>
                                     </div>
@@ -159,7 +165,7 @@
                                     <div *ngIf="doce && detalle.tipo == 'proform'">
                                         <input type="text" [value]="detalle.febrero_monto_resultado" [disabled]="!detalle.editable" (change)="changeMonto(detalle, 'febrero_monto_resultado', $event,table)">
                                     </div>
-                                    <div *ngIf="!doce">
+                                    <div *ngIf="!doce  && detalle.tipo == 'real'">
                                         {{detalle.febrero_monto_resultado  | currency }}
                                     </div>
 
@@ -178,7 +184,7 @@
                                         <div *ngIf="doce && detalle.tipo == 'proform'">
                                             <input type="text" [value]="detalle.marzo_monto_resultado" [disabled]="!detalle.editable" (change)="changeMonto(detalle, 'marzo_monto_resultado', $event,table)">
                                         </div>
-                                        <div *ngIf="!doce">
+                                        <div *ngIf="!doce  && detalle.tipo == 'real'">
                                             {{detalle.marzo_monto_resultado  | currency}}
                                         </div>
                                     </div>

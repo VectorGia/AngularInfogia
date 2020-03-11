@@ -10,6 +10,7 @@ import { MaterialModule } from '../material/material.module';
 import { BuscarproformaComponent } from './buscarproforma/buscarproforma.component';
 import { EstatusEditComponent } from './estatus-edit/estatus-edit.component';
 import {SharedModule} from '../shared/shared.module';
+import { ReportesComponent } from './reportes/reportes.component';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import {SharedModule} from '../shared/shared.module';
                 ExtraccionComponent,
                 ProformaComponent,
                 BuscarproformaComponent,
-                EstatusEditComponent],
+                EstatusEditComponent,
+                ReportesComponent],
   imports: [
     CommonModule,
     ProformaRoutingModule,

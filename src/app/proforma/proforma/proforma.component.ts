@@ -228,10 +228,11 @@ getAnios() {
       if (result.value) {
         this.updateProforma();
       }
-    })
+    });
   }
   updateProforma() {
-    if (this.isValidDetalles(this.detallesProforma, ['nombre_rubro', 'fecha_captura', 'clave_rubro', 'aritmetica', 'idInterno', 'editable', 'campoEnAjustes', 'hijos', 'estilo','tipo'])) {
+    if (this.isValidDetalles(this.detallesProforma, ['nombre_rubro', 'fecha_captura', 'clave_rubro', 'aritmetica', 'idInterno', 'editable',
+                                                                    'campoEnAjustes', 'hijos', 'estilo', 'tipo'])) {
       this.recalculateAll(this.detallesProforma); // /HNA:Antes de mandar a guardar la proforma se recalcula completa
       this.proformaService.updateProforma(this.id, this.detallesProforma)
         .subscribe( res => {
@@ -246,7 +247,7 @@ getAnios() {
   }
 /*a cada detalle de la proforma calculada, se le aplica un factor correspondiente al tipo de cambio */
   recalculaPorTipoCambio(factor) {
-    let detalles=[];
+    let detalles = [];
     for(let i = 0; i < this.detallesProforma.length;i++){
       detalles.push( Object.assign({}, this.detallesProforma[i]));
     }
@@ -269,7 +270,7 @@ getAnios() {
       let detalleProforma = this.detallesProformaIdxIdRubro[ajuste.rubro_id];
       for (const prop in detalleProforma) {
         let valor = detalleProforma[prop];
-        if (valor&&!isNaN(valor)) {
+        if (valor && !isNaN(valor)) {
           if (aplicar) {
             detalleProforma[prop] = valor + ajuste[prop];
           } else {
@@ -278,7 +279,7 @@ getAnios() {
         }
       }
     });
-    if(this.ajustes.length>0) {
+    if (this.ajustes.length > 0) {
       this.recalculateAll(this.detallesProforma);
       this.detallesProfToRender = this.splitDetalles(this.detallesProforma, this.mesInicio);
     }
@@ -325,26 +326,19 @@ getAnios() {
     return detalles;
   }
   export() {
+    console.log(this.detallesProfToRender);
     this.exportService.exportProforma(this.detallesProfToRender);
   }
 
   import(fileList: FileList) {
-    let self=this;
-    this.exportService.importExcel(fileList,function(res) {
-      self.detallesProfToRender=res;
+    let self = this;
+    this.exportService.importExcel(fileList, function(res) {
+      console.log('lista import: ', res);
+      self.detallesProfToRender= res;
     });
   }
 
-  getBase64(file) {
-    let reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => {
-      console.log(reader.result);
-    };
-    reader.onerror = (error) => {
-      console.log('Error', error);
-    };
-  }
+
 
   sumColumnsForDetalle(detalle, targetColumn, columnsNames) {
     let suma = 0;
