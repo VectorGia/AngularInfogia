@@ -11,6 +11,7 @@ import { BuscarproformaComponent } from './buscarproforma/buscarproforma.compone
 import { EstatusEditComponent } from './estatus-edit/estatus-edit.component';
 import {SharedModule} from '../shared/shared.module';
 import { ReportesComponent } from './reportes/reportes.component';
+import { DialogReportComponent } from './dialog-report/dialog-report.component';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { ReportesComponent } from './reportes/reportes.component';
                 ProformaComponent,
                 BuscarproformaComponent,
                 EstatusEditComponent,
-                ReportesComponent],
+                ReportesComponent,
+                DialogReportComponent],
   imports: [
     CommonModule,
     ProformaRoutingModule,

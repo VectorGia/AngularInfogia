@@ -81,7 +81,7 @@
         <button mat-button color="primary" *ngIf="detallesProfToRender.length>0" (click)="export()" >Exportar a EXCEL</button>
       </div>
     </div>
-    <div class="col-sm-2 mt-0 input__row uploader" *ngIf="!proformaExistente&&detallesProfToRender.length>0">
+    <div class="col-sm-2 mt-0 input__row uploader">
       <div id="inputval" class="input-value">Importar Archivo</div>
         <label for="file"></label>
       <input id="file" type="file" class="upload" (change)="import($event.target.files)" >
