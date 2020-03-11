@@ -19,6 +19,13 @@ export class ExcelService {
     this.header = new HttpHeaders(headerSettings);
    }
 
+  public generarReporte(reportesRequest){
+    //var reportesRequest1={idReporte:1000000000000,nombreReporte:'pruebas',parametros:{usuario:'0'}}
+    return this.http.post<any>(`${this.url}/api/Reportes/generar`, reportesRequest).subscribe(res =>{
+      console.log("excel B64 ",res.resB64);
+      this.downloadExcel(reportesRequest.nombreReporte+".xlsx",res.resB64);
+    });
+  }
 
   public exportProforma(detalleProforma){
     return this.http.post<any>(`${this.url}/api/ProformaExcel/export`, detalleProforma).subscribe(res =>{
