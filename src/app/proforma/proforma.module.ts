@@ -12,6 +12,8 @@ import { EstatusEditComponent } from './estatus-edit/estatus-edit.component';
 import {SharedModule} from '../shared/shared.module';
 import { ReportesComponent } from './reportes/reportes.component';
 import { DialogReportComponent } from './dialog-report/dialog-report.component';
+import {ConfirmationDialogComponent} from '../shared/confirmation-dialog/confirmation-dialog.component';
+import {DialogOverviewDialogComponent} from '../shared/dialog-overview-dialog/dialog-overview-dialog.component';
 
 
 @NgModule({
@@ -28,6 +30,9 @@ import { DialogReportComponent } from './dialog-report/dialog-report.component';
     MaterialModule,
     ReactiveFormsModule,
     SharedModule
+  ],
+  entryComponents: [
+  DialogReportComponent,
   ]
 })
 export class ProformaModule { }

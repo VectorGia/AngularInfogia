@@ -2,6 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { GlobalVariable } from 'src/app/shared/global';
 import * as FileSaver from 'file-saver';
+import {Observable} from 'rxjs';
+import {Reporte} from '../models/reporte';
+import {Parametros} from '../models/parametros';
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'})
@@ -19,18 +22,28 @@ export class ExcelService {
     this.header = new HttpHeaders(headerSettings);
    }
 
-  public generarReporte(reportesRequest){
-    //var reportesRequest1={idReporte:1000000000000,nombreReporte:'pruebas',parametros:{usuario:'0'}}
+   getAllReportes(): Observable<Reporte[]> {
+    return this.http.get<Reporte[]>(`${this.url}/api/Reportes/reportes`);
+   }
+
+   getParametros(id): Observable<any> {
+    return this.http.get<any>(`${this.url}/api/Reportes/parametros/${id}`);
+   }
+  public generarReporte(reportesRequest) {
     return this.http.post<any>(`${this.url}/api/Reportes/generar`, reportesRequest).subscribe(res =>{
       console.log("excel B64 ",res.resB64);
       this.downloadExcel(reportesRequest.nombreReporte+".xlsx",res.resB64);
     });
   }
 
-  public exportProforma(detalleProforma){
-    return this.http.post<any>(`${this.url}/api/ProformaExcel/export`, detalleProforma).subscribe(res =>{
-      console.log("excel B64 ",res.resB64);
-      this.downloadExcel("proforma.xlsx",res.resB64);
+  addParametros(parametros) {
+    console.log('recibi: ', parametros);
+    return this.http.post<Parametros>(`${this.url}/api/Reportes/generar`, parametros);
+  }
+  public exportProforma(detalleProforma) {
+    return this.http.post<any>(`${this.url}/api/ProformaExcel/export`, detalleProforma).subscribe(res => {
+      console.log("excel B64 ", res.resB64);
+      this.downloadExcel("proforma.xlsx", res.resB64);
     });
   }
   public importExcel(fileList: FileList, callback): void {
