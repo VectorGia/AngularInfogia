@@ -26,6 +26,7 @@ nombre;
 
   openDialog(id, nombre): void {
     const dialogRef = this.dialog.open(DialogReportComponent, {
+      disableClose: true,
       width: '500px',
       data: {
         id,

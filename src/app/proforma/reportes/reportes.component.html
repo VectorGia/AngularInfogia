@@ -5,10 +5,10 @@
   <mat-card-content>
     <ol id="lista">
       <li *ngFor="let item of reportes">
-        <button mat-button color="primary" (click)="openDialog(item.id, item.nombre)">
+        <mat-label color="primary">
         {{item.nombre}}
-        </button>
-        <button mat-button color="primary" (click)="generarRepo()">
+        </mat-label>
+        <button mat-button color="primary" (click)="openDialog(item.id, item.nombre)">
           Generar
         </button>
       </li>

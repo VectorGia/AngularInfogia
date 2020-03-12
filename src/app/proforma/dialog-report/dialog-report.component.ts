@@ -1,7 +1,8 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import {FormBuilder, FormControl, FormGroup, NgForm} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, NgForm, Validators} from '@angular/forms';
 import {ExcelService} from '../../core/service/excel.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-dialog-report',
@@ -26,10 +27,7 @@ params: any;
   buildForm() {
     this.formulario = this.fb.group({
       id: [this.data.id],
-      tipo: [''],
-      nombre: [''],
-      clave: [''],
-      valor: ['']
+      parametro: ['']
     });
   }
   getParams() {
@@ -41,9 +39,18 @@ params: any;
   }
 
   generateReport() {
-    var paramsRequest = {};
+    let paramsRequest = {};
     for (let i = 0; i < this.params.length; i++) {
-      paramsRequest[this.params.clave] = this.params.valor;
+      let parametro = this.params[i];
+      if(parametro.requerido&&!parametro.valor){
+        Swal.fire(
+          'Error!',
+          `Parametro ${parametro.clave} requerido`,
+          'warning'
+        );
+        return;
+      }
+      paramsRequest[parametro.clave] = parametro.valor;
     }
     const request = {idReporte: this.data.id, nombreReporte: this.data.nombre, parametros: paramsRequest};
 
@@ -53,8 +60,12 @@ params: any;
     this.dialogRef.close();
   }
   changeValue(parametro,event: any){
-    if (event.target.value) {
-      alert('Parametro requerido.');
+    if (parametro.requerido&&!event.target.value) {
+      Swal.fire(
+        'Advertencia!',
+        'Parametro requerido',
+        'warning'
+      );
       event.target.focus();
       event.stopPropagation();
       event.preventDefault();
