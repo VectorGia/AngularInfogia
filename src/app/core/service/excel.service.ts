@@ -36,10 +36,6 @@ export class ExcelService {
     });
   }
 
-  addParametros(parametros) {
-    console.log('recibi: ', parametros);
-    return this.http.post<Parametros>(`${this.url}/api/Reportes/generar`, parametros);
-  }
   public exportProforma(detalleProforma) {
     return this.http.post<any>(`${this.url}/api/ProformaExcel/export`, detalleProforma).subscribe(res => {
       console.log('excel B64 ', res.resB64);
