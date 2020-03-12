@@ -39,10 +39,10 @@ params: any;
   }
 
   generateReport() {
-    let paramsRequest = {};
+    const paramsRequest = {};
     for (let i = 0; i < this.params.length; i++) {
-      let parametro = this.params[i];
-      if(parametro.requerido&&!parametro.valor){
+      const parametro = this.params[i];
+      if (parametro.requerido && !parametro.valor) {
         Swal.fire(
           'Error!',
           `Parametro ${parametro.clave} requerido`,
@@ -55,13 +55,12 @@ params: any;
     const request = {idReporte: this.data.id, nombreReporte: this.data.nombre, parametros: paramsRequest};
 
     this.excelService.generarReporte(request);
-    
   }
   onNoClick(): void {
     this.dialogRef.close();
   }
-  changeValue(parametro,event: any){
-    if (parametro.requerido&&!event.target.value) {
+  changeValue(parametro, event: any) {
+    if (parametro.requerido && !event.target.value) {
       Swal.fire(
         'Advertencia!',
         'Parametro requerido',
@@ -72,6 +71,6 @@ params: any;
       event.preventDefault();
       return;
     }
-    parametro['valor']=event.target.value;
+    parametro['valor'] = event.target.value;
   }
 }
