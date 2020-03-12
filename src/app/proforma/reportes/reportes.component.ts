@@ -18,11 +18,7 @@ nombre;
   ngOnInit() {
     this.fetchReportes();
   }
-
-  generarRepo() {
-    const reportesRequest1 = {idReporte: 1000000000000, nombreReporte: 'pruebas', parametros: {usuario: '0'}};
-    this.excelService.generarReporte(reportesRequest1);
-  }
+ // const reportesRequest1 = {idReporte: 1000000000000, nombreReporte: 'pruebas', parametros: {usuario: '0'}};
 
   openDialog(id, nombre): void {
     const dialogRef = this.dialog.open(DialogReportComponent, {

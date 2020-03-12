@@ -30,8 +30,8 @@ export class ExcelService {
     return this.http.get<any>(`${this.url}/api/Reportes/parametros/${id}`);
    }
   public generarReporte(reportesRequest) {
+    console.log("excel B64 ",reportesRequest);
     return this.http.post<any>(`${this.url}/api/Reportes/generar`, reportesRequest).subscribe(res =>{
-      console.log("excel B64 ",res.resB64);
       this.downloadExcel(reportesRequest.nombreReporte+".xlsx",res.resB64);
     });
   }

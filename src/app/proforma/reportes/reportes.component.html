@@ -5,12 +5,18 @@
   <mat-card-content>
     <ol id="lista">
       <li *ngFor="let item of reportes">
-        <mat-label color="primary">
-        {{item.nombre}}
-        </mat-label>
-        <button mat-button color="primary" (click)="openDialog(item.id, item.nombre)">
-          Generar
-        </button>
+        <div class="row">
+          <div class="col-sm-10 mt-2">
+            <mat-label color="primary">
+            {{item.nombre}}
+            </mat-label>
+          </div>
+          <div class="col">
+            <button  mat-button color="primary" (click)="openDialog(item.id, item.nombre)">
+              Generar
+            </button>
+          </div>
+        </div>
       </li>
     </ol>
   </mat-card-content>

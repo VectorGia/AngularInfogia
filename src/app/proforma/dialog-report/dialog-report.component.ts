@@ -55,6 +55,7 @@ params: any;
     const request = {idReporte: this.data.id, nombreReporte: this.data.nombre, parametros: paramsRequest};
 
     this.excelService.generarReporte(request);
+    
   }
   onNoClick(): void {
     this.dialogRef.close();
