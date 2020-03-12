@@ -42,18 +42,18 @@ export class ExcelService {
   }
   public exportProforma(detalleProforma) {
     return this.http.post<any>(`${this.url}/api/ProformaExcel/export`, detalleProforma).subscribe(res => {
-      console.log("excel B64 ", res.resB64);
-      this.downloadExcel("proforma.xlsx", res.resB64);
+      console.log('excel B64 ', res.resB64);
+      this.downloadExcel('proforma.xlsx', res.resB64);
     });
   }
   public importExcel(fileList: FileList, callback): void {
     let file = fileList[0];
     let fileReader: FileReader = new FileReader();
-    let self=this;
-    fileReader.onloadend = function(x) {
-      let urlB64= fileReader.result.toString();
-      let b64=urlB64.substring(urlB64.indexOf('base64,')+7);
-      console.log("enviando excel:",b64);
+    let self = this;
+    fileReader.onloadend = (x) => {
+      let urlB64 = fileReader.result.toString();
+      let b64 = urlB64.substring(urlB64.indexOf('base64,')+7);
+      console.log('enviando excel:', b64);
       self.http.post<any>(`${self.url}/api/ProformaExcel/import`, {b64Data:b64}).subscribe(callback);
     };
     fileReader.readAsDataURL(file);

@@ -1,6 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import {FormArray, FormBuilder, FormControl, FormGroup, NgForm} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, NgForm} from '@angular/forms';
 import {ExcelService} from '../../core/service/excel.service';
 
 @Component({
@@ -24,6 +24,7 @@ params: any;
 
   buildForm() {
     this.formulario = this.fb.group({
+      id: [this.data.id],
       tipo: [''],
       nombre: [''],
       clave: [''],

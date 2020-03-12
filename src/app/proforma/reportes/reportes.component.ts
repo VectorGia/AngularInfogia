@@ -22,6 +22,7 @@ id;
     const reportesRequest1 = {idReporte: 1000000000000, nombreReporte: 'pruebas', parametros: {usuario: '0'}};
     this.excelService.generarReporte(reportesRequest1);
   }
+
   openDialog(id): void {
     const dialogRef = this.dialog.open(DialogReportComponent, {
       width: '500px',
@@ -40,5 +41,4 @@ id;
          console.log('Reporte: %o', this.reportes);
       });
   }
-
 }
