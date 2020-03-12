@@ -20,6 +20,7 @@ params: any;
   ngOnInit() {
     this.buildForm();
     console.log('id:', this.data.id);
+    console.log('nombre:', this.data.nombre);
   }
 
   buildForm() {
@@ -28,6 +29,7 @@ params: any;
       tipo: [''],
       nombre: [''],
       clave: [''],
+      valor: ['']
     });
   }
   getParams() {

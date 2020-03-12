@@ -11,6 +11,7 @@ import {ExcelService} from '../../core/service/excel.service';
 export class ReportesComponent implements OnInit {
 reportes = [];
 id;
+nombre;
   constructor(public dialog: MatDialog,
               private excelService: ExcelService) { }
 
@@ -23,11 +24,12 @@ id;
     this.excelService.generarReporte(reportesRequest1);
   }
 
-  openDialog(id): void {
+  openDialog(id, nombre): void {
     const dialogRef = this.dialog.open(DialogReportComponent, {
       width: '500px',
       data: {
-        id
+        id,
+        nombre
       }
     });
     dialogRef.afterClosed().subscribe(result => {

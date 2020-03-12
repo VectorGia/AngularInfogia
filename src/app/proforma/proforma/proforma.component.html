@@ -42,6 +42,14 @@
                     </mat-select>
                 </mat-form-field>
             </div>
+            <div class="col-sm-2">
+                <mat-form-field>
+                    <mat-label>Centro de Costo: </mat-label>
+                    <mat-select matNativeControl required formControlName="centro_costo" [disabled]="consulta">
+                        <mat-option *ngFor="let item of centros" [value]="item.id"> {{item.nombre}} </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
             <div class="col-sm-1">
                 <button mat-button color="primary" [disabled]="consulta">Proformar</button>
             </div>
