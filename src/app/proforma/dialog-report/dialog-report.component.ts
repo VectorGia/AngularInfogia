@@ -39,13 +39,27 @@ params: any;
         console.log('Parametros: ', this.params);
       });
   }
-  sendParams(form: NgForm) {
-    this.excelService.addParametros(form)
-      .subscribe(res => {
-        console.log('Exito');
-      });
+
+  generateReport() {
+    var paramsRequest = {};
+    for (let i = 0; i < this.params.length; i++) {
+      paramsRequest[this.params.clave] = this.params.valor;
+    }
+    const request = {idReporte: this.data.id, nombreReporte: this.data.nombre, parametros: paramsRequest};
+
+    this.excelService.generarReporte(request);
   }
   onNoClick(): void {
     this.dialogRef.close();
+  }
+  changeValue(parametro,event: any){
+    if (event.target.value) {
+      alert('Parametro requerido.');
+      event.target.focus();
+      event.stopPropagation();
+      event.preventDefault();
+      return;
+    }
+    parametro['valor']=event.target.value;
   }
 }
