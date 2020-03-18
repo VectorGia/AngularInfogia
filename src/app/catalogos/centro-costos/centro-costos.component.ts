@@ -28,7 +28,6 @@ export class CentroCostosComponent implements OnInit {
 
   constructor(private cs: CentrosService,
               private fb: FormBuilder,
-              private router: Router,
               private companiaService: CompaniaService,
               public dialog: MatDialog,
               private activeRoute: ActivatedRoute,
@@ -49,8 +48,7 @@ export class CentroCostosComponent implements OnInit {
             this.companias = companias;
           } else {
             this.companiaService.getAllCompania()
-            // tslint:disable-next-line: no-shadowed-variable
-            .subscribe(companias => {
+            .subscribe( companias => {
               this.companias = companias;
             });
           }
@@ -95,10 +93,6 @@ export class CentroCostosComponent implements OnInit {
     filterValue = filterValue.trim();
     filterValue = filterValue.toLowerCase();
     this.dataSource.filter = filterValue;
-    /* this.array.filter = filterValue.trim().toLowerCase();
-    if (this.array.paginator) {
-      this.array.paginator.firstPage();
-    } */
   }
   selec() {
     this.selected = false;
@@ -117,7 +111,6 @@ export class CentroCostosComponent implements OnInit {
           'Se guardo el Centro de Costos!',
           'success'
         )
-        // this.centroForm.reset();
         this.renderDataTable();
       });
   }
@@ -138,7 +131,6 @@ export class CentroCostosComponent implements OnInit {
     if (result) {
       console.log('Yes clicked');
       this.delete(id);
-      // DO SOMETHING
     }
   });
 }

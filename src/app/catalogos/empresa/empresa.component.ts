@@ -5,7 +5,7 @@ import { FormGroup, FormBuilder, Validators, NgForm } from '@angular/forms';
 import { CompaniaService } from 'src/app/core/service/compania.service';
 import { Compania } from 'src/app/core/models/compania';
 import { ConfirmationDialogComponent } from './../../shared/confirmation-dialog/confirmation-dialog.component';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatSort } from '@angular/material';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -20,7 +20,9 @@ export class EmpresaComponent implements OnInit {
   form: FormGroup;
   dataSource: any;
 
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild(MatPaginator, {static: true}  ) paginator: MatPaginator;
+  @ViewChild(MatSort, {static: true} ) sort: MatSort;
+
   constructor( private fb: FormBuilder, private cs: CompaniaService, public dialog: MatDialog) {
     this.form = this.fb.group({
       desc_id: ['', Validators.required],
@@ -41,10 +43,14 @@ export class EmpresaComponent implements OnInit {
   }
 
   ngOnInit() {
-
     this.obtener();
   }
 
+  // tslint:disable-next-line: use-lifecycle-interface
+  ngAfterViewInit(): void {
+    this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
+  }
   obtener() {
     this.cs.getAllCompania()
     .subscribe(
@@ -124,17 +130,6 @@ export class EmpresaComponent implements OnInit {
         );
       }
     });
-    /*const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      width: '550px',
-      data: 'Estas seguro de eliminar este grupo?'
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        console.log('Yes clicked');
-        this.delete(id);
-        // DO SOMETHING
-      }
-    });*/
   }
 }
 

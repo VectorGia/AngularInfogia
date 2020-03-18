@@ -50,7 +50,7 @@ params: any;
         );
         return;
       }
-      paramsRequest[parametro.clave] = parametro.valor;
+      paramsRequest[parametro.clave] = parametro.valor ? parametro.valor : ' ';
     }
     const request = {idReporte: this.data.id, nombreReporte: this.data.nombre, parametros: paramsRequest};
 

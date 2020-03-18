@@ -15,6 +15,8 @@ export class CentroCostosEditComponent implements OnInit {
   id: string;
   companias: any;
   modelos: any;
+  
+  selected = false;
   constructor(private aR: ActivatedRoute, private companiaService: CompaniaService,
               private fB: FormBuilder, private cS: CentrosService, private router: Router,
               private modeloService: NegocioService) {
@@ -86,14 +88,20 @@ export class CentroCostosEditComponent implements OnInit {
    getIdProyecto(url){
       var inicioCad="costos/";
       var idxIni=url.indexOf(inicioCad);
-      idxIni=idxIni+inicioCad.length;
-      var idxFin=url.indexOf("/",idxIni);
+      idxIni = idxIni+inicioCad.length;
+      var idxFin = url.indexOf("/", idxIni);
       var idProyecto;
-      if(idxFin===-1){
-          idProyecto=url.substring(idxIni);
-      }else{
-          idProyecto=url.substring(idxIni,idxFin);
+      if(idxFin === -1){
+          idProyecto = url.substring(idxIni);
+      } else {
+          idProyecto = url.substring(idxIni,idxFin);
       }
       return idProyecto;
+  }
+  selec() {
+    this.selected = false;
+  }
+  select() {
+    this.selected = true;
   }
 }

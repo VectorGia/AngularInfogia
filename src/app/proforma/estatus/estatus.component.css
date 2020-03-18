@@ -1,0 +1,9 @@
+table th{
+  text-align: center;
+  background-color: #000080;
+  color: white;
+  border-right: #000080;
+}
+table td {
+  text-align: center;
+}

@@ -28,11 +28,8 @@
     width: 100%;
   }
 
-  example-container {
-    height: 400px;
-    overflow: auto;
-  }
-  
-  table {
-    width: 100%;
+  table th{
+    background-color: #000080;
+    color: white;
+    border-right: #000080;
   }

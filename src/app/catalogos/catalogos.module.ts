@@ -19,7 +19,13 @@ import { RubrosEditComponent } from './rubros-edit/rubros-edit.component';
 
 
 @NgModule({
-  declarations: [CentroCostosComponent, CentroCostosEditComponent, EmpresaComponent, EmpresaEditComponent, MonedaComponent, MonedaEditComponent, NegocioComponent, NegocioEditComponent, ProyectoComponent, ProyectoEditComponent, RubrosComponent, RubrosEditComponent],
+  declarations: [CentroCostosComponent,
+                CentroCostosEditComponent,
+                EmpresaComponent,
+                EmpresaEditComponent,
+                MonedaComponent,
+                MonedaEditComponent,
+                NegocioComponent, NegocioEditComponent, ProyectoComponent, ProyectoEditComponent, RubrosComponent, RubrosEditComponent],
   imports: [
     CommonModule,
     CatalogosRoutingModule,

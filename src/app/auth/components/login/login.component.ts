@@ -44,8 +44,7 @@ export class LoginComponent implements OnInit {
     this.api.login(form).subscribe(
       data => {
         console.log(data.Status);
-        if(data.message == true){
-          
+        if (data.message == true) {
           localStorage.setItem('isLoggedIn', "true");
           localStorage.setItem('token', this.f.username.value);
           this.router.navigate([this.returnUrl]);

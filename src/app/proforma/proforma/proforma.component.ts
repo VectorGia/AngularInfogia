@@ -34,6 +34,7 @@ export class ProformaComponent implements OnInit {
   seisseis = false;
   nuevetres = false;
   doce = false;
+  isLoading = false;
   detallesProfToRender: any = [];
   detallesProforma: any;
   detallesProformaIdxIdRubro: any;
@@ -144,6 +145,7 @@ getAnios() {
 
 
   proformar(form: any) {
+    this.isLoading = true;
     this.proformaService.getProforma(form).subscribe(res => {this.renderDetallesProforma(res);});
     if(this.esProformaContable) {
       this.proformaService.getAjustes(form).subscribe(res => {
@@ -151,6 +153,7 @@ getAnios() {
         console.log('getAjustess %o', res);
       });
     }
+    this.isLoading = false;
   }
   renderDetallesProforma(detallesProforma) {
     this.detallesProforma = detallesProforma;
@@ -185,7 +188,8 @@ getAnios() {
   }
 
   guardarProforma() {
-    if (this.isValidDetalles(this.detallesProfToRender, ['nombre_rubro', 'fecha_captura', 'clave_rubro', 'aritmetica', 'idInterno', 'editable', 'campoEnAjustes', 'hijos', 'estilo', 'tipo'])) {
+    if (this.isValidDetalles(this.detallesProfToRender, ['nombre_rubro', 
+    'fecha_captura', 'clave_rubro', 'aritmetica', 'idInterno', 'editable', 'campoEnAjustes', 'hijos', 'estilo', 'tipo'])) {
       this.proformaService.addProforma(this.detallesProforma)
         .subscribe(res => {
           Swal.fire(

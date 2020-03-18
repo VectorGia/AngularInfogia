@@ -14,7 +14,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./proyecto.component.css']
 })
 export class ProyectoComponent implements OnInit {
-  displayedColumns: string[] = ['position', 'id', 'name', 'responsable', 'empresa', 'action'];
+  displayedColumns: string[] = ['position', 'name', 'responsable', 'empresa', 'action'];
   dataSource: any;
   proyectoForm: FormGroup;
   companias: any;

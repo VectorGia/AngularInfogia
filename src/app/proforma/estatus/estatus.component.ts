@@ -24,7 +24,7 @@ export class EstatusComponent implements OnInit {
   tcaptura: any;
   proformar: any;
   periodoForm: FormGroup;
-  periodo:any;
+  periodo: any;
   estatus: any;
   constructor(private periodoService: PeriodoService, private capturaService: TipocapturaService,
               private proformarService: TipoproformaService, private formBuilder: FormBuilder, public dialog: MatDialog) {
