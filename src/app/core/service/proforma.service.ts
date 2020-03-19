@@ -54,6 +54,10 @@ export class ProformaService {
      return this.http.put(`${this.url}/api/Proforma/${id}`, proforma);
    }
 
+   deleteProforma(id) {
+     return this.http.delete(`${this.url}/api/Proforma/${id}`);
+   }
+
    private handleError(error: HttpErrorResponse) {
      console.log(error);
      return throwError('algo salio mal');

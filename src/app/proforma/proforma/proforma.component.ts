@@ -8,7 +8,6 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {TipoproformaService} from 'src/app/core/service/tipoproforma.service';
 import {TipocapturaService} from 'src/app/core/service/tipocaptura.service';
 import Swal from 'sweetalert2';
-import * as XLSX from 'xlsx';
 import {ExcelService} from '../../core/service/excel.service';
 type AOA = any[][];
 @Component({
@@ -17,8 +16,7 @@ type AOA = any[][];
   styleUrls: ['./proforma.component.css']
 })
 export class ProformaComponent implements OnInit {
-  constructor(private montosServies: MontosconsolidadosService,
-              private fB: FormBuilder, private proformaService: ProformaService,
+  constructor(private fB: FormBuilder, private proformaService: ProformaService,
               private empresaService: CompaniaService, private centroService: CentrosService,
               private activeRoute: ActivatedRoute,
               private router: Router,
