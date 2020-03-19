@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { GlobalVariable } from './../../shared/global';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { Proforma } from '../models/proforma';
 import { ProformaDetalle } from '../models/proformadetalle';
+import { catchError } from 'rxjs/operators';
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -38,7 +39,10 @@ export class ProformaService {
 
    getProforma(proforma): Observable<Proforma> {
      console.log('recibi: ', proforma);
-     return this.http.post<any>(`${this.url}/api/Proforma`, proforma);
+     return this.http.post<any>(`${this.url}/api/Proforma`, proforma)
+     .pipe(
+       catchError(this.handleError)
+     );
    }
 
    addProforma(proforma) {
@@ -48,5 +52,10 @@ export class ProformaService {
 
    updateProforma(id, proforma) {
      return this.http.put(`${this.url}/api/Proforma/${id}`, proforma);
+   }
+
+   private handleError(error: HttpErrorResponse) {
+     console.log(error);
+     return throwError('algo salio mal');
    }
 }

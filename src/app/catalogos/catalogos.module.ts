@@ -16,6 +16,7 @@ import { MaterialModule } from '../material/material.module';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RubrosComponent } from './rubros/rubros.component';
 import { RubrosEditComponent } from './rubros-edit/rubros-edit.component';
+import { SharedModule } from '../shared/shared.module';
 
 
 @NgModule({
@@ -31,7 +32,11 @@ import { RubrosEditComponent } from './rubros-edit/rubros-edit.component';
     CatalogosRoutingModule,
     MaterialModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    SharedModule
+  ],
+  exports: [
+
   ]
 })
 export class CatalogosModule { }

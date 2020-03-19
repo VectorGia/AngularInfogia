@@ -34,7 +34,6 @@ export class ProformaComponent implements OnInit {
   seisseis = false;
   nuevetres = false;
   doce = false;
-  isLoading = false;
   detallesProfToRender: any = [];
   detallesProforma: any;
   detallesProformaIdxIdRubro: any;
@@ -71,7 +70,7 @@ export class ProformaComponent implements OnInit {
     this.tipoproformaService.getAllTipoProformas().subscribe(res => {this.tiposProforma = res; });
     this.tipocapturaService.getAllTipoCaptura().subscribe(res => {this.tiposCaptura = res; });
     this.activeRoute.params.subscribe((params) => {
-      if(params.id){
+      if (params.id) {
         this.id = params.id;
         this.proformaService.getProformaby(this.id)
           .subscribe(res => {
@@ -94,7 +93,7 @@ builForm() {
   });
 }
 
-getTiposCambio(form){
+getTiposCambio(form) {
   this.proformaService.getTiposCambio(form).subscribe(res => {
     this.tiposCambio = [];
     for (const key in res) {
@@ -142,18 +141,23 @@ getAnios() {
     }
   }
 
-
-
   proformar(form: any) {
-    this.isLoading = true;
-    this.proformaService.getProforma(form).subscribe(res => {this.renderDetallesProforma(res);});
-    if(this.esProformaContable) {
+    this.proformaService.getProforma(form)
+    .subscribe(
+      res => {
+        this.consulta = true;
+        this.renderDetallesProforma(res);
+      },
+      error => {
+        console.error(error);
+      }
+    );
+    if (this.esProformaContable) {
       this.proformaService.getAjustes(form).subscribe(res => {
         this.ajustes = res;
         console.log('getAjustess %o', res);
       });
     }
-    this.isLoading = false;
   }
   renderDetallesProforma(detallesProforma) {
     this.detallesProforma = detallesProforma;
@@ -188,7 +192,7 @@ getAnios() {
   }
 
   guardarProforma() {
-    if (this.isValidDetalles(this.detallesProfToRender, ['nombre_rubro', 
+    if (this.isValidDetalles(this.detallesProfToRender, ['nombre_rubro',
     'fecha_captura', 'clave_rubro', 'aritmetica', 'idInterno', 'editable', 'campoEnAjustes', 'hijos', 'estilo', 'tipo'])) {
       this.proformaService.addProforma(this.detallesProforma)
         .subscribe(res => {
@@ -214,6 +218,9 @@ getAnios() {
     }).then((result) => {
       if (result.value) {
           this.router.navigate(['/proforma/proforma']);
+          this.consulta = false;
+          this.formProforma.reset();
+          this.detallesProfToRender = [];
       }
     });
   }
@@ -251,15 +258,15 @@ getAnios() {
   }
 /*a cada detalle de la proforma calculada, se le aplica un factor correspondiente al tipo de cambio */
   recalculaPorTipoCambio(factor) {
-    let detalles = [];
-    for(let i = 0; i < this.detallesProforma.length;i++){
+    const detalles = [];
+    for (let i = 0; i < this.detallesProforma.length; i++) {
       detalles.push( Object.assign({}, this.detallesProforma[i]));
     }
     if ( factor != 1 ) {
       for (let i = 0; i < detalles.length; i++) {
-        let detActual = detalles[i];
+        const detActual = detalles[i];
         for (const prop in detActual) {
-          let valor = detActual[prop];
+          const valor = detActual[prop];
           if (!isNaN(valor)) {
             detActual[prop] = valor * factor;
           }
@@ -335,21 +342,23 @@ getAnios() {
   }
 
   import(fileList: FileList) {
-    let self = this;
-    this.exportService.importExcel(fileList, function(res) {
-      let datosProforma = res[0];
+    const self = this;
+    this.exportService.importExcel(fileList, (res) => {
+      const datosProforma = res[0];
       self.formProforma.patchValue(datosProforma);
       self.renderDetallesProforma(res);
       self.recalculateAll(self.detallesProforma);
       if (datosProforma.id_proforma > 0) {
         self.consulta = true;
         self.proformaExistente = true;
-        self.getTiposCambio({centro_costo_id: datosProforma.centro_costo_id, anio: datosProforma.anio, tipo_captura_id: datosProforma.tipo_captura_id});
-      }else{
+        self.getTiposCambio({centro_costo_id: datosProforma.centro_costo_id,
+          anio: datosProforma.anio, tipo_captura_id: datosProforma.tipo_captura_id});
+      } else {
         self.consulta = false;
         self.proformaExistente = false;
       }
-    });
+    }
+    );
   }
 
 
@@ -358,9 +367,9 @@ getAnios() {
     let suma = 0;
     for (let j = 0; j < columnsNames.length; j++) {
       const colName = columnsNames[j];
-      if(!isNaN(detalle[colName])) {
+      if (!isNaN(detalle[colName])) {
         suma += parseFloat(detalle[colName]);
-      }else{
+      } else {
         console.warn('La columna ' + colName + 'del detalle ' + detalle.nombre_rubro + ', no es numero');
       }
     }
@@ -402,17 +411,17 @@ getAnios() {
 
   calculaDetTot(detalles, detallesTotales) {
     console.log('##### detalles=%o, detallesTotales=%o', detalles, detallesTotales);
-    let detallesTotalesNoEvaluados=[];
-    let detallesTotalesEvaluados=[];
+    const detallesTotalesNoEvaluados = [];
+    const detallesTotalesEvaluados = [];
     detallesTotales.forEach(detalleTotal => {
-      let evaluado = this.evaluaDetalleTotal(detalleTotal, detalles);
+      const evaluado = this.evaluaDetalleTotal(detalleTotal, detalles);
       if (!evaluado) {
         detallesTotalesNoEvaluados.push(detalleTotal);
       } else {
         detallesTotalesEvaluados.push(detalleTotal);
       }
     });
-    let allDetalles=detalles.concat(detallesTotalesEvaluados);
+    const allDetalles = detalles.concat(detallesTotalesEvaluados);
     detallesTotalesNoEvaluados.forEach(detalleTotal => {
       this.evaluaDetalleTotal(detalleTotal, allDetalles);
     });
@@ -484,13 +493,13 @@ getAnios() {
     const detprof = Object.assign({}, detalle);
     for (const prop in this.ponderacionCampos) {
       if (this.ponderacionCampos[prop] > mesinicio) {
-        //detReal[prop] = 0;
+        // detReal[prop] = 0;
         detReal.tipo = 'real';
-        //-> proformados
+        // -> proformados
       } else {
-        //detprof[prop] = 0;
+        // detprof[prop] = 0;
         detprof.tipo = 'proform';
-        //-> reales
+        // -> reales
       }
     }
     return [detReal, detprof];
