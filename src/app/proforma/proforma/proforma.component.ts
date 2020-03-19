@@ -147,6 +147,11 @@ getAnios() {
         this.renderDetallesProforma(res);
       },
       error => {
+        Swal.fire(
+          'Error!',
+           error,
+          'warning'
+        );
         console.error(error);
       }
     );
@@ -200,7 +205,15 @@ getAnios() {
             'success'
           );
           // alert('Se guardo');
-        });
+        },
+        error => {
+          Swal.fire(
+            'Error!',
+             error,
+            'warning'
+          );
+        }
+        );
     }
   }
   exitAlert() {
@@ -244,13 +257,21 @@ getAnios() {
                                                                     'campoEnAjustes', 'hijos', 'estilo', 'tipo'])) {
       this.recalculateAll(this.detallesProforma); // /HNA:Antes de mandar a guardar la proforma se recalcula completa
       this.proformaService.updateProforma(this.id, this.detallesProforma)
-        .subscribe( res => {
+        .subscribe( 
+        res => {
           Swal.fire(
             'Actualizada!',
             'Se guardaron los cambios.',
             'success'
           )
           console.log(res);
+        },
+        error => {
+          Swal.fire(
+            'Error!',
+             error,
+            'warning'
+          );
         });
     }
   }

@@ -11,7 +11,7 @@ import Swal from 'sweetalert2';
 export class BuscarproformaComponent implements OnInit {
   displayedColumns = ['id', 'nombre', 'fecha', 'action'];
   proforma: any;
-  constructor(private proformaService: ProformaService, private exportService: ExcelService) { }
+  constructor(private proformaService: ProformaService) { }
 
   ngOnInit() {
     this.fetchProforma();
@@ -24,7 +24,7 @@ export class BuscarproformaComponent implements OnInit {
       console.log('consultar: ', this.proforma);
     });
   }
-  
+
   openDialog(id): void {
     const swalWithBootstrapButtons = Swal.mixin({
       customClass: {

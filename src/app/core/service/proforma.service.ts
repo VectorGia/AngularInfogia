@@ -22,7 +22,10 @@ export class ProformaService {
    }
 
   getAllProformas(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.url}/api/Proforma`);
+    return this.http.get<any[]>(`${this.url}/api/Proforma`)
+    .pipe(
+      catchError(this.handleError)
+    );
   }
   getAjustes(proforma) {
     return this.http.post<any>(`${this.url}/api/Proforma/ajustes`, proforma);
@@ -34,7 +37,10 @@ export class ProformaService {
     return this.http.get<any>(`${this.url}/api/Proforma/anios`);
   }
   getProformaby(id) {
-    return this.http.get<any>(`${this.url}/api/Proforma/${id}`);
+    return this.http.get<any>(`${this.url}/api/Proforma/${id}`)
+    .pipe(
+      catchError(this.handleError)
+    );
   }
 
    getProforma(proforma): Observable<Proforma> {
@@ -47,19 +53,28 @@ export class ProformaService {
 
    addProforma(proforma) {
      console.log('recibi proforma: ', proforma);
-     return this.http.post<any>(`${this.url}/api/Proforma/save`, proforma);
+     return this.http.post<any>(`${this.url}/api/Proforma/save`, proforma)
+     .pipe(
+      catchError(this.handleError)
+    );
    }
 
    updateProforma(id, proforma) {
-     return this.http.put(`${this.url}/api/Proforma/${id}`, proforma);
+     return this.http.put(`${this.url}/api/Proforma/${id}`, proforma)
+     .pipe(
+      catchError(this.handleError)
+    );
    }
 
    deleteProforma(id) {
-     return this.http.delete(`${this.url}/api/Proforma/${id}`);
+     return this.http.delete(`${this.url}/api/Proforma/${id}`)
+     .pipe(
+      catchError(this.handleError)
+    );
    }
 
    private handleError(error: HttpErrorResponse) {
      console.log(error);
-     return throwError('algo salio mal');
+     return throwError('algo salio mal, intentalo de nuevo');
    }
 }

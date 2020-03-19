@@ -5,6 +5,7 @@ import * as FileSaver from 'file-saver';
 import {Observable} from 'rxjs';
 import {Reporte} from '../models/reporte';
 import {Parametros} from '../models/parametros';
+import Swal from 'sweetalert2';
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'})
@@ -37,10 +38,20 @@ export class ExcelService {
   }
 
   public exportProforma(detalleProforma) {
-    return this.http.post<any>(`${this.url}/api/ProformaExcel/export`, detalleProforma).subscribe(res => {
+    return this.http.post<any>(`${this.url}/api/ProformaExcel/export`, detalleProforma)
+    .subscribe(
+      res => {
       console.log('excel B64 ', res.resB64);
       this.downloadExcel('proforma.xlsx', res.resB64);
-    });
+      },
+      error => {
+        Swal.fire(
+          'Error!',
+           error,
+          'warning'
+        );
+      }
+    );
   }
   public importExcel(fileList: FileList, callback): void {
     let file = fileList[0];

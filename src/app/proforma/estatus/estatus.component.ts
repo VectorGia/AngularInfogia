@@ -87,7 +87,7 @@ export class EstatusComponent implements OnInit {
         cancelButton: 'btn btn-danger'
       },
       buttonsStyling: false
-    })
+    });
 
     swalWithBootstrapButtons.fire({
       title: 'Estas seguro?',
@@ -131,21 +131,21 @@ export class EstatusComponent implements OnInit {
       this.periodo = data;
       console.log('periodo: ', this.periodo);
 
-      if(this.periodo.estatus) {
+      if (this.periodo.estatus) {
         this.periodo.estatus = false;
         console.log('tiene estatus', this.periodo);
         this.periodoService.updatePeriodo(id, this.periodo)
       .subscribe(periodoup => {
         console.log('estatus: ', periodoup);
-      })
+      });
       } else {
         this.periodo.estatus = true;
         this.periodoService.updatePeriodo(id, this.periodo)
       .subscribe(periodoup => {
         console.log('estatus: ', periodoup);
-      })
+      });
       }
-    })
+    });
 
   }
 
