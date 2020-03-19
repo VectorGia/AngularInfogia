@@ -47,7 +47,7 @@ export class BuscarproformaComponent implements OnInit {
         this.delete(id);
         swalWithBootstrapButtons.fire(
           'Eliminado!',
-          'El periodo se ha borrado.',
+          'La proforma se ha borrado.',
           'success'
         );
       } else if (
@@ -56,7 +56,7 @@ export class BuscarproformaComponent implements OnInit {
       ) {
         swalWithBootstrapButtons.fire(
           'Cancelado',
-          'El periodo no se elimino :)',
+          'La proforma no se elimino :)',
           'error'
         );
       }
