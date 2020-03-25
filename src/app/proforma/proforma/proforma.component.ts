@@ -53,10 +53,10 @@ export class ProformaComponent implements OnInit {
   tiposProforma: any;
   tiposCaptura: any;
   ponderacionCampos = {
-    'total_resultado': -1, 'anios_posteriores_resultado ': -1, 'ejercicio_resultado': -1, 'enero_monto_resultado': 1,
-    'febrero_monto_resultado': 1, 'marzo_monto_resultado': 3, 'abril_monto_resultado': 4, 'mayo_monto_resultado': 5,
-    'junio_monto_resultado': 6, 'julio_monto_resultado': 7, 'agosto_monto_resultado': 8, 'septiembre_monto_resultado': 9,
-    'octubre_monto_resultado': 10, 'noviembre_monto_resultado': 11, 'diciembre_monto_resultado': 12
+    ' total_resultado ': -1, 'anios_posteriores_resultado ': -1, ' ejercicio_resultado': -1, ' enero_monto_resultado': 1,
+    ' febrero_monto_resultado': 1, ' marzo_monto_resultado': 3, ' abril_monto_resultado': 4, ' mayo_monto_resultado': 5,
+    ' junio_monto_resultado': 6, ' julio_monto_resultado': 7, ' agosto_monto_resultado': 8, ' septiembre_monto_resultado': 9,
+    ' octubre_monto_resultado': 10, ' noviembre_monto_resultado': 11, ' diciembre_monto_resultado': 12
   };
   esProformaContable = false;
 
@@ -257,13 +257,13 @@ getAnios() {
                                                                     'campoEnAjustes', 'hijos', 'estilo', 'tipo'])) {
       this.recalculateAll(this.detallesProforma); // /HNA:Antes de mandar a guardar la proforma se recalcula completa
       this.proformaService.updateProforma(this.id, this.detallesProforma)
-        .subscribe( 
+        .subscribe(
         res => {
           Swal.fire(
             'Actualizada!',
             'Se guardaron los cambios.',
             'success'
-          )
+          );
           console.log(res);
         },
         error => {
@@ -297,9 +297,9 @@ getAnios() {
 
   recalculaPorAjusteBalanza(aplicar) {
     this.ajustes.forEach(ajuste => {
-      let detalleProforma = this.detallesProformaIdxIdRubro[ajuste.rubro_id];
+      const detalleProforma = this.detallesProformaIdxIdRubro[ajuste.rubro_id];
       for (const prop in detalleProforma) {
-        let valor = detalleProforma[prop];
+        const valor = detalleProforma[prop];
         if (valor && !isNaN(valor)) {
           if (aplicar) {
             detalleProforma[prop] = valor + ajuste[prop];

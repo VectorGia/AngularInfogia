@@ -31,9 +31,9 @@ export class ExcelService {
     return this.http.get<any>(`${this.url}/api/Reportes/parametros/${id}`);
    }
   public generarReporte(reportesRequest) {
-    console.log("excel B64 ",reportesRequest);
-    return this.http.post<any>(`${this.url}/api/Reportes/generar`, reportesRequest).subscribe(res =>{
-      this.downloadExcel(reportesRequest.nombreReporte+".xlsx",res.resB64);
+    console.log('excel B64 ', reportesRequest);
+    return this.http.post<any>(`${this.url}/api/Reportes/generar`, reportesRequest).subscribe(res => {
+      this.downloadExcel(reportesRequest.nombreReporte + '.xlsx', res.resB64);
     });
   }
 
@@ -54,19 +54,19 @@ export class ExcelService {
     );
   }
   public importExcel(fileList: FileList, callback): void {
-    let file = fileList[0];
-    let fileReader: FileReader = new FileReader();
-    let self = this;
+    const file = fileList[0];
+    const fileReader: FileReader = new FileReader();
+    const self = this;
     fileReader.onloadend = (x) => {
-      let urlB64 = fileReader.result.toString();
-      let b64 = urlB64.substring(urlB64.indexOf('base64,')+7);
+      const urlB64 = fileReader.result.toString();
+      const b64 = urlB64.substring(urlB64.indexOf('base64,') + 7);
       console.log('enviando excel:', b64);
-      self.http.post<any>(`${self.url}/api/ProformaExcel/import`, {b64Data:b64}).subscribe(callback);
+      self.http.post<any>(`${self.url}/api/ProformaExcel/import`, {b64Data: b64}).subscribe(callback);
     };
     fileReader.readAsDataURL(file);
   }
   downloadExcel(filename, contenidoB64) {
-    let url = 'data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,' + contenidoB64;
+    const url = 'data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,' + contenidoB64;
     FileSaver.saveAs(url, filename);
   }
 }

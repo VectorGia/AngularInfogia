@@ -14,7 +14,7 @@ import { ReportesComponent } from './reportes/reportes.component';
 import { DialogReportComponent } from './dialog-report/dialog-report.component';
 import {ConfirmationDialogComponent} from '../shared/confirmation-dialog/confirmation-dialog.component';
 import {DialogOverviewDialogComponent} from '../shared/dialog-overview-dialog/dialog-overview-dialog.component';
-
+import { CronEditorModule } from 'cron-editor';
 
 @NgModule({
   declarations: [EstatusComponent,
@@ -29,7 +29,8 @@ import {DialogOverviewDialogComponent} from '../shared/dialog-overview-dialog/di
     ProformaRoutingModule,
     MaterialModule,
     ReactiveFormsModule,
-    SharedModule
+    SharedModule,
+    CronEditorModule
   ],
   entryComponents: [
   DialogReportComponent,

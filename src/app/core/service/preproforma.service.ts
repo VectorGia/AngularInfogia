@@ -18,6 +18,6 @@ export class PreproformaService {
   }
 
   getPreProforma(){
-    return this.http.get(`${this.url}/api/PreProforma`)
+    return this.http.get(`${this.url}/api/PreProforma`);
   }
 }

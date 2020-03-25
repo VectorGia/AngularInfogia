@@ -7,7 +7,7 @@ import {finalize} from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
-export class InterceptorsService implements HttpInterceptor{
+export class InterceptorsService implements HttpInterceptor {
 
   constructor(public loaderService: LoaderService) { }
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {

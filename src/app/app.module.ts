@@ -22,6 +22,7 @@ import { MatListModule } from '@angular/material/list';
 import { ConfirmationDialogComponent } from './shared/confirmation-dialog/confirmation-dialog.component';
 import {LoaderService} from './core/service/loader.service';
 import {InterceptorsService} from './core/service/interceptors.service';
+import { CronEditorModule } from 'cron-editor';
 
 
 @NgModule({
@@ -45,7 +46,8 @@ import {InterceptorsService} from './core/service/interceptors.service';
     LayoutModule,
     MatToolbarModule,
     MatSidenavModule,
-    MatListModule
+    MatListModule,
+    CronEditorModule,
   ],
   providers: [LoaderService,
     { provide: HTTP_INTERCEPTORS, useClass: InterceptorsService, multi: true}],

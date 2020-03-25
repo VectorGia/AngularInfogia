@@ -1,4 +1,4 @@
-<mat-card class="container">
+<!-- <mat-card class="container">
   <mat-card-header>
     <mat-card-title>
       Extracción Programada
@@ -30,7 +30,7 @@
           <div class="col">
             <div class="mat-elevation-z8">
               <table mat-table [dataSource]="dataSource">
-                <!-- Position Column -->
+               
                 <ng-container matColumnDef="idDB">
                   <th mat-header-cell *matHeaderCellDef>No.</th>
                   <td mat-cell *matCellDef="let element">
@@ -43,21 +43,20 @@
                     {{ element.desc_id }}
                   </td>
                 </ng-container>
-                <!-- Name Column -->
+               
                 <ng-container matColumnDef="empresa">
                   <th mat-header-cell *matHeaderCellDef>EMPRESA</th>
                   <td mat-cell *matCellDef="let element">
                     {{ element.nombre }}
                   </td>
                 </ng-container>
-                <!-- Weight Column -->
+           
                 <ng-container matColumnDef="abrev">
                   <th mat-header-cell *matHeaderCellDef>ABREVIATURA</th>
                   <td mat-cell *matCellDef="let element">
                     {{ element.abrev }}
                   </td>
                 </ng-container>
-                <!-- Symbol Column -->
                 <ng-container matColumnDef="etl">
                   <th mat-header-cell *matHeaderCellDef>ETL</th>
                   <td mat-cell *matCellDef="let element">
@@ -105,4 +104,1148 @@
       </mat-tab>
     </mat-tab-group>
     </mat-card-content>
+</mat-card> -->
+
+
+<mat-card class="container">
+  <mat-card-header>
+    <mat-card-title> Extracción Programada </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <div class="row">
+  <cron-editor [(cron)]="cronExpression" [disabled]="isCronDisabled" [(options)]="cronOptions"></cron-editor>
+  
+  <hr/>
+  <p>El resultado de la expresion: <strong> {{cronExpression}} </strong></p>
+</div>
+  <!--   <mat-tab-group>
+      <mat-tab label="Segundos">
+        <div class="row">
+          <div class="col-12">
+            <input type="radio" name="" id="" checked="checked">
+            <label for=""> Cada segundo</label>
+          </div>
+          <div class="col-12">
+            <input type="radio" checked="checked">
+            <label for="">
+              <font>Cada</font>
+              <select name="" id="">
+                <option value="">1</option>
+                <option value="">2</option>
+              </select>
+              <font>segundo especifico a partir del segundo </font>
+              <select name="" id="">
+                <option value="">1</option>
+                <option value="">2</option>
+              </select>
+            </label>
+          </div>
+          <div class="col-12">
+            <input type="radio">
+            <label for="">
+              <font style="vertical-align: inherit;">
+                <font style="vertical-align: inherit;">Segundo especifico (elije uno o muchos)</font>
+              </font>
+            </label>
+            <div>
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">00</font>
+                </font>
+              </label>
+              <input type="checkbox" value="0">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">01</font>
+                </font>
+              </label>
+              <input type="checkbox" value="1">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">02</font>
+                </font>
+              </label>
+              <input type="checkbox" value="2">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">03</font>
+                </font>
+              </label>
+              <input type="checkbox" value="3">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">04</font>
+                </font>
+              </label>
+              <input type="checkbox" value="4">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">05</font>
+                </font>
+              </label>
+              <input type="checkbox" value="5">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">06</font>
+                </font>
+              </label>
+              <input type="checkbox" value="6">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">07</font>
+                </font>
+              </label>
+              <input type="checkbox" value="7">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">08</font>
+                </font>
+              </label>
+              <input type="checkbox" value="8">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">09</font>
+                </font>
+              </label>
+              <input type="checkbox" value="9">
+            </div>
+            <div>
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">10</font>
+                </font>
+              </label>
+              <input type="checkbox" value="10">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">11</font>
+                </font>
+              </label>
+              <input type="checkbox" value="11">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">12</font>
+                </font>
+              </label>
+              <input type="checkbox" value="12">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">13</font>
+                </font>
+              </label>
+              <input type="checkbox" value="13">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">14</font>
+                </font>
+              </label>
+              <input type="checkbox" value="14">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">15</font>
+                </font>
+              </label>
+              <input type="checkbox" value="15">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">16</font>
+                </font>
+              </label>
+              <input type="checkbox" value="16">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">17</font>
+                </font>
+              </label>
+              <input type="checkbox" value="17">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">18</font>
+                </font>
+              </label>
+              <input type="checkbox" value="18">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">19</font>
+                </font>
+              </label>
+              <input type="checkbox" value="19">
+            </div>
+            <div>
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">20</font>
+                </font>
+              </label>
+              <input type="checkbox" value="20">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">21</font>
+                </font>
+              </label>
+              <input type="checkbox" value="21">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">22</font>
+                </font>
+              </label>
+              <input type="checkbox" value="22">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">23</font>
+                </font>
+              </label>
+              <input type="checkbox" value="23">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">24</font>
+                </font>
+              </label>
+              <input type="checkbox" value="24">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">25</font>
+                </font>
+              </label>
+              <input type="checkbox" value="25">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">26</font>
+                </font>
+              </label>
+              <input type="checkbox" value="26">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">27</font>
+                </font>
+              </label>
+              <input type="checkbox" value="27">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">28</font>
+                </font>
+              </label>
+              <input type="checkbox" value="28">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">29</font>
+                </font>
+              </label>
+              <input type="checkbox" value="29">
+            </div>
+          </div>
+          <div class="col-12">
+            <input type="radio">
+            <label for="">
+              <font style="vertical-align: inherit;">
+                <font>Cada segundo entre </font>
+              </font>
+              <select name="" id="">
+                <option value="0">00</option>
+                <option value="1">01</option>
+              </select>
+              <font style="vertical-align: inherit;">
+                <font>y </font>
+              </font>
+              <select name="" id="">
+                <option value="0">00</option>
+                <option value="1">01</option>
+              </select>
+            </label>
+          </div>
+        </div>
+      </mat-tab>
+      <mat-tab label="Minutos">
+        <div class="row">
+          <div class="col-12">
+            <input type="radio" name="" id="">
+            <label for=""> Cada minuto</label>
+          </div>
+          <div class="col-12">
+            <input type="radio">
+            <label for="">
+              <font>Cada</font>
+              <select name="" id="">
+                <option value="">1</option>
+                <option value="">2</option>
+              </select>
+              <font>minuto(s) a partir del minuto </font>
+              <select name="" id="">
+                <option value="">1</option>
+                <option value="">2</option>
+              </select>
+            </label>
+          </div>
+          <div class="col-12">
+            <input type="radio">
+            <label for="">
+              <font style="vertical-align: inherit;">
+                <font style="vertical-align: inherit;">Minutos especificos (elije uno o muchos)</font>
+              </font>
+            </label>
+            <div>
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">00</font>
+                </font>
+              </label>
+              <input type="checkbox" value="0">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">01</font>
+                </font>
+              </label>
+              <input type="checkbox" value="1">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">02</font>
+                </font>
+              </label>
+              <input type="checkbox" value="2">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">03</font>
+                </font>
+              </label>
+              <input type="checkbox" value="3">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">04</font>
+                </font>
+              </label>
+              <input type="checkbox" value="4">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">05</font>
+                </font>
+              </label>
+              <input type="checkbox" value="5">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">06</font>
+                </font>
+              </label>
+              <input type="checkbox" value="6">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">07</font>
+                </font>
+              </label>
+              <input type="checkbox" value="7">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">08</font>
+                </font>
+              </label>
+              <input type="checkbox" value="8">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">09</font>
+                </font>
+              </label>
+              <input type="checkbox" value="9">
+            </div>
+            <div>
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">10</font>
+                </font>
+              </label>
+              <input type="checkbox" value="10">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">11</font>
+                </font>
+              </label>
+              <input type="checkbox" value="11">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">12</font>
+                </font>
+              </label>
+              <input type="checkbox" value="12">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">13</font>
+                </font>
+              </label>
+              <input type="checkbox" value="13">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">14</font>
+                </font>
+              </label>
+              <input type="checkbox" value="14">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">15</font>
+                </font>
+              </label>
+              <input type="checkbox" value="15">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">16</font>
+                </font>
+              </label>
+              <input type="checkbox" value="16">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">17</font>
+                </font>
+              </label>
+              <input type="checkbox" value="17">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">18</font>
+                </font>
+              </label>
+              <input type="checkbox" value="18">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">19</font>
+                </font>
+              </label>
+              <input type="checkbox" value="19">
+            </div>
+            <div>
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">20</font>
+                </font>
+              </label>
+              <input type="checkbox" value="20">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">21</font>
+                </font>
+              </label>
+              <input type="checkbox" value="21">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">22</font>
+                </font>
+              </label>
+              <input type="checkbox" value="22">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">23</font>
+                </font>
+              </label>
+              <input type="checkbox" value="23">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">24</font>
+                </font>
+              </label>
+              <input type="checkbox" value="24">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">25</font>
+                </font>
+              </label>
+              <input type="checkbox" value="25">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">26</font>
+                </font>
+              </label>
+              <input type="checkbox" value="26">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">27</font>
+                </font>
+              </label>
+              <input type="checkbox" value="27">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">28</font>
+                </font>
+              </label>
+              <input type="checkbox" value="28">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">29</font>
+                </font>
+              </label>
+              <input type="checkbox" value="29">
+            </div>
+          </div>
+          <div class="col-12">
+            <input type="radio">
+            <label for="">
+              <font style="vertical-align: inherit;">
+                <font>Cada minuto entre </font>
+              </font>
+              <select name="" id="">
+                <option value="0">00</option>
+                <option value="1">01</option>
+              </select>
+              <font style="vertical-align: inherit;">
+                <font>y </font>
+              </font>
+              <select name="" id="">
+                <option value="0">00</option>
+                <option value="1">01</option>
+              </select>
+            </label>
+          </div>
+        </div>
+      </mat-tab>
+      <mat-tab label="Horas">
+        <div class="row">
+          <div class="col-12">
+            <input type="radio" name="" id="">
+            <label for=""> Cada hora</label>
+          </div>
+          <div class="col-12">
+            <input type="radio">
+            <label for="">
+              <font>Cada</font>
+              <select name="" id="">
+                <option value="">1</option>
+                <option value="">2</option>
+              </select>
+              <font>hora(s) a partir de la hora </font>
+              <select name="" id="">
+                <option value="">1</option>
+                <option value="">2</option>
+              </select>
+            </label>
+          </div>
+          <div class="col-12">
+            <input type="radio">
+            <label for="">
+              <font style="vertical-align: inherit;">
+                <font style="vertical-align: inherit;">Hora especifica (elije una o muchas)</font>
+              </font>
+            </label>
+            <div>
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">00</font>
+                </font>
+              </label>
+              <input type="checkbox" value="0">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">01</font>
+                </font>
+              </label>
+              <input type="checkbox" value="1">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">02</font>
+                </font>
+              </label>
+              <input type="checkbox" value="2">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">03</font>
+                </font>
+              </label>
+              <input type="checkbox" value="3">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">04</font>
+                </font>
+              </label>
+              <input type="checkbox" value="4">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">05</font>
+                </font>
+              </label>
+              <input type="checkbox" value="5">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">06</font>
+                </font>
+              </label>
+              <input type="checkbox" value="6">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">07</font>
+                </font>
+              </label>
+              <input type="checkbox" value="7">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">08</font>
+                </font>
+              </label>
+              <input type="checkbox" value="8">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">09</font>
+                </font>
+              </label>
+              <input type="checkbox" value="9">
+            </div>
+            <div>
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">10</font>
+                </font>
+              </label>
+              <input type="checkbox" value="10">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">11</font>
+                </font>
+              </label>
+              <input type="checkbox" value="11">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">12</font>
+                </font>
+              </label>
+              <input type="checkbox" value="12">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">13</font>
+                </font>
+              </label>
+              <input type="checkbox" value="13">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">14</font>
+                </font>
+              </label>
+              <input type="checkbox" value="14">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">15</font>
+                </font>
+              </label>
+              <input type="checkbox" value="15">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">16</font>
+                </font>
+              </label>
+              <input type="checkbox" value="16">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">17</font>
+                </font>
+              </label>
+              <input type="checkbox" value="17">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">18</font>
+                </font>
+              </label>
+              <input type="checkbox" value="18">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">19</font>
+                </font>
+              </label>
+              <input type="checkbox" value="19">
+            </div>
+            <div>
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">20</font>
+                </font>
+              </label>
+              <input type="checkbox" value="20">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">21</font>
+                </font>
+              </label>
+              <input type="checkbox" value="21">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">22</font>
+                </font>
+              </label>
+              <input type="checkbox" value="22">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">23</font>
+                </font>
+              </label>
+              <input type="checkbox" value="23">
+            </div>
+          </div>
+          <div class="col-12">
+            <input type="radio">
+            <label for="">
+              <font style="vertical-align: inherit;">
+                <font>Cada hora entre </font>
+              </font>
+              <select name="" id="">
+                <option value="0">00</option>
+                <option value="1">01</option>
+              </select>
+              <font style="vertical-align: inherit;">
+                <font>y </font>
+              </font>
+              <select name="" id="">
+                <option value="0">00</option>
+                <option value="1">01</option>
+              </select>
+            </label>
+          </div>
+        </div>
+      </mat-tab>
+      <mat-tab label="Día">
+        <div class="row">
+          <div class="col-12">
+            <input type="radio" name="" id="">
+            <label for=""> Todos los dias</label>
+          </div>
+          <div class="col-12">
+            <input type="radio">
+            <label for="">
+              <font>Cada</font>
+              <select name="" id="">
+                <option value="">1</option>
+                <option value="">2</option>
+              </select>
+              <font>dia(s) a partir del </font>
+              <select name="" id="">
+                <option value="">1</option>
+                <option value="">2</option>
+              </select>
+            </label>
+          </div>
+          <div class="col-12">
+            <input type="radio">
+            <label for="">
+              <font>Cada</font>
+              <select name="" id="">
+                <option value="">1</option>
+                <option value="">2</option>
+              </select>
+              <font>dia(s) a partir del </font>
+              <select name="" id="">
+                <option value="">1</option>
+                <option value="">2</option>
+              </select>
+              <font>del mes</font>
+            </label>
+          </div>
+          <div class="col-12">
+            <input type="radio">
+            <label for="">
+              <font>Dia especifico de la semana (elije uno o muchos)</font>
+              <select name="" id="">
+                <option value="">domingo</option>
+                <option value="">lunes</option>
+                <option value="">martes</option>
+                <option value="">miercoles</option>
+                <option value="">jueves</option>
+                <option value="">viernes</option>
+                <option value="">sabado</option>
+              </select>
+            </label>
+          </div>
+          <div class="col-12">
+            <input type="radio">
+            <label for="">
+              <font style="vertical-align: inherit;">
+                <font style="vertical-align: inherit;">Dia especifico del mes (elije uno o muchos)</font>
+              </font>
+            </label>
+            <div>
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">00</font>
+                </font>
+              </label>
+              <input type="checkbox" value="0">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">01</font>
+                </font>
+              </label>
+              <input type="checkbox" value="1">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">02</font>
+                </font>
+              </label>
+              <input type="checkbox" value="2">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">03</font>
+                </font>
+              </label>
+              <input type="checkbox" value="3">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">04</font>
+                </font>
+              </label>
+              <input type="checkbox" value="4">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">05</font>
+                </font>
+              </label>
+              <input type="checkbox" value="5">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">06</font>
+                </font>
+              </label>
+              <input type="checkbox" value="6">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">07</font>
+                </font>
+              </label>
+              <input type="checkbox" value="7">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">08</font>
+                </font>
+              </label>
+              <input type="checkbox" value="8">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">09</font>
+                </font>
+              </label>
+              <input type="checkbox" value="9">
+            </div>
+            <div>
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">10</font>
+                </font>
+              </label>
+              <input type="checkbox" value="10">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">11</font>
+                </font>
+              </label>
+              <input type="checkbox" value="11">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">12</font>
+                </font>
+              </label>
+              <input type="checkbox" value="12">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">13</font>
+                </font>
+              </label>
+              <input type="checkbox" value="13">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">14</font>
+                </font>
+              </label>
+              <input type="checkbox" value="14">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">15</font>
+                </font>
+              </label>
+              <input type="checkbox" value="15">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">16</font>
+                </font>
+              </label>
+              <input type="checkbox" value="16">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">17</font>
+                </font>
+              </label>
+              <input type="checkbox" value="17">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">18</font>
+                </font>
+              </label>
+              <input type="checkbox" value="18">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">19</font>
+                </font>
+              </label>
+              <input type="checkbox" value="19">
+            </div>
+            <div>
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">20</font>
+                </font>
+              </label>
+              <input type="checkbox" value="20">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">21</font>
+                </font>
+              </label>
+              <input type="checkbox" value="21">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">22</font>
+                </font>
+              </label>
+              <input type="checkbox" value="22">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">23</font>
+                </font>
+              </label>
+              <input type="checkbox" value="23">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">24</font>
+                </font>
+              </label>
+              <input type="checkbox" value="24">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">25</font>
+                </font>
+              </label>
+              <input type="checkbox" value="25">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">26</font>
+                </font>
+              </label>
+              <input type="checkbox" value="26">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">27</font>
+                </font>
+              </label>
+              <input type="checkbox" value="27">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">28</font>
+                </font>
+              </label>
+              <input type="checkbox" value="28">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">29</font>
+                </font>
+              </label>
+              <input type="checkbox" value="29">
+            </div>
+          </div>
+          <div class="col-12">
+            <input type="radio" name="" id="">
+            <label for="">El ultimo dia del mes</label>
+          </div>
+          <div class="col-12">
+            <input type="radio" name="" id="">
+            <label for="">El ultimo dia de la semana del mes</label>
+          </div>
+          <div class="col-12">
+            <input type="radio">
+            <label for="">
+              <font style="vertical-align: inherit;">
+                <font>En el ultimo </font>
+              </font>
+              <select name="" id="">
+                <option value="0">Domingo</option>
+                <option value="1">Lunes</option>
+                <option value="1">Martes</option>
+                <option value="1">Miercoles</option>
+                <option value="1">Jueves</option>
+                <option value="1">Viernes</option>
+                <option value="1">Sabado</option>
+              </select>
+              <font style="vertical-align: inherit;">
+                <font> del mes</font>
+              </font>
+            </label>
+          </div>
+          <div class="col-12">
+            <input type="radio">
+            <label for="">
+              <select name="" id="">
+                <option value="">1</option>
+                <option value="">2</option>
+              </select>
+              <font>dia(s) antes del fin de mes</font>
+            </label>
+          </div>
+          <div class="col-12">
+            <input type="radio">
+            <label for="">
+              <font>Dia de la semana mas cercano(L - V) al </font>
+              <select name="" id="">
+                <option value="">1</option>
+                <option value="">2</option>
+              </select>
+              <font>del mes </font>
+            </label>
+          </div>
+          <div class="col-12">
+            <input type="radio">
+            <label for="">
+              <font>Sobre el</font>
+              <select name="" id="">
+                <option value="">1ro</option>
+                <option value="">2do</option>
+                <option value="">3ro</option>
+                <option value="">4to</option>
+                <option value="">5to</option>
+              </select>
+              <select name="" id="">
+                <option value="">Domingo</option>
+                <option value="">Lunes</option>
+              </select>
+              <font>del mes </font>
+            </label>
+          </div>
+        </div>
+      </mat-tab>
+      <mat-tab label="Mes">
+        <div class="col-12">
+          <input type="radio" name="" id="">
+          <label for=""> Cada mes</label>
+        </div>
+        <div class="col-12">
+          <input type="radio">
+          <label for="">
+            <font>Cada</font>
+            <select name="" id="">
+              <option value="">1</option>
+              <option value="">2</option>
+            </select>
+            <font>mes(es) a partir de </font>
+            <select name="" id="">
+              <option value="">enero</option>
+              <option value="">febrero</option>
+            </select>
+          </label>
+        </div>
+        <div class="col-12">
+          <input type="radio">
+          <label for="">
+            <font>Mes especifico(elije uno o muchos)</font>
+            <select name="" id="">
+              <option value="">enero</option>
+              <option value="">febrero</option>
+              <option value="">marzo</option>
+              <option value="">abril</option>
+              <option value="">mayo</option>
+              <option value="">junio</option>
+              <option value="">julio</option>
+              <option value="">agosto</option>
+              <option value="">septiembre</option>
+              <option value="">octubre</option>
+            </select>
+          </label>
+        </div>
+        <div class="col-12">
+          <input type="radio">
+          <label for="">
+            <font style="vertical-align: inherit;">
+              <font>Todos los meses entre</font>
+            </font>
+            <select name="" id="">
+              <option value="0">Enero</option>
+              <option value="1">Febrero</option>
+            </select>
+            <font style="vertical-align: inherit;">
+              <font>y </font>
+            </font>
+            <select name="" id="">
+              <option value="0">Enero</option>
+              <option value="1">Febrero</option>
+            </select>
+          </label>
+        </div>
+      </mat-tab>
+      <mat-tab label="Año">
+        <div class="row">
+          <div class="col-12">
+            <input type="radio" name="" id="">
+            <label for=""> Cada año</label>
+          </div>
+          <div class="col-12">
+            <input type="radio">
+            <label for="">
+              <font>Cada</font>
+              <select name="" id="">
+                <option value="">1</option>
+                <option value="">2</option>
+              </select>
+              <font>años a partir de </font>
+              <select name="" id="">
+                <option value="">2016</option>
+                <option value="">2017</option>
+              </select>
+            </label>
+          </div>
+          <div class="col-12">
+            <input type="radio">
+            <label for="">
+              <font style="vertical-align: inherit;">
+                <font style="vertical-align: inherit;">Año especifico (elije uno o muchos)</font>
+              </font>
+            </label>
+            <div>
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">2019</font>
+                </font>
+              </label>
+              <input type="checkbox" value="0">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">2020</font>
+                </font>
+              </label>
+              <input type="checkbox" value="1">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">2021</font>
+                </font>
+              </label>
+              <input type="checkbox" value="2">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">2022</font>
+                </font>
+              </label>
+              <input type="checkbox" value="3">
+              <label for="">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;">2023</font>
+                </font>
+              </label>
+              <input type="checkbox" value="4">
+            </div>
+          </div>
+          <div class="col-12">
+            <input type="radio">
+            <label for="">
+              <font style="vertical-align: inherit;">
+                <font>Cada año entre </font>
+              </font>
+              <select name="" id="">
+                <option value="0">2020</option>
+                <option value="1">2021</option>
+              </select>
+              <font style="vertical-align: inherit;">
+                <font>y </font>
+              </font>
+              <select name="" id="">
+                <option value="0">2020</option>
+                <option value="1">2021</option>
+              </select>
+            </label>
+          </div>
+        </div>
+      </mat-tab>
+    </mat-tab-group> -->
+  </mat-card-content>
 </mat-card>
