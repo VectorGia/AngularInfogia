@@ -1,4 +1,4 @@
-<!-- <mat-card class="container">
+<mat-card class="container">
   <mat-card-header>
     <mat-card-title>
       Extracción Programada
@@ -7,7 +7,7 @@
   <mat-card-content>
     <mat-tab-group>
       <mat-tab label="Extracción Programada">
-        <form [formGroup]="formFecha" (ngSubmit)="save(formFecha.value)">
+       <!--  <form [formGroup]="formFecha" (ngSubmit)="save(formFecha.value)">
           <div class="row">
               <div class="col-2">
                   <mat-form-field class="example-full-width">
@@ -92,7 +92,10 @@
               ></mat-paginator>
             </div>
           </div>
-        </div>
+        </div> -->
+
+        
+        <app-cron></app-cron>
       </mat-tab>
       <mat-tab label="Extracción Manual">
         <div class="row offset-4">
@@ -104,20 +107,15 @@
       </mat-tab>
     </mat-tab-group>
     </mat-card-content>
-</mat-card> -->
-
+</mat-card> 
+<!-- 
 
 <mat-card class="container">
   <mat-card-header>
     <mat-card-title> Extracción Programada </mat-card-title>
   </mat-card-header>
   <mat-card-content>
-    <div class="row">
-  <cron-editor [(cron)]="cronExpression" [disabled]="isCronDisabled" [(options)]="cronOptions"></cron-editor>
-  
-  <hr/>
-  <p>El resultado de la expresion: <strong> {{cronExpression}} </strong></p>
-</div>
+   <app-cron></app-cron>
   <!--   <mat-tab-group>
       <mat-tab label="Segundos">
         <div class="row">
@@ -1246,6 +1244,6 @@
           </div>
         </div>
       </mat-tab>
-    </mat-tab-group> -->
+    </mat-tab-group> 
   </mat-card-content>
-</mat-card>
+</mat-card> -->

@@ -15,13 +15,13 @@ import Swal from 'sweetalert2';
 })
 export class EmpresaComponent implements OnInit {
   displayedColumns: string[] = ['idDB', 'id', 'empresa', 'abrev', 'etl', 'cadconexion', 'cambio', 'action'];
+  dataSource = new MatTableDataSource<Compania>();
   mostrarDatos: boolean;
   compania: Compania[] = [];
   form: FormGroup;
-  dataSource: any;
 
   @ViewChild(MatPaginator, {static: true}  ) paginator: MatPaginator;
-  @ViewChild(MatSort, {static: true} ) sort: MatSort;
+  @ViewChild(MatSort, {static: true}  ) sort: MatSort;
 
   constructor( private fb: FormBuilder, private cs: CompaniaService, public dialog: MatDialog) {
     this.form = this.fb.group({
@@ -45,18 +45,16 @@ export class EmpresaComponent implements OnInit {
   ngOnInit() {
     this.obtener();
   }
-
-  // tslint:disable-next-line: use-lifecycle-interface
   ngAfterViewInit(): void {
-    this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
+
   obtener() {
     this.cs.getAllCompania()
     .subscribe(
       x => {
-        this.dataSource = new MatTableDataSource();
-        this.dataSource.data = x;
+        this.dataSource.data = x as Compania[];
         console.log('empresas: ', this.dataSource.data);
       },
       error => {

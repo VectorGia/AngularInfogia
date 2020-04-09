@@ -32,9 +32,9 @@ import { CronEditorModule } from 'cron-editor';
 
   ],
   imports: [
+    BrowserAnimationsModule,
     BrowserModule,
     AppRoutingModule,
-    BrowserAnimationsModule,
     FormsModule,
     SharedModule,
     HttpClientModule,
@@ -47,7 +47,6 @@ import { CronEditorModule } from 'cron-editor';
     MatToolbarModule,
     MatSidenavModule,
     MatListModule,
-    CronEditorModule,
   ],
   providers: [LoaderService,
     { provide: HTTP_INTERCEPTORS, useClass: InterceptorsService, multi: true}],

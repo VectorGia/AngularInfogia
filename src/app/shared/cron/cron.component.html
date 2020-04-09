@@ -1,0 +1,19 @@
+<section>
+    <mat-card>
+      <mat-card-content>
+        <form >
+        <cron-editor  [(cron)]="cronExpression" [options]="cronOptions"></cron-editor>
+        </form>
+      </mat-card-content>
+
+      <mat-card-footer>
+        <div>
+          <p>
+            <b>Expression: {{cronExpression}}</b>
+          </p>
+          <button (click)="sendProg()">Programar Extracción </button>
+        </div>
+      </mat-card-footer>
+
+    </mat-card>
+</section>

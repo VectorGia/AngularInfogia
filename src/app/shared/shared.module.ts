@@ -7,20 +7,27 @@ import { DialogOverviewDialogComponent } from './dialog-overview-dialog/dialog-o
 import { ReactiveFormsModule } from '@angular/forms';
 import { LoaderComponent } from './loader/loader.component';
 import { LoadingComponent } from './loading/loading.component';
+import { CronComponent } from './cron/cron.component';
+import { CronEditorModule } from 'projects/cron-editor/src/lib/cron-editor.module';
+// import { CronEditorModule } from 'ngx-cron-editor';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
-  declarations: [ConfirmationDialogComponent, DialogOverviewDialogComponent, LoaderComponent, LoadingComponent],
+  declarations: [ConfirmationDialogComponent, DialogOverviewDialogComponent, LoaderComponent, LoadingComponent, CronComponent],
   imports: [
     CommonModule,
     MaterialModule,
     RouterModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    CronEditorModule,
+    FormsModule,
   ],
     exports: [
         ConfirmationDialogComponent,
         LoaderComponent,
-        LoadingComponent
+        LoadingComponent,
+        CronComponent,
     ],
   entryComponents: [
     ConfirmationDialogComponent,

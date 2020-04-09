@@ -19,8 +19,9 @@ export class EtlprogService {
     this.header = new HttpHeaders(headerSettings);
    }
 
-   postETL(etl): Observable<ETLProg>{
-    return this.http.post<ETLProg>(`${this.url}/api/ETLProg`, etl, httpOptions).pipe(
+   postETL(cron) {
+    console.log('recibi expresion: ', cron);
+    return this.http.post(`${this.url}/api/ETL/rescheduleContable`, cron, httpOptions).pipe(
       tap((etl: ETLProg) => console.log(`added product w/ id=${etl.ID_ETL_PROG}`))
     );
    }

@@ -9,7 +9,7 @@ import { PreproformaService } from 'src/app/core/service/preproforma.service';
 import Swal from 'sweetalert2';
 import { NgxSpinnerService } from 'ngx-spinner';
 import {LoaderService} from '../../core/service/loader.service';
-import { CronOptions } from 'cron-editor';
+
 @Component({
   selector: 'app-extraccion',
   templateUrl: './extraccion.component.html',
@@ -21,31 +21,6 @@ export class ExtraccionComponent implements OnInit {
   checked = false;
   selection = new SelectionModel<Compania>(true, []);
   formFecha: FormGroup;
-  cronForm: FormControl;
-  cronExpression = '4 3 2 12 1/1 ? *';
-  isCronDisabled = false;
-  cronOptions: CronOptions = {
-
-    formSelectClass: 'form-control cron-editor-select',
-    formCheckboxClass: 'cron-editor-radio',
-    formRadioClass: 'cron-editor-checkbox',
-    formInputClass: 'form-control cron-editor-input',
-
-    defaultTime: '10:00:00',
-    use24HourTime: true,
-
-    hideMinutesTab: false,
-    hideHourlyTab: false,
-    hideDailyTab: false,
-    hideWeeklyTab: false,
-    hideMonthlyTab: false,
-    hideYearlyTab: false,
-    hideAdvancedTab: false,
-
-    hideSeconds: false,
-    removeSeconds: false,
-    removeYears: false
-  };
   constructor(private cS: CompaniaService,
               private fB: FormBuilder,
               private eS: EtlprogService,
@@ -56,7 +31,6 @@ export class ExtraccionComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.cronForm = new FormControl('0 0 1/1 * *');
     this.obtener();
   }
   obtener() {
