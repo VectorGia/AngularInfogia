@@ -296,11 +296,25 @@ getAnios() {
   }
 
   recalculaPorAjusteBalanza(aplicar) {
+    var excludeProps = ['id_proforma',
+      'mes_inicio',
+      'centro_costo_id',
+      'anio',
+      'tipo_proforma_id',
+      'tipo_captura_id',
+      'idInterno',
+      'clave_rubro',
+      'rubro_id',
+      'tipo',
+      'estilo',
+      'aritmetica',
+      'id'];
     this.ajustes.forEach(ajuste => {
       const detalleProforma = this.detallesProformaIdxIdRubro[ajuste.rubro_id];
       for (const prop in detalleProforma) {
         const valor = detalleProforma[prop];
-        if (valor && !isNaN(valor)) {
+
+        if (valor && !isNaN(valor) && excludeProps.indexOf(prop) === -1) {
           if (aplicar) {
             detalleProforma[prop] = valor + ajuste[prop];
           } else {
