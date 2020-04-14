@@ -29,23 +29,23 @@
 }
 
 .cron-editor-container .months {
-    width: 20px;
+    width: 100px;
 }
 
 .cron-editor-container .month-days {
-    width: 30px;
+    width: 100px;
 }
 
 .cron-editor-container .months-small {
-    width: 30px;
+    width: 100px;
 }
 
 .cron-editor-container .day-order-in-month {
-    width: 45px;
+    width: 100px;
 }
 
 .cron-editor-container .week-days {
-    width: 20px;
+    width: 100px;
 }
 
 .cron-editor-container .advanced-cron-editor-input {

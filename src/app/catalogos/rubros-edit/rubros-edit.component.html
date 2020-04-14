@@ -27,6 +27,16 @@
                         <input matInput placeholder="Cuentas excluidas" formControlName="rango_cuentas_excluidas">
                     </mat-form-field>
                 </div>
+                <div class="col" *ngIf="disabledC">
+                    <mat-form-field>
+                        <mat-label>Tipo de cuenta</mat-label>
+                        <mat-select formControlName="tipo_cuenta">
+                          <mat-option value="ingreso">Ingreso</mat-option>
+                          <mat-option value="directo">Directo</mat-option>
+                          <mat-option value="indirecto">Indirecto</mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                </div>
                 <div class="col" *ngIf="disabledR">
                     <mat-form-field>
                         <input matInput placeholder="Aritmetica" formControlName="aritmetica">

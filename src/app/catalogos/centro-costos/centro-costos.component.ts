@@ -71,7 +71,7 @@ export class CentroCostosComponent implements OnInit {
       proyecto_id: [this.id],
       empresa_id: ['', Validators.required],
       proyeccion: ['', Validators.required],
-      porcentaje: [''],
+      porcentaje: [100],
       modelo_negocio_id: ['', Validators.required],
       activo: [true]
     });

@@ -1,4 +1,4 @@
 export interface Mes{
-    value: string;
+    value: number;
     viewValue: string;
 }

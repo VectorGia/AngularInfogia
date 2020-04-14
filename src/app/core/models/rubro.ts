@@ -9,5 +9,6 @@ export interface Rubros{
     rangos_cuentas_incluidas: string;
     tipo_id?: string;
     hijos?: any;
+    tipo_cuenta?: any;
     id_modelo_neg
 }

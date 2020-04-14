@@ -1,12 +1,12 @@
 <mat-card class="container">
   <mat-card-header>
     <mat-card-title>
-      Extracción Programada
+      Extracción
     </mat-card-title>
   </mat-card-header>
   <mat-card-content>
     <mat-tab-group>
-      <mat-tab label="Extracción Programada">
+      <mat-tab label="Extracción Contable">
        <!--  <form [formGroup]="formFecha" (ngSubmit)="save(formFecha.value)">
           <div class="row">
               <div class="col-2">
@@ -93,12 +93,271 @@
             </div>
           </div>
         </div> -->
-
-        
-        <app-cron></app-cron>
+        <mat-tab-group dynamicHeight>
+          <mat-tab label="Programada">
+            <div class="example-small-box mat-elevation-z4">
+              <section>
+                <mat-card>
+                  <mat-card-content>
+                    <form >
+                    <cron-editor  [(cron)]="cronExpression" [options]="cronOptions"></cron-editor>
+                    </form>
+                  </mat-card-content>
+                  <mat-card-footer>
+                    <div class="row">
+                      <div class="col-sm-9">
+                        <p>
+                          <b>Expression generada: {{cronExpression}}</b>
+                        </p>
+                      </div>
+                      <div class="col-sm-3">
+                        <p class="cron-actual">
+                          <b>Expression actual: {{datosCron[0].valor}}</b>
+                        </p>
+                      </div>
+                    </div>
+                    <button mat-raised-button color="primary" (click)="sendProgMontoCont()">Programar Extracción </button>
+                  </mat-card-footer>
+                </mat-card>
+            </section>
+            </div>
+          </mat-tab>
+          <mat-tab label="Manual">
+            <div class="example-large-box mat-elevation-z4">
+              <form [formGroup]="formFecha" (ngSubmit)="extraccionManualContable(formFecha.value)">
+                <div class="row">
+                  <div class="col">
+                    <mat-form-field>
+                      <mat-label>Año Inicio</mat-label>
+                      <mat-select formControlName="anioInicio">
+                        <mat-option *ngFor="let item of anios" [value]="item.value"> {{item.viewValue}} </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                  <div class="col">
+                    <mat-form-field>
+                      <mat-label>Año Fin</mat-label>
+                      <mat-select formControlName="anioFin">
+                        <mat-option *ngFor="let item of anios" [value]="item.value"> {{item.viewValue}} </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                </div>
+                <button type="submit" mat-raised-button color="primary">Extracción </button>
+              </form>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
       </mat-tab>
-      <mat-tab label="Extracción Manual">
-        <div class="row offset-4">
+      <mat-tab label="Extracción Flujo">
+        <!--  <form [formGroup]="formFecha" (ngSubmit)="save(formFecha.value)">
+           <div class="row">
+               <div class="col-2">
+                   <mat-form-field class="example-full-width">
+                       <input matInput [matDatepicker]="picker" placeholder="Selecciona una fecha" formControlName="TEXT_FECH_EXTR">
+                       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                       <mat-datepicker touchUi #picker></mat-datepicker>
+                     </mat-form-field>
+               </div>
+               <div class="col">
+                 <input type="time" formControlName="TEXT_HORA_EXTR">
+               </div>
+               <div class="col">
+                 <div class="btn-group btn-group-sm" role="group" aria-label="...">
+                   <button type="submit"  class="btn btn-outline-primary btn-sm btn-block">Guardar</button>
+                 </div>
+               </div>
+           </div>
+         </form>
+         <div class="row">
+           <div class="col">
+             <div class="mat-elevation-z8">
+               <table mat-table [dataSource]="dataSource">
+                
+                 <ng-container matColumnDef="idDB">
+                   <th mat-header-cell *matHeaderCellDef>No.</th>
+                   <td mat-cell *matCellDef="let element">
+                     {{ element.id }}
+                   </td>
+                 </ng-container>
+                 <ng-container matColumnDef="id">
+                   <th mat-header-cell *matHeaderCellDef>ID</th>
+                   <td mat-cell *matCellDef="let element">
+                     {{ element.desc_id }}
+                   </td>
+                 </ng-container>
+                
+                 <ng-container matColumnDef="empresa">
+                   <th mat-header-cell *matHeaderCellDef>EMPRESA</th>
+                   <td mat-cell *matCellDef="let element">
+                     {{ element.nombre }}
+                   </td>
+                 </ng-container>
+            
+                 <ng-container matColumnDef="abrev">
+                   <th mat-header-cell *matHeaderCellDef>ABREVIATURA</th>
+                   <td mat-cell *matCellDef="let element">
+                     {{ element.abrev }}
+                   </td>
+                 </ng-container>
+                 <ng-container matColumnDef="etl">
+                   <th mat-header-cell *matHeaderCellDef>ETL</th>
+                   <td mat-cell *matCellDef="let element">
+                     <input
+                       type="checkbox"
+                       [checked]="element.etl"
+                     />
+                   </td>
+                 </ng-container>
+                 <ng-container matColumnDef="cadconexion">
+                   <th mat-header-cell *matHeaderCellDef>CADENA DE CONEXIÓN</th>
+                   <td mat-cell *matCellDef="let element">
+                     {{ element.host }}
+                   </td>
+                 </ng-container>
+ 
+                 <ng-container matColumnDef="cambio">
+                   <th mat-header-cell *matHeaderCellDef>TIPO DE CAMBIO</th>
+                   <td mat-cell *matCellDef="let element">
+                     {{ element.moneda_id }}
+                   </td>
+                 </ng-container>
+ 
+                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                 <tr
+                   mat-row
+                   *matRowDef="let row; columns: displayedColumns"
+                 ></tr>
+               </table>
+ 
+               <mat-paginator
+                 [pageSizeOptions]="[5, 10, 25, 100]"
+               ></mat-paginator>
+             </div>
+           </div>
+         </div> -->
+         <mat-tab-group dynamicHeight>
+          <mat-tab label="Programada">
+            <div class="example-small-box mat-elevation-z4">
+              <section>
+                <mat-card>
+                  <mat-card-content>
+                    <form >
+                    <cron-editor  [(cron)]="cronExpression" [options]="cronOptions"></cron-editor>
+                    </form>
+                  </mat-card-content>
+                  <mat-card-footer>
+                    <div class="row">
+                      <div class="col-sm-9">
+                        <p>
+                          <b>Expression generada: {{cronExpression}}</b>
+                        </p>
+                      </div>
+                      <div class="col-sm-3">
+                        <p class="cron-actual">
+                          <b>Expression actual: {{datosCron[1].valor}}</b>
+                        </p>
+                      </div>
+                    </div>
+                    <button mat-raised-button color="primary" (click)="sendProgMontoCont()">Programar Extracción </button>
+                  </mat-card-footer>
+                </mat-card>
+            </section>
+            </div>
+          </mat-tab>
+          <mat-tab label="Manual">
+            <div class="example-large-box mat-elevation-z4">
+              <form [formGroup]="formFecha" (ngSubmit)="extraccionManualflujo(formFecha.value)">
+                <div class="row">
+                  <div class="col">
+                    <mat-form-field>
+                      <mat-label>Año Inicio</mat-label>
+                      <mat-select formControlName="anioInicio">
+                        <mat-option *ngFor="let item of anios" [value]="item.value"> {{item.viewValue}} </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                  <div class="col">
+                    <mat-form-field>
+                      <mat-label>Año Fin</mat-label>
+                      <mat-select formControlName="anioFin">
+                        <mat-option *ngFor="let item of anios" [value]="item.value"> {{item.viewValue}} </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                  <div class="col">
+                    <mat-form-field>
+                      <mat-label>Mes</mat-label>
+                      <mat-select formControlName="mes">
+                        <mat-option *ngFor="let item of meses" [value]="item.value"> {{item.viewValue}} </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                </div>
+                <button type="submit" mat-raised-button color="primary">Extracción </button>
+              </form>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </mat-tab>
+      <mat-tab label="Montos Contable">
+        <div class="example-small-box mat-elevation-z4">
+          <section>
+            <mat-card>
+              <mat-card-content>
+                <form >
+                <cron-editor  [(cron)]="cronExpression" [options]="cronOptions"></cron-editor>
+                </form>
+              </mat-card-content>
+              <mat-card-footer>
+                <div class="row">
+                  <div class="col-sm-9">
+                    <p>
+                      <b>Expression generada: {{cronExpression}}</b>
+                    </p>
+                  </div>
+                  <div class="col-sm-3">
+                    <p class="cron-actual">
+                      <b>Expression actual: {{datosCron[2].valor}}</b>
+                    </p>
+                  </div>
+                </div>
+                <button mat-raised-button color="primary" (click)="sendProgMontoCont()">Programar Extracción </button>
+              </mat-card-footer>
+            </mat-card>
+        </section>
+        </div>
+       </mat-tab>
+      <mat-tab label="Montos Flujo">
+        <div class="example-small-box mat-elevation-z4">
+          <section>
+            <mat-card>
+              <mat-card-content>
+                <form >
+                <cron-editor  [(cron)]="cronExpression" [options]="cronOptions"></cron-editor>
+                </form>
+              </mat-card-content>
+              <mat-card-footer>
+                <div class="row">
+                  <div class="col-sm-9">
+                    <p>
+                      <b>Expression generada: {{cronExpression}}</b>
+                    </p>
+                  </div>
+                  <div class="col-sm-3">
+                    <p class="cron-actual">
+                      <b>Expression actual: {{datosCron[3].valor}}</b>
+                    </p>
+                  </div>
+                </div>
+                <button mat-raised-button color="primary" (click)="sendProgMontoCont()">Programar Extracción </button>
+              </mat-card-footer>
+            </mat-card>
+        </section>
+        </div>
+       </mat-tab>
+      <mat-tab class="extraccion" label="Ejecución montos manual">
+        <div class="row offset-4 extraccionManual">
           <div class="col">
             <app-loader></app-loader>
             <button  mat-fab color="warn" (click)="extraccion()">Extraer</button>

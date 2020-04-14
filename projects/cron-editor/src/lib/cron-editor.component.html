@@ -1,7 +1,7 @@
 
 <!-- Tabs -->
 <ul class="nav nav-tabs" role="tablist">
-    <li class="mr-2" [ngClass]="{'active': activeTab === 'minutes'}" *ngIf="!options.hideMinutesTab">
+    <!-- <li class="mr-2" [ngClass]="{'active': activeTab === 'minutes'}" *ngIf="!options.hideMinutesTab">
         <a aria-controls="minutes" role="tab" data-toggle="tab" (click)="setActiveTab('minutes')">
            Minutos
         </a>
@@ -18,7 +18,7 @@
             Diario
         </a>
     </li>
-
+ -->
     <li class="mr-2" role="presentation" *ngIf="!options.hideWeeklyTab" [ngClass]="{'active': activeTab === 'weekly'}">
         <a aria-controls="weekly" role="tab" data-toggle="tab" (click)="setActiveTab('weekly')">
            Semanal
@@ -31,11 +31,11 @@
         </a>
     </li>
 
-    <li class="mr-2" role="presentation" *ngIf="!options.hideYearlyTab" [ngClass]="{'active': activeTab === 'yearly'}">
+  <!--   <li class="mr-2" role="presentation" *ngIf="!options.hideYearlyTab" [ngClass]="{'active': activeTab === 'yearly'}">
         <a aria-controls="yearly" role="tab" data-toggle="tab" (click)="setActiveTab('yearly')">
             Anual
         </a>
-    </li>
+    </li> -->
 
    <!--  <li class="mr-2" role="presentation" *ngIf="!options.hideAdvancedTab" [ngClass]="{'active': activeTab === 'advanced'}">
         <a aria-controls="advanced" role="tab" data-toggle="tab" (click)="setActiveTab('advanced')">
@@ -49,7 +49,7 @@
     <div class="row">
         <div class="col-sm-10">
             <div class="tab-content">
-                <!-- Minutes-->
+                <!-- Minutes 
                 <div class="tab-pane" *ngIf="!options.hideMinutesTab" [ngClass]="{'active': activeTab === 'minutes'}">
                     <div class="well well-small">
                         Cada
@@ -69,7 +69,7 @@
                     </div>
                 </div>
 
-                <!-- Hourly-->
+                 Hourly
                 <div class="tab-pane" *ngIf="!options.hideHourlyTab" [ngClass]="{'active': activeTab === 'hourly'}">
                     <div class="well well-small">
                         Cada
@@ -95,7 +95,7 @@
                     </div>
                 </div>
 
-                <!-- Daily-->
+                <!-- Daily
                 <div class="tab-pane" *ngIf="!options.hideDailyTab" [ngClass]="{'active': activeTab === 'daily'}">
                     <div class="well well-small">
                         <input type="radio" name="daily-radio" value="everyDays" [disabled]="disabled" (change)="regenerateCron()"
@@ -123,9 +123,9 @@
                             [use24HourTime]="options.use24HourTime" [hideSeconds]="options.hideSeconds">
                         </cron-time-picker>
                     </div>
-                </div>
+                </div>-->
 
-                <!-- Weekly-->
+                <!--Weekly-->
                 <div class="tab-pane" *ngIf="!options.hideWeeklyTab" [ngClass]="{'active': activeTab === 'weekly'}">
                     <div class="well well-small">
                         <div class="row">
@@ -192,8 +192,7 @@
                             (change)="regenerateCron()" [(time)]="state.monthly.specificDay" [selectClass]="options.formSelectClass"
                             [use24HourTime]="options.use24HourTime" [hideSeconds]="options.hideSeconds">
                         </cron-time-picker>&nbsp;
-                        <label class="advanced-cron-editor-label"><input type="checkbox" [disabled]="disabled || activeTab !== 'monthly' || state.monthly.subTab !== 'specificDay'" 
-                            (change)="regenerateCron()" [(ngModel)]="state.monthly.runOnWeekday" [ngClass]="options.formCheckboxClass"> Durante el dia de la semana mas cercano</label>
+                        
                     </div>
                     <div class="well well-small">
                         <input type="radio" name="monthly-radio" value="specificWeekDay" [disabled]="disabled" (change)="regenerateCron()"
@@ -232,7 +231,7 @@
                     </div>
                 </div>
 
-                <!-- Yearly-->
+                <!-- Yearly
                 <div class="tab-pane" *ngIf="!options.hideYearlyTab" [ngClass]="{'active': activeTab === 'yearly'}">
                     <div class="well well-small">
                         <input type="radio" name="yearly-radio" value="specificMonthDay" [disabled]="disabled" (change)="regenerateCron()"
@@ -254,8 +253,7 @@
                             (change)="regenerateCron()" [(time)]="state.yearly.specificMonthDay" [selectClass]="options.formSelectClass"
                             [use24HourTime]="options.use24HourTime" [hideSeconds]="options.hideSeconds">
                         </cron-time-picker>&nbsp;
-                        <label class="advanced-cron-editor-label"><input type="checkbox" (change)="regenerateCron()"
-                        [(ngModel)]="state.yearly.runOnWeekday" [ngClass]="options.formCheckboxClass"> durante el dia de la semana mas cercano</label>
+                       
                     </div>
                     <div class="well well-small">
                         <input type="radio" name="yearly-radio" value="specificMonthWeek" [disabled]="disabled"

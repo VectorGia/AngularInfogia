@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { CronOptions, CronGenComponent } from 'ngx-cron-editor';
 import { FormControl, FormGroup } from '@angular/forms';
 import { EtlprogService } from 'src/app/core/service/etlprog.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-cron',
@@ -9,6 +10,8 @@ import { EtlprogService } from 'src/app/core/service/etlprog.service';
   styleUrls: ['./cron.component.css']
 })
 export class CronComponent implements OnInit {
+  datos: any;
+  datosCron = [];
   public cronExpression = '0 0 1/1 * *';
   public isCronDisabled = false;
   public cronOptions: CronOptions = {
@@ -48,15 +51,29 @@ export class CronComponent implements OnInit {
 
   cronFlavorChange() {
     this.cronEditorDemo.options = this.cronOptions;
-    console.log('La expresion cron es: ', this.cronForm.value);
   }
 
+  getDatosCron() {
+    this.etlService.getDatosExtraccion()
+    .subscribe(data => {
+      this.datos = data;
+      console.log('datos de extraccion: ', this.datos);
+      this.datosCron = [];
+      for (const key in data) {
+        this.datosCron.push({etiqueta: key, valor: data[key]});
+      }
+      console.log('datos de extraccion Cron: ', this.datosCron);
+    });
+  }
   sendProg() {
-    console.log('cron: ', this.cronForm.value);
-    
-    this.etlService.postETL(this.cronForm.value)
+    console.log('cron: ', this.cronExpression);
+    this.etlService.postETLCont(this.cronExpression)
       .subscribe(res => {
-
-      })
+        Swal.fire(
+          'Listo!',
+          'Se programo la extracción!',
+          'success'
+        );
+      });
   }
 }

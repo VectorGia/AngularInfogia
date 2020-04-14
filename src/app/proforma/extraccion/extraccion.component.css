@@ -33,3 +33,15 @@
     color: white;
     border-right: #000080;
   }
+  .extraccionManual{
+    height: 100px;
+    
+  }
+
+  .mat-tab-body-content{
+    overflow: hidden !important;
+  }
+
+  .cron-actual{
+    color: blue;
+  }

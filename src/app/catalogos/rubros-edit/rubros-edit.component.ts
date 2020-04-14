@@ -21,6 +21,7 @@ disabledR = true;
   }
 
   ngOnInit() {
+    this.getRubros();
     this.activeRoute.params.subscribe((params) => {
       this.id = params.id;
       console.log(`id rubros: ${this.id}`);
@@ -37,7 +38,7 @@ disabledR = true;
         this.editRubro.patchValue(data[0]);
       });
     });
-    this.getRubros();
+   
   }
 
   buildEditForm() {
@@ -47,6 +48,7 @@ disabledR = true;
       rangos_cuentas_incluidas: [''],
       rango_cuentas_excluidas: [''],
       hijos: [''],
+      tipo_cuenta: [''],
       aritmetica: ['']
     });
   }
