@@ -92,11 +92,17 @@ reorderRubros(rubros) {
       rubrosReorder.push(hijo);
     }
   }
+
   for (const padreSinHijos of padresSinHijos) {
     rubrosReorder.push(padreSinHijos);
   }
-  console.log('reorden:', rubrosReorder);
-  return rubrosReorder;
+  for(const rreodered of rubrosReorder ){
+    let idx=rubros.indexOf(rreodered);
+    rubros.splice(idx,1);
+  }
+  let res=rubrosReorder.concat(rubros);
+  console.log('reorden:', res);
+  return res;
 }
  getPadres(rubros) {
   const padres = [];
