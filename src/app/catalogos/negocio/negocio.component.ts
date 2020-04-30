@@ -7,6 +7,7 @@ import { CuentasService } from 'src/app/core/service/cuentas.service';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { UnidadnegocioService } from 'src/app/core/service/unidadnegocio.service';
 import Swal from 'sweetalert2';
+import { UnidadDialogComponent } from 'src/app/shared/unidad-dialog/unidad-dialog.component';
 
 export interface Model {
   value: string;
@@ -27,20 +28,17 @@ export class NegocioComponent implements OnInit {
   negocioForm: FormGroup;
   toppings = new FormControl();
   companias = [];
-  unidades: any;
   select: boolean;
   nextClicked = false;
   constructor(private ns: NegocioService,
               private fb: FormBuilder,
               private cS: CompaniaService,
               private cuentaS: CuentasService,
-              private unidadService: UnidadnegocioService,
               public dialog: MatDialog) {
 
                 this.buildModelo();
   // this.fetchCuentas();
                 this.fetchCompania();
-                this.fetchUnidad();
   }
 
   ngOnInit() {
@@ -61,7 +59,7 @@ export class NegocioComponent implements OnInit {
   }
 
   saveModelos(form: NgForm) {
-
+    console.log('[Datos a guardar]: ', form);
     this.ns.addModelos(form).subscribe(
       res => {
         // tslint:disable-next-line: no-string-literal
@@ -74,7 +72,25 @@ export class NegocioComponent implements OnInit {
         this.ngOnInit();
       },
       error => {
-        console.log('Ocurrio un error al guardar, intente de nuevo.' + error);
+        Swal.fire(
+          'Error!',
+          'Ocurrio un error al guardar, intente de nuevo.',
+          'error'
+        );
+      });
+  }
+
+  openDialogUnidad(id): void {
+      const dialogRef = this.dialog.open(UnidadDialogComponent, {
+        width: '550px',
+        data: {
+          id: id
+        }
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        console.log('The dialog was closed');
+        this.ngOnInit();
       });
   }
 
@@ -140,26 +156,9 @@ export class NegocioComponent implements OnInit {
       console.log('empresas: ', this.companias);
     });
   }
-
-  fetchUnidad() {
-    this.unidadService.getAllUnidades()
-    .subscribe(uni => {
-      this.unidades = uni;
-      console.log('Unodades de Negocio: ', uni);
-    });
-  }
-/*   fetchCuentas(){
-    this.cuentaS.getAllCuentas()
-    .subscribe(x => {
-      this.cuentas = x;
-      console.log(this.cuentas)
-    })
-  } */
-
   buildModelo() {
     this.negocioForm = this.fb.group({
       nombre: ['', Validators.required],
-      unidad_negocio_id: ['', Validators.required],
       activo: [true]
     });
   }

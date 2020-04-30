@@ -13,6 +13,14 @@ table th{
   border-right: #000080;
 }
 td {
-  width: 25%;
+  width: 5%;
   text-align: center;
+}
+
+.mat-column-nombre {
+  width: 2%;
+}
+
+.mat-column-tipo {
+  width: 2%;
 }

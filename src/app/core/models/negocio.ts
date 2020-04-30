@@ -4,6 +4,6 @@ export interface Negocio{
     inT_IDCOMPANIA_P
     nombre: string;
     tipo_captura_id: string;
-    STR_CUENTASMODELO: string;
     activo: boolean;
+    unidad_negocio_id?: any;
 }
