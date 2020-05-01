@@ -32,12 +32,12 @@ export class NegocioService {
       tap((negocio: Negocio) => console.log(`added negocio w/ id=${negocio.nombre}`))
     )
   }
-
+/* 
   addModeloUnidad(negocio): Observable<Negocio> {
     console.log("[enviar a back]: ", negocio);
     negocio.unidad_negocio_id = negocio.unidad_negocio_id.toString();
     return this.http.post<Negocio>(`${this.url}/api/ModeloUnidad`, negocio, httpOptions);
-  }
+  } */
   updateModelo(id: string, changes: Partial<Negocio>){
     return this.http.put(`${this.url}/api/ModeloNegocio/${id}`, changes, httpOptions);
   }

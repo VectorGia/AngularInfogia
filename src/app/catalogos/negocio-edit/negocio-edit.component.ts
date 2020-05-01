@@ -16,8 +16,8 @@ export class NegocioEditComponent implements OnInit {
   negocio: Negocio[];
   companias = [];
   unidades: any;
-  id: string
-  constructor(private cS: CompaniaService,
+  id: any;
+  constructor(
               private fb: FormBuilder,
               private router: Router,
               private nS: NegocioService,
@@ -28,48 +28,48 @@ export class NegocioEditComponent implements OnInit {
   }
 
   ngOnInit() {
-   this.fetchEmpresa();
-    this.aR.params.subscribe((params) => {
+   this.aR.params.subscribe((params) => {
       this.id = params.id;
       console.log(this.id);
-      this.nS.getModelo(this.id)
-        .subscribe(data => {
-          console.log("data", data)
-          this.modelo.patchValue(data)
-        })
-    })
+    });
   }
 
-  saveModelo(event: Event){
+  saveModelo(event: Event) {
     event.preventDefault();
-    if(this.modelo.valid){
+    if (this.modelo.valid) {
       const centro = this.modelo.value;
       this.nS.updateModelo(this.id, centro )
       .subscribe((newCompania) => {
         console.log(newCompania);
-        this.router.navigate(['./catalogo/negocio'])
+        this.router.navigate(['./catalogo/negocio']);
       });
     }
   }
 
-  fetchEmpresa() {
-    this.cS.getAllCompania()
-    .subscribe(compania => {
-      this.companias = compania;
-      console.log(compania);
-    });
-  }
   fetchUnidad() {
+    console.log('[id]: ', this.id);
     this.unidadService.getAllUnidades()
-      .subscribe(uni => {
-        this.unidades = uni;
-        console.log('Unodades de Negocio: ', uni);
+      .subscribe(allUnidades => {
+        this.unidadService.getUnidadesById(this.id)
+        .subscribe(unidadesModelo => {
+          console.log('data', unidadesModelo);
+          this.modelo.patchValue(unidadesModelo[0]);
+          for (let i = 0; i < allUnidades.length; i++){
+            for (let j = 0; j < unidadesModelo.length; j++) {
+              if (unidadesModelo[j].idUnidad === allUnidades[j].id) {
+                 allUnidades[j].selected = true;
+              }
+            }
+          }
+        });
+        this.unidades = allUnidades;
+        console.log('Unodades de Negocio: ', allUnidades);
       });
     }
     buildForm() {
     this.modelo = this.fb.group({
-      nombre: [null, Validators.required],
-      unidad_negocio_id: [''],
+      descripcionModelo: ['', Validators.required],
+      idUnidad: [''],
     });
   }
   return() {

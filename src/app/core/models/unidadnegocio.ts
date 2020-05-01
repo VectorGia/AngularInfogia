@@ -5,4 +5,5 @@ export interface UnidadNegocio {
     idusuario: number;
     fec_modif: Date;
     activo: boolean;
+    selected: boolean;
 }

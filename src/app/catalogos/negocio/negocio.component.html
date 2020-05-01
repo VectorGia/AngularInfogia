@@ -16,7 +16,12 @@
         </mat-form-field>
       </div>
       <div class="col">
-        
+        <mat-form-field>
+          <mat-label>Unidad de Negocio</mat-label>
+          <mat-select formControlName="unidades_negocio_ids" multiple>
+            <mat-option *ngFor="let item of unidades" [value]="item.id"> {{item.descripcion}} </mat-option>
+          </mat-select>
+        </mat-form-field>
       </div>
       <!-- <div class="col">
         <mat-form-field>
@@ -63,7 +68,6 @@
           <td mat-cell *matCellDef="let element">
             <a mat-raised-button [routerLink]="['edit', element.id]">Editar</a>
             <a mat-raised-button [routerLink]="['rubros', element.id, element.nombre]">Ver rubros</a>
-            <button mat-raised-button (click)="openDialogUnidad(element.id)">Agregar Unidad de Negocio</button>
             <button mat-raised-button color="warn" (click)="openDialog(element.id)">Eliminar</button>
           </td>
         </ng-container>

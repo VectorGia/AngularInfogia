@@ -7,14 +7,14 @@
     <div class="row">
       <div class="col">
         <mat-form-field>
-          <input matInput placeholder="Nombre" formControlName="nombre" matTooltip="Escribe un numbre para el modelo de negocio"/>
+          <input matInput placeholder="Nombre" formControlName="descripcionModelo" matTooltip="Escribe un numbre para el modelo de negocio"/>
         </mat-form-field>
       </div>
       <div class="col">
         <mat-form-field>
           <mat-label>Unidad de Negocio</mat-label>
-          <mat-select formControlName="unidad_negocio_id">
-            <mat-option *ngFor="let item of unidades" [value]="item.id"> {{item.descripcion}} </mat-option>
+          <mat-select formControlName="idUnidad" multiple>
+            <mat-option *ngFor="let item of unidades" [value]="item.id" [selected]="item.selected"> {{item.descripcion}} </mat-option>
           </mat-select>
         </mat-form-field>
       </div>
