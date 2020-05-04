@@ -1,0 +1,11 @@
+table th{
+    text-align: center;
+    background-color: #000080;
+    color: wheat;
+    border-right: #000080;
+  }
+
+  td {
+    width: 5%;
+    text-align: center;
+  }

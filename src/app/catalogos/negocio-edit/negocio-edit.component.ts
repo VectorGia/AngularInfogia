@@ -5,6 +5,7 @@ import { NegocioService } from 'src/app/core/service/negocio.service';
 import { Negocio } from 'src/app/core/models/negocio';
 import { CompaniaService } from 'src/app/core/service/compania.service';
 import {UnidadnegocioService} from '../../core/service/unidadnegocio.service';
+import { MatTableDataSource } from '@angular/material';
 
 @Component({
   selector: 'app-negocio-edit',
@@ -12,10 +13,13 @@ import {UnidadnegocioService} from '../../core/service/unidadnegocio.service';
   styleUrls: ['./negocio-edit.component.css']
 })
 export class NegocioEditComponent implements OnInit {
+  displayedColumns: string[] = ['nombre', 'unidad'];
+  dataSource: any;
   modelo: FormGroup;
   negocio: Negocio[];
   companias = [];
   unidades: any;
+  unidad: any;
   id: any;
   constructor(
               private fb: FormBuilder,
@@ -52,15 +56,9 @@ export class NegocioEditComponent implements OnInit {
       .subscribe(allUnidades => {
         this.unidadService.getUnidadesById(this.id)
         .subscribe(unidadesModelo => {
-          console.log('data', unidadesModelo);
-          this.modelo.patchValue(unidadesModelo[0]);
-          for (let i = 0; i < allUnidades.length; i++){
-            for (let j = 0; j < unidadesModelo.length; j++) {
-              if (unidadesModelo[j].idUnidad === allUnidades[j].id) {
-                 allUnidades[j].selected = true;
-              }
-            }
-          }
+          console.log('unidadesModelo', unidadesModelo);
+          this.dataSource = new MatTableDataSource();
+          this.dataSource.data = unidadesModelo;
         });
         this.unidades = allUnidades;
         console.log('Unodades de Negocio: ', allUnidades);
@@ -68,8 +66,8 @@ export class NegocioEditComponent implements OnInit {
     }
     buildForm() {
     this.modelo = this.fb.group({
-      descripcionModelo: ['', Validators.required],
-      idUnidad: [''],
+      nombre: ['', Validators.required],
+      unidades_negocio_ids: [''],
     });
   }
   return() {
