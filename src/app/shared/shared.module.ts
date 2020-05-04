@@ -11,12 +11,11 @@ import { CronComponent } from './cron/cron.component';
 import { CronEditorModule } from 'projects/cron-editor/src/lib/cron-editor.module';
 // import { CronEditorModule } from 'ngx-cron-editor';
 import { FormsModule } from '@angular/forms';
-import { UnidadDialogComponent } from './unidad-dialog/unidad-dialog.component';
 
 
 @NgModule({
   declarations: [
-    ConfirmationDialogComponent, DialogOverviewDialogComponent, LoaderComponent, LoadingComponent, CronComponent, UnidadDialogComponent],
+    ConfirmationDialogComponent, DialogOverviewDialogComponent, LoaderComponent, LoadingComponent, CronComponent],
   imports: [
     CommonModule,
     MaterialModule,
@@ -30,12 +29,10 @@ import { UnidadDialogComponent } from './unidad-dialog/unidad-dialog.component';
         LoaderComponent,
         LoadingComponent,
         CronComponent,
-        UnidadDialogComponent,
     ],
   entryComponents: [
     ConfirmationDialogComponent,
     DialogOverviewDialogComponent,
-    UnidadDialogComponent
   ]
 })
 export class SharedModule { }
