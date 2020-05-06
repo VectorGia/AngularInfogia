@@ -40,6 +40,10 @@ const routes: Routes = [
     component: NegocioEditComponent
   },
   {
+    path: 'negocio/edit/:id/:nombre',
+    component: NegocioEditComponent
+  },
+  {
     path: 'negocio/rubros/:id/:nombre',
     component: RubrosComponent
   },

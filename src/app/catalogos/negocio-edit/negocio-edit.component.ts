@@ -13,7 +13,7 @@ import { MatTableDataSource } from '@angular/material';
   styleUrls: ['./negocio-edit.component.css']
 })
 export class NegocioEditComponent implements OnInit {
-  displayedColumns: string[] = ['nombre', 'unidad'];
+  displayedColumns: string[] = ['unidad'];
   dataSource: any;
   modelo: FormGroup;
   negocio: Negocio[];
@@ -21,6 +21,7 @@ export class NegocioEditComponent implements OnInit {
   unidades: any;
   unidad: any;
   id: any;
+  nombre: any;
   constructor(
               private fb: FormBuilder,
               private router: Router,
@@ -34,6 +35,8 @@ export class NegocioEditComponent implements OnInit {
   ngOnInit() {
    this.aR.params.subscribe((params) => {
       this.id = params.id;
+      this.nombre = params.nombre;
+
       console.log(this.id);
     });
   }
@@ -45,11 +48,21 @@ export class NegocioEditComponent implements OnInit {
       this.nS.updateModelo(this.id, centro )
       .subscribe((newCompania) => {
         console.log(newCompania);
-        this.router.navigate(['./catalogo/negocio']);
+        this.router.navigate(['./catalogo/negocio' + this.getData(window.location.href, 'negocio/', '/edit')]);
       });
     }
   }
 
+  getData(url, startDelimiter, endDelimiter) {
+    let idxIni = url.indexOf(startDelimiter);
+    idxIni = idxIni + startDelimiter.length;
+    const idxFin = url.indexOf(endDelimiter);
+    if (idxFin === -1) {
+        return url.substring(idxIni);
+    } else {
+        return url.substring(idxIni, idxFin);
+    }
+}
   fetchUnidad() {
     console.log('[id]: ', this.id);
     this.unidadService.getAllUnidades()
@@ -59,6 +72,8 @@ export class NegocioEditComponent implements OnInit {
           console.log('unidadesModelo', unidadesModelo);
           this.dataSource = new MatTableDataSource();
           this.dataSource.data = unidadesModelo;
+          let tmp = {nombre: unidadesModelo[0].descripcionModelo}
+          this.modelo.patchValue(tmp);
         });
         this.unidades = allUnidades;
         console.log('Unodades de Negocio: ', allUnidades);
@@ -66,7 +81,7 @@ export class NegocioEditComponent implements OnInit {
     }
     buildForm() {
     this.modelo = this.fb.group({
-      nombre: ['', Validators.required],
+      nombre: [''],
       unidades_negocio_ids: [''],
     });
   }

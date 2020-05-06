@@ -109,6 +109,7 @@ getAnios() {
   onChangeTipoCaptura(value) {
     this.esProformaContable = (value == 1);
   }
+  
   onChangeTipoProforma(value) {
     console.log(value);
     switch (value) {
@@ -177,7 +178,7 @@ getAnios() {
       this.proformaEditable = !this.detallesProforma[0].editable;
       this.detallesProfToRender = this.splitDetalles(this.detallesProforma, this.mesInicio);
     }
-    console.log('Proforma: ', this.detallesProfToRender);
+    console.table('Proforma: ', this.detallesProfToRender);
   }
 
   fetchEmpresa() {
@@ -503,7 +504,7 @@ getAnios() {
 
 
   splitDetalles(dataSource, mesinicio) {
-    console.log('data: ', dataSource);
+    console.table('data: ', dataSource);
     const alldetalles = [];
     for (const detalle of dataSource) {
       if (!detalle.hijos && !detalle.aritmetica) {
@@ -525,7 +526,7 @@ getAnios() {
     const detReal = Object.assign({}, detalle);
     const detprof = Object.assign({}, detalle);
     for (const prop in this.ponderacionCampos) {
-      if (this.ponderacionCampos[prop] > mesinicio) {
+      if (this.ponderacionCampos[prop] >= mesinicio) {
         // detReal[prop] = 0;
         detReal.tipo = 'real';
         // -> proformados
