@@ -14,7 +14,7 @@
             <div class="col-sm-1">
               <mat-form-field>
                 <mat-label>Proforma:</mat-label>
-                <mat-select matNativeControl required formControlName="tipo_proforma_id" (ngModelChange)="onChangeTipoProforma($event)" [disabled]="consulta">
+                <mat-select matNativeControl required formControlName="tipo_proforma_id"  [disabled]="consulta">
                   <mat-option *ngFor="let item of tiposProforma" [value]="item.id"> {{item.nombre}} </mat-option>
                 </mat-select>
               </mat-form-field>
