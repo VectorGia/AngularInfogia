@@ -28,10 +28,6 @@ export class ProformaComponent implements OnInit {
   displayedColumns: string[] = ['nombre', 'total', 'aant', 'ejercicio', 'enero', 'febrero', 'marzo',
                                 'abril', 'mayo', 'junio', 'julio', 'agosto',
                                 'septiembre', 'octubre', 'noviembre', 'diciembre', 'apost'];
-  tresnueve = false;
-  seisseis = false;
-  nuevetres = false;
-  doce = false;
   detallesProfToRender: any = [];
   detallesProforma: any;
   detallesProformaIdxIdRubro: any;
@@ -108,36 +104,6 @@ getAnios() {
 }
   onChangeTipoCaptura(value) {
     this.esProformaContable = (value == 1);
-  }
-  
-  onChangeTipoProforma(value) {
-    console.log(value);
-    switch (value) {
-      case 4:
-        this.tresnueve = true;
-        this.seisseis = false;
-        this.nuevetres = false;
-        this.doce = false;
-        break;
-      case 5:
-        this.tresnueve = false;
-        this.seisseis = true;
-        this.nuevetres = false;
-        this.doce = false;
-        break;
-      case 6:
-        this.tresnueve = false;
-        this.seisseis = false;
-        this.nuevetres = true;
-        this.doce = false;
-        break;
-      case 2:
-        this.tresnueve = false;
-        this.seisseis = false;
-        this.nuevetres = false;
-        this.doce = true;
-        break;
-    }
   }
 
   proformar(form: any) {
@@ -276,6 +242,19 @@ getAnios() {
         });
     }
   }
+  private  excludeProps = ['id_proforma',
+    'mes_inicio',
+    'centro_costo_id',
+    'anio',
+    'tipo_proforma_id',
+    'tipo_captura_id',
+    'idInterno',
+    'clave_rubro',
+    'rubro_id',
+    'tipo',
+    'estilo',
+    'aritmetica',
+    'id'];
 /*a cada detalle de la proforma calculada, se le aplica un factor correspondiente al tipo de cambio */
   recalculaPorTipoCambio(factor) {
     const detalles = [];
@@ -287,7 +266,7 @@ getAnios() {
         const detActual = detalles[i];
         for (const prop in detActual) {
           const valor = detActual[prop];
-          if (!isNaN(valor)) {
+          if (valor && !isNaN(valor) && this.excludeProps.indexOf(prop) === -1) {
             detActual[prop] = valor * factor;
           }
         }
@@ -297,25 +276,13 @@ getAnios() {
   }
 
   recalculaPorAjusteBalanza(aplicar) {
-    var excludeProps = ['id_proforma',
-      'mes_inicio',
-      'centro_costo_id',
-      'anio',
-      'tipo_proforma_id',
-      'tipo_captura_id',
-      'idInterno',
-      'clave_rubro',
-      'rubro_id',
-      'tipo',
-      'estilo',
-      'aritmetica',
-      'id'];
+
     this.ajustes.forEach(ajuste => {
       const detalleProforma = this.detallesProformaIdxIdRubro[ajuste.rubro_id];
       for (const prop in detalleProforma) {
         const valor = detalleProforma[prop];
 
-        if (valor && !isNaN(valor) && excludeProps.indexOf(prop) === -1) {
+        if (valor && !isNaN(valor) && this.excludeProps.indexOf(prop) === -1) {
           if (aplicar) {
             detalleProforma[prop] = valor + ajuste[prop];
           } else {
