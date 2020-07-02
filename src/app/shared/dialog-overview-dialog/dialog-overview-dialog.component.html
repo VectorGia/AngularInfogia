@@ -13,10 +13,10 @@
           {{labelCtaOrTm}}
         </label>
        </div>
-       <div class="col">
-        <mat-form-field>
-          <mat-label>Tipo de cuenta</mat-label>
-          <mat-select formControlName="tipo_cuenta">
+       <div class="col" *ngIf="nombreTipoCaptura!=='FLUJO'">
+        <mat-form-field >
+          <mat-label >Tipo de cuenta</mat-label>
+          <mat-select formControlName="tipo_cuenta" matTooltip="Dato para clasificar el tipo de cuenta para ajustes de balanza">
             <mat-option value="ingreso">Ingreso</mat-option>
             <mat-option value="directo">Directo</mat-option>
             <mat-option value="indirecto">Indirecto</mat-option>

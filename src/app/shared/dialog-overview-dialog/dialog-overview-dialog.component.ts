@@ -28,6 +28,9 @@ export class DialogOverviewDialogComponent implements OnInit {
   aritmetica: any;
   rubros: any;
   labelCtaOrTm: string = '';
+  nombreTipoCaptura: string = '';
+
+
   disableSelect = new FormControl(false);
   constructor(private fb: FormBuilder,
               private dialogRef: MatDialogRef<DialogOverviewDialogComponent>,
@@ -35,6 +38,7 @@ export class DialogOverviewDialogComponent implements OnInit {
               private rS: RubroService,
               private aR: ActivatedRoute,
               @Inject(MAT_DIALOG_DATA) public data: any) {
+    this.nombreTipoCaptura = data.nombreTipoCaptura;
     this.labelCtaOrTm = data.nombreTipoCaptura === 'FLUJO' ? 'TMs' : 'Cuentas';
     this.buildCuenta();
    }
