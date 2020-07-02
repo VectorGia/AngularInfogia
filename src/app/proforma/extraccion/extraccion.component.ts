@@ -58,14 +58,7 @@ export class ExtraccionComponent implements OnInit {
   formFecha: FormGroup;
   datos: any;
   datosCron = [];
-  anios: Año[] = [
-    {value: 2005, viewValue: 2005},
-    {value: 2006, viewValue: 2006},
-    {value: 2007, viewValue: 2007},
-    {value: 2008, viewValue: 2008},
-    {value: 2009, viewValue: 2009},
-    {value: 2010, viewValue: 2010},
-  ];
+  anios: Año[] = [];
   meses: Mes[] = [
     {value: 1, viewValue: 'Enero'},
     {value: 2, viewValue: 'Febrero'},
@@ -89,11 +82,15 @@ export class ExtraccionComponent implements OnInit {
               ) {
     this.getDatosCron();
     this.buildForm();
+    let anioActual=new Date().getFullYear();
+    for ( let i = 2005; i <= anioActual ; i++) {
+      this.anios.push({value: i, viewValue: i});
+    }
   }
 
   ngOnInit() {
     this.obtener();
-   
+
     this.cronForm = new FormControl(this.cronExpression);
   }
 
@@ -248,5 +245,5 @@ export class ExtraccionComponent implements OnInit {
       );
     });
   }
- 
+
 }

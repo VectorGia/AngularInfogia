@@ -1,7 +1,6 @@
 <h1 mat-dialog-title>Registro de Rubro</h1>
 <div mat-dialog-content>
     <form [formGroup]="cuentasForm" (ngSubmit)="saveRubro(cuentasForm.value)">
-      <h4>Unidad de Negocio</h4>
      <div class="row">
        <div class="col">
          <br>
@@ -11,7 +10,7 @@
         </label>
         <label for="">
           <input type="radio" formControlName="tipo_id" value="2" [(ngModel)]="gender" (click)="opc()">
-          Cuentas
+          {{labelCtaOrTm}}
         </label>
        </div>
        <div class="col">
@@ -44,18 +43,18 @@
         </mat-form-field>
         <div *ngIf="!select">
             <mat-form-field>
-              <input matInput placeholder="Cuentas incluidas: " maxlength="200" pattern="^(((\s*\d+\*\s*(-\s*\d+\*\s*)?)|(\s*\d+\s*))\s*,)*(((\s*\d+\*\s*(-\s*\d+\*\s*)?)|(\s*\d+\s*))\s*)$" [(ngModel)]="cuentainclu" formControlName="rangos_cuentas_incluidas" matTooltip="El conjunto de cuentas separadas por comas que seran incluidas en este rubro. Pueden ser rangos y cuentas individuales. Ejemplo: 1000*-2000*,300000000000">
+              <input matInput placeholder="{{labelCtaOrTm}} incluidas: " maxlength="200" pattern="^(((\s*\d+\*\s*(-\s*\d+\*\s*)?)|(\s*\d+\s*))\s*,)*(((\s*\d+\*\s*(-\s*\d+\*\s*)?)|(\s*\d+\s*))\s*)$" [(ngModel)]="cuentainclu" formControlName="rangos_cuentas_incluidas" matTooltip="El conjunto de cuentas separadas por comas que seran incluidas en este rubro. Pueden ser rangos y cuentas individuales. Ejemplo: 1000*-2000*,300000000000">
               <button mat-button *ngIf="cuentainclu" matSuffix mat-icon-button aria-label="Clear" (click)="cuentainclu=''">
                 <mat-icon>close</mat-icon>
               </button>
             </mat-form-field>
             <mat-form-field>
-              <input matInput placeholder="Cuenta excluidas: " maxlength="200" pattern="^(((\s*\d+\*\s*(-\s*\d+\*\s*)?)|(\s*\d+\s*))\s*,)*(((\s*\d+\*\s*(-\s*\d+\*\s*)?)|(\s*\d+\s*))\s*)$" [(ngModel)]="cuentaexclu" formControlName="rango_cuentas_excluidas" matTooltip="El conjunto de cuentas separados por comas que seran exluidas en este rubro. Pueden ser rangos y cuentas individuales. Ejemplo: 1000*-2000*,300000000000">
+              <input matInput placeholder="{{labelCtaOrTm}} excluidas: " maxlength="200" pattern="^(((\s*\d+\*\s*(-\s*\d+\*\s*)?)|(\s*\d+\s*))\s*,)*(((\s*\d+\*\s*(-\s*\d+\*\s*)?)|(\s*\d+\s*))\s*)$" [(ngModel)]="cuentaexclu" formControlName="rango_cuentas_excluidas" matTooltip="El conjunto de cuentas separados por comas que seran exluidas en este rubro. Pueden ser rangos y cuentas individuales. Ejemplo: 1000*-2000*,300000000000">
               <button mat-button *ngIf="cuentaexclu" matSuffix mat-icon-button aria-label="Clear" (click)="cuentaexclu=''">
                 <mat-icon>close</mat-icon>
               </button>
             </mat-form-field>
-           
+
         </div>
         <div *ngIf="select">
             <mat-form-field>
@@ -78,7 +77,7 @@
                 </div>
                 <div class="col">
                   <mat-form-field>
-                    <mat-label>Cuentas</mat-label>
+                    <mat-label>{{labelCtaOrTm}}</mat-label>
                     <mat-select [disabled]="!disableSelect.value" formControlName="hijos" multiple>
                       <mat-option *ngFor="let item of rubros" [value]="item.id"> {{item.nombre}} </mat-option>
                     </mat-select>

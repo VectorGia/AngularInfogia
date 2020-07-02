@@ -1,6 +1,6 @@
 
 <mat-card class="container">
-    <h4>Rubros del Modelo {{name}} </h4>
+    <h4>Rubros del Modelo {{name}} ({{nombreTipoCaptura}}) </h4>
     <table mat-table class="mat-elevation-z8" [dataSource]="dataSource">
         <!-- Position Column -->
         <ng-container matColumnDef="nombre" >
@@ -16,13 +16,13 @@
 
         <!-- Weight Column -->
         <ng-container matColumnDef="cuenta">
-        <th mat-header-cell *matHeaderCellDef>Cuentas incluidas</th>
+        <th mat-header-cell *matHeaderCellDef>{{labelCtaOrTm}} incluidas</th>
         <td mat-cell *matCellDef="let element">{{ element.rangos_cuentas_incluidas }}</td>
         </ng-container>
 
         <!-- Symbol Column -->
         <ng-container matColumnDef="monto">
-        <th mat-header-cell *matHeaderCellDef>Cuentas excluidas</th>
+        <th mat-header-cell *matHeaderCellDef>{{labelCtaOrTm}} excluidas</th>
         <td mat-cell *matCellDef="let element">{{ element.rango_cuentas_excluidas }}</td>
         </ng-container>
 
@@ -44,7 +44,7 @@
     <div class="row">
         <div class="col">
             <button mat-raised-button color="primary" (click)="return()">Regresar</button>
-            <button mat-raised-button (click)="openDialog()">Agregar a Rubro</button>
+            <button mat-raised-button (click)="openDialog()">Agregar Rubro</button>
         </div>
     </div>
 </mat-card>
