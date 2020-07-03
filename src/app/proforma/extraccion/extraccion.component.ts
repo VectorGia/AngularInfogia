@@ -1,17 +1,17 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { CompaniaService } from 'src/app/core/service/compania.service';
-import { MatTableDataSource } from '@angular/material/table';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {CompaniaService} from 'src/app/core/service/compania.service';
+import {MatTableDataSource} from '@angular/material/table';
 import {SelectionModel} from '@angular/cdk/collections';
-import { Compania } from 'src/app/core/models/compania';
-import { FormGroup, FormBuilder, Validators, NgForm, FormControl } from '@angular/forms';
-import { EtlprogService } from 'src/app/core/service/etlprog.service';
-import { PreproformaService } from 'src/app/core/service/preproforma.service';
+import {Compania} from 'src/app/core/models/compania';
+import {FormGroup, FormBuilder, Validators, NgForm, FormControl} from '@angular/forms';
+import {EtlprogService} from 'src/app/core/service/etlprog.service';
+import {PreproformaService} from 'src/app/core/service/preproforma.service';
 import Swal from 'sweetalert2';
-import { NgxSpinnerService } from 'ngx-spinner';
+import {NgxSpinnerService} from 'ngx-spinner';
 import {LoaderService} from '../../core/service/loader.service';
-import { CronOptions, CronGenComponent } from 'ngx-cron-editor';
-import { Año } from 'src/app/core/models/año.model';
-import { Mes } from 'src/app/core/models/mes.model';
+import {CronOptions, CronGenComponent} from 'ngx-cron-editor';
+import {Año} from 'src/app/core/models/año.model';
+import {Mes} from 'src/app/core/models/mes.model';
 
 
 @Component({
@@ -20,33 +20,49 @@ import { Mes } from 'src/app/core/models/mes.model';
   styleUrls: ['./extraccion.component.css']
 })
 export class ExtraccionComponent implements OnInit {
-  public cronExpression = '0 0 1/1 * *';
+  public cronExpression = '0 0 0 ? * MON,SUN *';
   public isCronDisabled = false;
-  public cronOptions: CronOptions = {
+  executing = false;
+  public cronOptionsSemanal: CronOptions = {
     formInputClass: 'form-control cron-editor-input',
     formSelectClass: 'form-control cron-editor-select',
     formRadioClass: 'cron-editor-radio',
     formCheckboxClass: 'cron-editor-checkbox',
-
     defaultTime: '00:00:00',
-
     hideMinutesTab: false,
     hideHourlyTab: false,
     hideDailyTab: false,
     hideWeeklyTab: false,
+    hideMonthlyTab: true,
+    hideYearlyTab: false,
+    hideAdvancedTab: false,
+    hideSpecificWeekDayTab: false,
+    hideSpecificMonthWeekTab: false,
+    use24HourTime: true,
+    hideSeconds: false,
+    cronFlavor: 'standard'
+  };
+  public cronOptionsMensual: CronOptions = {
+    formInputClass: 'form-control cron-editor-input',
+    formSelectClass: 'form-control cron-editor-select',
+    formRadioClass: 'cron-editor-radio',
+    formCheckboxClass: 'cron-editor-checkbox',
+    defaultTime: '00:00:00',
+    hideMinutesTab: false,
+    hideHourlyTab: false,
+    hideDailyTab: false,
+    hideWeeklyTab: true,
     hideMonthlyTab: false,
     hideYearlyTab: false,
     hideAdvancedTab: false,
     hideSpecificWeekDayTab: false,
     hideSpecificMonthWeekTab: false,
-
     use24HourTime: true,
     hideSeconds: false,
-
     cronFlavor: 'standard'
   };
 
-  @ViewChild('cronEditorDemo', { static: false })
+  @ViewChild('cronEditorDemo', {static: false})
   displayedColumns: string[] = ['idDB', 'id', 'empresa', 'abrev', 'etl', 'cadconexion', 'cambio'];
   dataSource: any;
   checked = false;
@@ -73,17 +89,18 @@ export class ExtraccionComponent implements OnInit {
     {value: 11, viewValue: 'Noviembre'},
     {value: 12, viewValue: 'Diciembre'},
   ];
+
   constructor(private cS: CompaniaService,
               private fB: FormBuilder,
               private eS: EtlprogService,
               private pProformaService: PreproformaService,
               private load: LoaderService,
               private etlService: EtlprogService
-              ) {
+  ) {
     this.getDatosCron();
     this.buildForm();
-    let anioActual=new Date().getFullYear();
-    for ( let i = 2005; i <= anioActual ; i++) {
+    let anioActual = new Date().getFullYear();
+    for (let i = 2005; i <= anioActual; i++) {
       this.anios.push({value: i, viewValue: i});
     }
   }
@@ -94,41 +111,41 @@ export class ExtraccionComponent implements OnInit {
     this.cronForm = new FormControl(this.cronExpression);
   }
 
-  cronFlavorChange() {
-    this.cronEditorDemo.options = this.cronOptions;
-  }
 
   buildForm() {
     this.formFecha = this.fB.group({
-      anioInicio: ['', Validators.required],
-      anioFin: ['', Validators.required],
-      mes: ['', Validators.required],
+      anioInicio: [''],
+      anioFin: [''],
+      mes: [''],
     });
   }
+
   getDatosCron() {
     this.etlService.getDatosExtraccion()
-    .subscribe(data => {
-      this.datos = data;
-      console.log('datos de extraccion: ', this.datos);
-      this.datosCron = [];
-      for (const key in data) {
-        this.datosCron.push({etiqueta: key, valor: data[key]});
-      }
-      console.log('datos de extraccion: ', this.datosCron);
-    });
-  }
-  obtener() {
-    this.cS.getAllCompania()
-    .subscribe(
-      x => {
-        this.dataSource = new MatTableDataSource();
-        this.dataSource.data = x;
-        console.log(this.dataSource.data);
-      },
-      error => {
-        console.log('Error al extraer los registros!' + error);
+      .subscribe(data => {
+        this.datos = data;
+        console.log('datos de extraccion: ', this.datos);
+        this.datosCron = [];
+        for (const key in data) {
+          this.datosCron.push({etiqueta: key, valor: data[key]});
+        }
+        console.log('datos de extraccion: ', this.datosCron);
       });
   }
+
+  obtener() {
+    this.cS.getAllCompania()
+      .subscribe(
+        x => {
+          this.dataSource = new MatTableDataSource();
+          this.dataSource.data = x;
+          console.log(this.dataSource.data);
+        },
+        error => {
+          console.log('Error al extraer los registros!' + error);
+        });
+  }
+
   opcr() {
     this.opcion = false;
   }
@@ -136,114 +153,191 @@ export class ExtraccionComponent implements OnInit {
   opc() {
     this.opcion = true;
   }
-  extraccionManualContable(form: NgForm) {
-    this.etlService.extraccionManualCont(form)
-    .subscribe(resul => {
-      Swal.fire(
-        'Listo!',
-        'Se realizo la extracción!',
-        'success'
-      );
-    },
-    error => {
-      Swal.fire(
-        'Error!',
-        'Ocurrio un error durante la extracción!',
-        'error'
-      );
+
+  extraccionManualContable(request) {
+    request['mes'] = -1;
+    if (!request['anioInicio']) {
+      request['anioInicio'] = -1;
     }
-    );
+    if (!request['anioFin']) {
+      request['anioFin'] = -1;
+    }
+    this.executing = true;
+    this.etlService.extraccionManualCont(request)
+      .subscribe(resul => {
+          this.executing = false;
+          Swal.fire(
+            'Listo!',
+            'Se realizo la extracción!',
+            'success'
+          );
+        },
+        error => {
+          this.executing = false;
+          Swal.fire(
+            'Error!',
+            'Ocurrio un error durante la extracción!',
+            'error'
+          );
+        }
+      );
   }
-  extraccionManualflujo(form: NgForm) {
-    this.etlService.extraccionManualflujo(form)
-    .subscribe(resul => {
-      Swal.fire(
-        'Listo!',
-        'Se realizo la extracción!',
-        'success'
-      );
-    },
-    error => {
-      Swal.fire(
-        'Error!',
-        'Ocurrio un error durante la extracción!',
-        'error'
-      );
+
+  extraccionManualflujo(request) {
+    this.executing = true;
+    if (!request['anioInicio']) {
+      request['anioInicio'] = -1;
     }
-    );
+    if (!request['anioFin']) {
+      request['anioFin'] = -1;
+    }
+    this.etlService.extraccionManualflujo(request)
+      .subscribe(resul => {
+          this.executing = false;
+          Swal.fire(
+            'Listo!',
+            'Se realizo la extracción!',
+            'success'
+          );
+        },
+        error => {
+          this.executing = false;
+          Swal.fire(
+            'Error!',
+            'Ocurrio un error durante la extracción!',
+            'error'
+          );
+        }
+      );
   }
 
   extraccion() {
+    this.executing = true;
     this.pProformaService.getPreProforma()
-    .subscribe( res => {
-      Swal.fire(
-        'Listo!',
-        'Se realizo la extracción!',
-        'success'
-      );
-    },
-    error => {
-      Swal.fire(
-        'Error!',
-        'Ocurrio un error durante la extracción!',
-        'error'
-      );
-    });
+      .subscribe(res => {
+          this.executing = false;
+          Swal.fire(
+            'Listo!',
+            'Se realizo la extracción!',
+            'success'
+          );
+        },
+        error => {
+          this.executing = false;
+          Swal.fire(
+            'Error!',
+            'Ocurrio un error durante la extracción!',
+            'error'
+          );
+        });
   }
 
-  sendProgFlujo() {
+  extraccionProgContable() {
     console.log('cron: ', this.cronExpression);
-    this.etlService.postETLFlujo(this.cronExpression)
+    if(!this.cronExpression){
+      Swal.fire(
+        'Error!',
+        'La expresión cron es requerida!',
+        'error'
+      );
+      return;
+    }
+    this.etlService.rescheduleContable(this.cronExpression)
       .subscribe(res => {
-        Swal.fire(
-          'Listo!',
-          'Se programo la extracción!',
-          'success'
-        );
-      },
-      error => {
-        Swal.fire(
-          'Error!',
-          'Ocurrio un error durante la extracción!',
-          'error'
-        );
-      });
+          Swal.fire(
+            'Listo!',
+            'Se programo la extracción!',
+            'success'
+          );
+        },
+        error => {
+          Swal.fire(
+            'Error!',
+            'Ocurrio un error durante la extracción!',
+            'error'
+          );
+        });
   }
+  extraccionProgFlujo() {
+    console.log('cron: ', this.cronExpression);
+    if(!this.cronExpression){
+      Swal.fire(
+        'Error!',
+        'La expresión cron es requerida!',
+        'error'
+      );
+      return;
+    }
+    this.etlService.rescheduleFlujo(this.cronExpression)
+      .subscribe(res => {
+          Swal.fire(
+            'Listo!',
+            'Se programo la extracción!',
+            'success'
+          );
+        },
+        error => {
+          Swal.fire(
+            'Error!',
+            'Ocurrio un error durante la extracción!',
+            'error'
+          );
+        });
+  }
+
+
   sendProgMontoFlujo() {
     console.log('cron: ', this.cronExpression);
-    this.etlService.extraccionProgMontosFlujo(this.cronExpression)
-    .subscribe(res => {
-      Swal.fire(
-        'Listo!',
-        'Se programo la extracción!',
-        'success'
-      );
-    },
-    error => {
+    if(!this.cronExpression){
       Swal.fire(
         'Error!',
-        'Ocurrio un error durante la extracción!',
+        'La expresión cron es requerida!',
         'error'
       );
-    });
+      return;
+    }
+    this.etlService.extraccionProgMontosFlujo(this.cronExpression)
+      .subscribe(res => {
+          Swal.fire(
+            'Listo!',
+            'Se programo la extracción!',
+            'success'
+          );
+        },
+        error => {
+          Swal.fire(
+            'Error!',
+            'Ocurrio un error durante la extracción!',
+            'error'
+          );
+        });
   }
+
   sendProgMontoCont() {
     console.log('cron: ', this.cronExpression);
-    this.etlService.extraccionProgMontosCont(this.cronExpression)
-    .subscribe(res => {
-      Swal.fire(
-        'Listo!',
-        'Se programo la extracción!',
-        'success'
-      );
-    },
-    error => {
+    if(!this.cronExpression){
       Swal.fire(
         'Error!',
-        'Ocurrio un error durante la extracción!',
+        'La expresión cron es requerida!',
         'error'
       );
-    });
+      return;
+    }
+    this.etlService.extraccionProgMontosCont(this.cronExpression)
+      .subscribe(res => {
+          Swal.fire(
+            'Listo!',
+            'Se programo la extracción!',
+            'success'
+          );
+        },
+        error => {
+          Swal.fire(
+            'Error!',
+            'Ocurrio un error durante la extracción!',
+            'error'
+          );
+        });
   }
 
 }

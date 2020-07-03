@@ -22,7 +22,7 @@
   table {
     width: 100%;
   }
-  
+
   .mat-form-field {
     font-size: 14px;
     width: 100%;
@@ -35,7 +35,7 @@
   }
   .extraccionManual{
     height: 100px;
-    
+
   }
 
   .mat-tab-body-content{
@@ -44,4 +44,7 @@
 
   .cron-actual{
     color: blue;
+  }
+  .progressbar{
+    margin-top: 10px;
   }

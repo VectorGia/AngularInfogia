@@ -26,20 +26,23 @@ export class EtlprogService {
      console.log('[recibi datos: ]', extraccion);
      return this.http.post(`${this.url}/api/ETL/contable`, extraccion, httpOptions);
    }
-   postETLCont(cron) {
+
+  extraccionManualflujo(extraccion): Observable<ETLProg> {
+    console.log('[recibi datos: ]', extraccion);
+    return this.http.post<ETLProg>(`${this.url}/api/ETL/flujo`, extraccion, httpOptions);
+  }
+
+  rescheduleContable(cron) {
     console.log('recibi expresion: ', cron);
     return this.http.post(`${this.url}/api/ETL/rescheduleContable`, {valor: cron}, httpOptions);
    }
 
-   postETLFlujo(cron) {
+  rescheduleFlujo(cron) {
      console.log('recibi expresion cron: ',cron);
      return this.http.post(`${this.url}/api/ETL/rescheduleFlujo`, {valor: cron}, httpOptions);
    }
 
-   extraccionManualflujo(extraccion): Observable<ETLProg> {
-    console.log('[recibi datos: ]', extraccion);
-    return this.http.post<ETLProg>(`${this.url}/api/ETL/flujo`, extraccion, httpOptions);
-  }
+
   extraccionProgMontosCont(cron) {
     console.log('recibi expresion cron: ', cron);
     return this.http.post(`${this.url}/api/PreProforma/montosRescheduleContable`,  {valor: cron}, httpOptions);
