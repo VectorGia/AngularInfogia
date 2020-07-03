@@ -36,7 +36,7 @@ export class RubrosComponent implements OnInit {
     this.aR.params.subscribe((params) => {
       console.log('rubros component params: ', params);
       this.id = params.id;
-      let data = params.nombre.split('|');
+      let data = decodeURI(params.nombre).split('|');
       this.name = data[0];
       if (data.length > 1) {
         this.nombreTipoCaptura = data[1];

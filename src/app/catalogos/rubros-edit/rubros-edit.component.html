@@ -7,7 +7,7 @@
             <div class="row">
                 <div class="col">
                     <mat-form-field>
-                        <input matInput placeholder="Nombre Rubro" formControlName="nombre"> 
+                        <input matInput placeholder="Nombre Rubro" formControlName="nombre">
                     </mat-form-field>
                 </div>
                 <div class="col">
@@ -19,15 +19,15 @@
             <div class="row">
                 <div class="col" *ngIf="disabledC">
                     <mat-form-field>
-                        <input matInput placeholder="Cuentas incluidas" formControlName="rangos_cuentas_incluidas">
+                        <input matInput placeholder="{{labelCtaOrTm}} incluidas" formControlName="rangos_cuentas_incluidas">
                     </mat-form-field>
                 </div>
                 <div class="col" *ngIf="disabledC">
                     <mat-form-field>
-                        <input matInput placeholder="Cuentas excluidas" formControlName="rango_cuentas_excluidas">
+                        <input matInput placeholder="{{labelCtaOrTm}} excluidas" formControlName="rango_cuentas_excluidas">
                     </mat-form-field>
                 </div>
-                <div class="col" *ngIf="disabledC">
+                <div class="col"  *ngIf="nombreTipoCaptura!=='FLUJO'">
                     <mat-form-field>
                         <mat-label>Tipo de cuenta</mat-label>
                         <mat-select formControlName="tipo_cuenta">
@@ -41,8 +41,8 @@
                     <mat-form-field>
                         <input matInput placeholder="Aritmetica" formControlName="aritmetica">
                     </mat-form-field>
-                    <mat-form-field>
-                        <mat-label>Cuentas</mat-label>
+                    <mat-form-field *ngIf="hijos">
+                        <mat-label>Rubros agrupados</mat-label>
                         <mat-select formControlName="hijos" multiple>
                           <mat-option *ngFor="let item of rubros" [value]="item.id"> {{item.nombre}} </mat-option>
                         </mat-select>

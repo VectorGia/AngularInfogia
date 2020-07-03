@@ -77,7 +77,7 @@
                 </div>
                 <div class="col">
                   <mat-form-field>
-                    <mat-label>{{labelCtaOrTm}}</mat-label>
+                    <mat-label>Rubros agrupados</mat-label>
                     <mat-select [disabled]="!disableSelect.value" formControlName="hijos" multiple>
                       <mat-option *ngFor="let item of rubros" [value]="item.id"> {{item.nombre}} </mat-option>
                     </mat-select>
