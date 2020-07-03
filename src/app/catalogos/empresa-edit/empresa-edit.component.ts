@@ -12,25 +12,29 @@ export class EmpresaEditComponent implements OnInit {
   mostrarDatos: boolean;
   form: FormGroup;
   id: string;
-  constructor(private aR: ActivatedRoute, private fB: FormBuilder, private cS: CompaniaService, private router: Router) { 
+  etl=false;
+  moneda_id='';
+  constructor(private aR: ActivatedRoute, private fB: FormBuilder, private cS: CompaniaService, private router: Router) {
       this.builForm();
   }
 
   ngOnInit() {
     this.aR.params.subscribe((params) => {
-      
       this.id = params.id;
       console.log(this.id)
       this.cS.getCompania(this.id)
         .subscribe(data => {
-          console.log(data)
-          this.form.patchValue(data)
-          console.log(this.form)
-        })
-    })
+          console.log("datos empresa=%o",data)
+          data['moneda_id']=data['moneda_id']+'';
+          this.form.patchValue(data);
+          this.etl = data['etl'];
+          this.moneda_id = data['moneda_id'];
+          console.log(this.form);
+        });
+    });
   }
   return(){
-    this.router.navigate(['./catalogo/empresa'])
+    this.router.navigate(['./catalogo/empresa']);
    }
   saveCompania(event: Event){
     event.preventDefault();
@@ -66,5 +70,5 @@ export class EmpresaEditComponent implements OnInit {
     this.mostrarDatos = false;
   }
 
-  
+
 }

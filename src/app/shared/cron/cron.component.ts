@@ -67,7 +67,7 @@ export class CronComponent implements OnInit {
   }
   sendProg() {
     console.log('cron: ', this.cronExpression);
-    this.etlService.postETLCont(this.cronExpression)
+    this.etlService.rescheduleContable(this.cronExpression)
       .subscribe(res => {
         Swal.fire(
           'Listo!',

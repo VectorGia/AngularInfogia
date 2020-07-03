@@ -24,9 +24,9 @@
     <div class="row">
       <div class="col">
         <label>Activación en ETL: </label>
-        <mat-radio-group aria-label="Select an option" formControlName="etl">
-          <mat-radio-button value="true">Si</mat-radio-button>
-          <mat-radio-button value="false">No</mat-radio-button>
+        <mat-radio-group aria-label="Select an option" formControlName="etl" >
+          <mat-radio-button value="true" [checked]="etl==true">Si</mat-radio-button>
+          <mat-radio-button value="false" [checked]="etl==false">No</mat-radio-button>
         </mat-radio-group>
       </div>
     </div>
@@ -82,8 +82,8 @@
         <p>
           <mat-form-field appearance="legacy">
             <mat-label>Moneda: </mat-label>
-            <mat-select placeholder="Select me" formControlName="moneda_id" matTooltip="Tipo de moneda">
-              <mat-option value="1">MX</mat-option>
+            <mat-select [(value)]="moneda_id" placeholder="Select me" formControlName="moneda_id" matTooltip="Tipo de moneda"  >
+              <mat-option value="1" >MX</mat-option>
             </mat-select>
           </mat-form-field>
         </p>

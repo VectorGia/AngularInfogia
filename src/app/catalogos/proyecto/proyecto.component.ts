@@ -68,6 +68,9 @@ export class ProyectoComponent implements OnInit {
     this.cS.getAllCompania()
     .subscribe(compania => {
       this.companias = compania;
+      this.companias.sort((a, b) => {
+        return a.desc_id - b.desc_id;
+      });
       console.log('compañias', this.companias);
     });
   }
