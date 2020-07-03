@@ -154,110 +154,117 @@ export class ExtraccionComponent implements OnInit {
     this.opcion = true;
   }
 
+  confirmExtraccion(applyFun) {
+    Swal.fire({
+      title: '¿Estas seguro de ejecutar la extracción?',
+      text: '!Podria demorar varios segundos e incluso minutos!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      cancelButtonText: 'No',
+      confirmButtonText: 'Aplicar'
+    }).then((result) => {
+      if (result.value) {
+        applyFun();
+      }
+    });
+  }
+
   extraccionManualContable(request) {
-    request['mes'] = -1;
-    if (!request['anioInicio']) {
-      request['anioInicio'] = -1;
-    }
-    if (!request['anioFin']) {
-      request['anioFin'] = -1;
-    }
-    this.executing = true;
-    this.etlService.extraccionManualCont(request)
-      .subscribe(resul => {
-          this.executing = false;
-          Swal.fire(
-            'Listo!',
-            'Se realizo la extracción!',
-            'success'
-          );
-        },
-        error => {
-          this.executing = false;
-          Swal.fire(
-            'Error!',
-            'Ocurrio un error durante la extracción!',
-            'error'
-          );
-        }
-      );
+    this.confirmExtraccion(() => {
+      request['mes'] = -1;
+      if (!request['anioInicio']) {
+        request['anioInicio'] = -1;
+      }
+      if (!request['anioFin']) {
+        request['anioFin'] = -1;
+      }
+      this.executing = true;
+      this.etlService.extraccionManualCont(request)
+        .subscribe(resul => {
+            this.executing = false;
+            Swal.fire('Listo!', 'Se realizo la extracción!', 'success');
+          },
+          error => {
+            this.executing = false;
+            Swal.fire('Error!', 'Ocurrio un error durante la extracción!', 'error'
+            );
+          }
+        );
+    });
   }
 
   extraccionManualflujo(request) {
-    this.executing = true;
-    if (!request['anioInicio']) {
-      request['anioInicio'] = -1;
-    }
-    if (!request['anioFin']) {
-      request['anioFin'] = -1;
-    }
-    this.etlService.extraccionManualflujo(request)
-      .subscribe(resul => {
-          this.executing = false;
-          Swal.fire(
-            'Listo!',
-            'Se realizo la extracción!',
-            'success'
-          );
-        },
-        error => {
-          this.executing = false;
-          Swal.fire(
-            'Error!',
-            'Ocurrio un error durante la extracción!',
-            'error'
-          );
-        }
-      );
+    this.confirmExtraccion(() => {
+      this.executing = true;
+      if (!request['anioInicio']) {
+        request['anioInicio'] = -1;
+      }
+      if (!request['anioFin']) {
+        request['anioFin'] = -1;
+      }
+      this.etlService.extraccionManualflujo(request)
+        .subscribe(resul => {
+            this.executing = false;
+            Swal.fire('Listo!', 'Se realizo la extracción!', 'success');
+          },
+          error => {
+            this.executing = false;
+            Swal.fire('Error!', 'Ocurrio un error durante la extracción!', 'error');
+          }
+        );
+    });
   }
 
   extraccion() {
-    this.executing = true;
-    this.pProformaService.getPreProforma()
-      .subscribe(res => {
-          this.executing = false;
-          Swal.fire(
-            'Listo!',
-            'Se realizo la extracción!',
-            'success'
-          );
-        },
-        error => {
-          this.executing = false;
-          Swal.fire(
-            'Error!',
-            'Ocurrio un error durante la extracción!',
-            'error'
-          );
-        });
+    this.confirmExtraccion(() => {
+      this.executing = true;
+      this.pProformaService.getPreProforma()
+        .subscribe(res => {
+            this.executing = false;
+            Swal.fire(
+              'Listo!',
+              'Se realizo la extracción!',
+              'success'
+            );
+          },
+          error => {
+            this.executing = false;
+            Swal.fire(
+              'Error!',
+              'Ocurrio un error durante la extracción!',
+              'error'
+            );
+          });
+    });
   }
 
   extraccionProgContable() {
     console.log('cron: ', this.cronExpression);
     if(!this.cronExpression){
-      Swal.fire(
-        'Error!',
-        'La expresión cron es requerida!',
-        'error'
-      );
+      Swal.fire('Error!', 'La expresión cron es requerida!', 'error');
       return;
     }
-    this.etlService.rescheduleContable(this.cronExpression)
-      .subscribe(res => {
-          Swal.fire(
-            'Listo!',
-            'Se programo la extracción!',
-            'success'
-          );
-        },
-        error => {
-          Swal.fire(
-            'Error!',
-            'Ocurrio un error durante la extracción!',
-            'error'
-          );
-        });
+    this.confirmExtraccion(() => {
+      this.etlService.rescheduleContable(this.cronExpression)
+        .subscribe(res => {
+            Swal.fire(
+              'Listo!',
+              'Se programo la extracción!',
+              'success'
+            );
+          },
+          error => {
+            Swal.fire(
+              'Error!',
+              'Ocurrio un error durante la extracción!',
+              'error'
+            );
+          });
+    });
   }
+
   extraccionProgFlujo() {
     console.log('cron: ', this.cronExpression);
     if(!this.cronExpression){
@@ -268,23 +275,24 @@ export class ExtraccionComponent implements OnInit {
       );
       return;
     }
-    this.etlService.rescheduleFlujo(this.cronExpression)
-      .subscribe(res => {
-          Swal.fire(
-            'Listo!',
-            'Se programo la extracción!',
-            'success'
-          );
-        },
-        error => {
-          Swal.fire(
-            'Error!',
-            'Ocurrio un error durante la extracción!',
-            'error'
-          );
-        });
+    this.confirmExtraccion(() => {
+      this.etlService.rescheduleFlujo(this.cronExpression)
+        .subscribe(res => {
+            Swal.fire(
+              'Listo!',
+              'Se programo la extracción!',
+              'success'
+            );
+          },
+          error => {
+            Swal.fire(
+              'Error!',
+              'Ocurrio un error durante la extracción!',
+              'error'
+            );
+          });
+    });
   }
-
 
   sendProgMontoFlujo() {
     console.log('cron: ', this.cronExpression);
@@ -296,21 +304,23 @@ export class ExtraccionComponent implements OnInit {
       );
       return;
     }
-    this.etlService.extraccionProgMontosFlujo(this.cronExpression)
-      .subscribe(res => {
-          Swal.fire(
-            'Listo!',
-            'Se programo la extracción!',
-            'success'
-          );
-        },
-        error => {
-          Swal.fire(
-            'Error!',
-            'Ocurrio un error durante la extracción!',
-            'error'
-          );
-        });
+    this.confirmExtraccion(() => {
+      this.etlService.extraccionProgMontosFlujo(this.cronExpression)
+        .subscribe(res => {
+            Swal.fire(
+              'Listo!',
+              'Se programo la extracción!',
+              'success'
+            );
+          },
+          error => {
+            Swal.fire(
+              'Error!',
+              'Ocurrio un error durante la extracción!',
+              'error'
+            );
+          });
+    });
   }
 
   sendProgMontoCont() {
@@ -323,21 +333,23 @@ export class ExtraccionComponent implements OnInit {
       );
       return;
     }
-    this.etlService.extraccionProgMontosCont(this.cronExpression)
-      .subscribe(res => {
-          Swal.fire(
-            'Listo!',
-            'Se programo la extracción!',
-            'success'
-          );
-        },
-        error => {
-          Swal.fire(
-            'Error!',
-            'Ocurrio un error durante la extracción!',
-            'error'
-          );
-        });
+    this.confirmExtraccion(() => {
+      this.etlService.extraccionProgMontosCont(this.cronExpression)
+        .subscribe(res => {
+            Swal.fire(
+              'Listo!',
+              'Se programo la extracción!',
+              'success'
+            );
+          },
+          error => {
+            Swal.fire(
+              'Error!',
+              'Ocurrio un error durante la extracción!',
+              'error'
+            );
+          });
+    });
   }
 
 }
