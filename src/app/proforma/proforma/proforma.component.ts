@@ -43,6 +43,7 @@ export class ProformaComponent implements OnInit {
   empresas: any;
   proforma: any;
   centros: any;
+  centrosToShow:any;
   consulta: any = false;
   id: any = null;
   proformaExistente: any = false;
@@ -107,6 +108,9 @@ getAnios() {
   }
 
   proformar(form: any) {
+    if ( this.formProforma.invalid ) {
+      return;
+    }
     this.proformaService.getProforma(form)
     .subscribe(
       res => {
@@ -151,6 +155,9 @@ getAnios() {
     this.empresaService.getAllCompania()
       .subscribe(res => {
         this.empresas = res;
+        this.empresas.sort((a, b) => {
+          return a.desc_id - b.desc_id;
+        });
       });
   }
 
@@ -273,6 +280,17 @@ getAnios() {
       }
     }
     this.detallesProfToRender = this.splitDetalles(detalles, this.mesInicio);
+  }
+  showCentrosCostoByEmpredaId(empresaId){
+    this.centrosToShow = [];
+    let value=this.formProforma.value;
+    value['centro_costo_id'] = '';
+    this.formProforma.patchValue(value);
+    for ( let i = 0 ; i < this.centros.length; i++) {
+      if ( this.centros[i].empresa_id == empresaId) {
+        this.centrosToShow.push(this.centros[i]);
+      }
+    }
   }
 
   recalculaPorAjusteBalanza(aplicar) {

@@ -27,8 +27,8 @@
             <div class="col-sm-2">
                 <mat-form-field>
                     <mat-label>Empresa: </mat-label>
-                    <mat-select matNativeControl required formControlName="empresa_id" [disabled]="consulta">
-                        <mat-option *ngFor="let item of empresas" [value]="item.id"> {{item.nombre}} </mat-option>
+                    <mat-select matNativeControl required formControlName="empresa_id" [disabled]="consulta" (selectionChange)="showCentrosCostoByEmpredaId($event.value)">
+                        <mat-option *ngFor="let item of empresas" [value]="item.id"> {{'( '+item.desc_id+' ) '+item.nombre}} </mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>
@@ -36,7 +36,7 @@
                 <mat-form-field>
                     <mat-label>Centro de Costo: </mat-label>
                     <mat-select matNativeControl required formControlName="centro_costo_id" [disabled]="consulta">
-                        <mat-option *ngFor="let item of centros" [value]="item.id"> {{item.nombre}} </mat-option>
+                        <mat-option *ngFor="let item of centrosToShow" [value]="item.id"> {{item.nombre}} </mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>
