@@ -9,6 +9,7 @@ import {TipoproformaService} from 'src/app/core/service/tipoproforma.service';
 import {TipocapturaService} from 'src/app/core/service/tipocaptura.service';
 import Swal from 'sweetalert2';
 import {ExcelService} from '../../core/service/excel.service';
+import {Location} from '@angular/common';
 type AOA = any[][];
 @Component({
   selector: 'app-proforma',
@@ -22,7 +23,8 @@ export class ProformaComponent implements OnInit {
               private router: Router,
               private tipoproformaService: TipoproformaService,
               private tipocapturaService: TipocapturaService,
-              private exportService: ExcelService) {
+              private exportService: ExcelService,
+              private _location: Location) {
   }
 
   displayedColumns: string[] = ['nombre', 'total', 'aant', 'ejercicio', 'enero', 'febrero', 'marzo',
@@ -69,6 +71,7 @@ export class ProformaComponent implements OnInit {
         this.id = params.id;
         this.proformaService.getProformaby(this.id)
           .subscribe(res => {
+            this.centrosToShow=this.centros;
             this.formProforma.patchValue(res[0]);
             this.consulta = true;
             this.proformaExistente = true;
@@ -523,6 +526,8 @@ getAnios() {
     }
     return [detReal, detprof];
   }
-
+  back() {
+    this._location.back();
+  }
 
 }
