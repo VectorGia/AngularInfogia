@@ -63,6 +63,10 @@ export class RubrosComponent implements OnInit {
     const dialogRef = this.dialog.open(DialogOverviewDialogComponent, {
       disableClose: true,
       width: '550px',
+      position: {
+        top: '0',
+        right: '0'
+      },
       data: {
         id: this.id,
         nombreTipoCaptura : this.nombreTipoCaptura

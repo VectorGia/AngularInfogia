@@ -30,26 +30,26 @@
         <mat-radio-button value="1" (click)="opcr()">Rubro</mat-radio-button>
       </mat-radio-group>  -->
         <mat-form-field>
-          <input matInput placeholder="Concepto: " formControlName="nombre" [(ngModel)]="nombre" maxlength="30">
+          <input autocomplete="off" matInput placeholder="Concepto: " formControlName="nombre" [(ngModel)]="nombre" maxlength="30">
           <button mat-button *ngIf="nombre" matSuffix mat-icon-button aria-label="Clear" (click)="nombre=''">
             <mat-icon>close</mat-icon>
           </button>
         </mat-form-field>
         <mat-form-field>
-          <input matInput placeholder="Clave: " maxlength="5" formControlName="clave" matTooltip="Clave alfanumerica que permitira hacer referencia a este rubro mediante una expresión aritmetica de un rubro de rubros" [(ngModel)]="clave">
+          <input autocomplete="off" matInput placeholder="Clave: " maxlength="4" formControlName="clave" matTooltip="Clave alfanumerica que permitira hacer referencia a este rubro mediante una expresión aritmetica de un rubro de rubros" [(ngModel)]="clave">
           <button mat-button *ngIf="clave" matSuffix mat-icon-button aria-label="Clear" (click)="clave=''">
             <mat-icon>close</mat-icon>
           </button>
         </mat-form-field>
         <div *ngIf="!select">
             <mat-form-field>
-              <input matInput placeholder="{{labelCtaOrTm}} incluidas: " maxlength="200" pattern="^(((\s*\d+\*\s*(-\s*\d+\*\s*)?)|(\s*\d+\s*))\s*,)*(((\s*\d+\*\s*(-\s*\d+\*\s*)?)|(\s*\d+\s*))\s*)$" [(ngModel)]="cuentainclu" formControlName="rangos_cuentas_incluidas" matTooltip="El conjunto de cuentas separadas por comas que seran incluidas en este rubro. Pueden ser rangos y cuentas individuales. Ejemplo: 1000*-2000*,300000000000">
+              <input autocomplete="off" matInput placeholder="{{labelCtaOrTm}} incluidas: " maxlength="200" pattern="^(((\s*\d+\*\s*(-\s*\d+\*\s*)?)|(\s*\d+\s*))\s*,)*(((\s*\d+\*\s*(-\s*\d+\*\s*)?)|(\s*\d+\s*))\s*)$" [(ngModel)]="cuentainclu" formControlName="rangos_cuentas_incluidas" matTooltip="El conjunto de cuentas separadas por comas que seran incluidas en este rubro. Pueden ser rangos y cuentas individuales. Ejemplo: 1000*-2000*,300000000000">
               <button mat-button *ngIf="cuentainclu" matSuffix mat-icon-button aria-label="Clear" (click)="cuentainclu=''">
                 <mat-icon>close</mat-icon>
               </button>
             </mat-form-field>
             <mat-form-field>
-              <input matInput placeholder="{{labelCtaOrTm}} excluidas: " maxlength="200" pattern="^(((\s*\d+\*\s*(-\s*\d+\*\s*)?)|(\s*\d+\s*))\s*,)*(((\s*\d+\*\s*(-\s*\d+\*\s*)?)|(\s*\d+\s*))\s*)$" [(ngModel)]="cuentaexclu" formControlName="rango_cuentas_excluidas" matTooltip="El conjunto de cuentas separados por comas que seran exluidas en este rubro. Pueden ser rangos y cuentas individuales. Ejemplo: 1000*-2000*,300000000000">
+              <input autocomplete="off" matInput placeholder="{{labelCtaOrTm}} excluidas: " maxlength="200" pattern="^(((\s*\d+\*\s*(-\s*\d+\*\s*)?)|(\s*\d+\s*))\s*,)*(((\s*\d+\*\s*(-\s*\d+\*\s*)?)|(\s*\d+\s*))\s*)$" [(ngModel)]="cuentaexclu" formControlName="rango_cuentas_excluidas" matTooltip="El conjunto de cuentas separados por comas que seran exluidas en este rubro. Pueden ser rangos y cuentas individuales. Ejemplo: 1000*-2000*,300000000000">
               <button mat-button *ngIf="cuentaexclu" matSuffix mat-icon-button aria-label="Clear" (click)="cuentaexclu=''">
                 <mat-icon>close</mat-icon>
               </button>
@@ -58,7 +58,7 @@
         </div>
         <div *ngIf="select">
             <mat-form-field>
-              <input matInput placeholder="Aritmetica: " [(ngModel)]="aritmetica" formControlName="aritmetica" value="">
+              <input autocomplete="off" matInput placeholder="Aritmetica: " [(ngModel)]="aritmetica" formControlName="aritmetica" value="">
               <button mat-button *ngIf="aritmetica" matSuffix mat-icon-button aria-label="Clear" (click)="aritmetica=''">
                 <mat-icon>close</mat-icon>
               </button>
