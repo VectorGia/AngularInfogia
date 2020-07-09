@@ -6,7 +6,9 @@
 }
 
 table input {
-  width: 40px;
+  width: 90px;
+  margin-left: 2px;
+  margin-right: 2px;
 }
 .padre{
   background-color: #FAFAD2;
@@ -72,7 +74,7 @@ table input {
 }
 
 table td {
-  font-size: 10px;
+  font-size: 11px;
 
 }
 table th{
