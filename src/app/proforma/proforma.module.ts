@@ -15,6 +15,7 @@ import { DialogReportComponent } from './dialog-report/dialog-report.component';
 import {ConfirmationDialogComponent} from '../shared/confirmation-dialog/confirmation-dialog.component';
 import {DialogOverviewDialogComponent} from '../shared/dialog-overview-dialog/dialog-overview-dialog.component';
 import { CronEditorModule } from 'projects/cron-editor/src/lib/cron-editor.module';
+import { NgxCurrencyModule } from 'ngx-currency';
 
 @NgModule({
   declarations: [EstatusComponent,
@@ -32,6 +33,7 @@ import { CronEditorModule } from 'projects/cron-editor/src/lib/cron-editor.modul
     SharedModule,
     CronEditorModule,
     FormsModule,
+    NgxCurrencyModule
   ],
   entryComponents: [
   DialogReportComponent,
