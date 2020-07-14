@@ -73,7 +73,7 @@ export class ExtraccionComponent implements OnInit {
   selection = new SelectionModel<Compania>(true, []);
   formFecha: FormGroup;
   datos: any;
-  datosCron = [];
+  datosCron: any = {};
   anios: Año[] = [];
   meses: Mes[] = [
     {value: 1, viewValue: 'Enero'},
@@ -99,7 +99,7 @@ export class ExtraccionComponent implements OnInit {
   ) {
     this.getDatosCron();
     this.buildForm();
-    let anioActual = new Date().getFullYear();
+    const anioActual = new Date().getFullYear();
     for (let i = 2005; i <= anioActual; i++) {
       this.anios.push({value: i, viewValue: i});
     }
@@ -125,11 +125,11 @@ export class ExtraccionComponent implements OnInit {
       .subscribe(data => {
         this.datos = data;
         console.log('datos de extraccion: ', this.datos);
-        this.datosCron = [];
-        for (const key in data) {
+        this.datosCron = this.datos;
+      /*  for (const key in data) {
           this.datosCron.push({etiqueta: key, valor: data[key]});
         }
-        console.log('datos de extraccion: ', this.datosCron);
+        console.log('datos de extraccion: ', this.datosCron);*/
       });
   }
 
@@ -249,7 +249,8 @@ export class ExtraccionComponent implements OnInit {
     this.confirmExtraccion(() => {
       this.etlService.rescheduleContable(this.cronExpression)
         .subscribe(res => {
-            Swal.fire(
+          this.getDatosCron();
+          Swal.fire(
               'Listo!',
               'Se programo la extracción!',
               'success'
@@ -278,6 +279,7 @@ export class ExtraccionComponent implements OnInit {
     this.confirmExtraccion(() => {
       this.etlService.rescheduleFlujo(this.cronExpression)
         .subscribe(res => {
+            this.getDatosCron();
             Swal.fire(
               'Listo!',
               'Se programo la extracción!',
@@ -307,6 +309,7 @@ export class ExtraccionComponent implements OnInit {
     this.confirmExtraccion(() => {
       this.etlService.extraccionProgMontosFlujo(this.cronExpression)
         .subscribe(res => {
+            this.getDatosCron();
             Swal.fire(
               'Listo!',
               'Se programo la extracción!',
@@ -336,6 +339,7 @@ export class ExtraccionComponent implements OnInit {
     this.confirmExtraccion(() => {
       this.etlService.extraccionProgMontosCont(this.cronExpression)
         .subscribe(res => {
+            this.getDatosCron();
             Swal.fire(
               'Listo!',
               'Se programo la extracción!',
