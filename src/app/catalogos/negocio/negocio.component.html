@@ -12,7 +12,7 @@
       </div> -->
       <div class="col">
         <mat-form-field>
-          <input matInput placeholder="Nombre: " formControlName="nombre" matTooltip="Escribe un numbre para el modelo de negocio"/>
+          <input [(ngModel)]="validNombre" matInput placeholder="Nombre: " formControlName="nombre" matTooltip="Escribe un numbre para el modelo de negocio"/>
         </mat-form-field>
       </div>
       <div class="col">

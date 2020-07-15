@@ -30,6 +30,7 @@ export class NegocioComponent implements OnInit {
   unidades: any;
   select: boolean;
   nextClicked = false;
+  validNombre:any;
   constructor(private ns: NegocioService,
               private fb: FormBuilder,
               private cS: CompaniaService,
@@ -56,19 +57,41 @@ export class NegocioComponent implements OnInit {
         console.log(this.dataSource.data);
       },
       error => {
-        console.log('Error al extraer los registros!' + error);
+        console.log('Error al extraer los registros' + error);
       });
   }
 
   saveModelos(form: NgForm) {
     console.log('[Datos a guardar]: ', form);
+    //valido que el formulario este completo
+    if(!this.negocioForm.valid){
+      Swal.fire(
+        'Atención!',
+        'Complete la información requerida',
+        'warning'
+      );
+      return false;
+    }
+    //itero para ver si existe empresa negocio con mismo nombre
+    for(let negocio of this.dataSource.data){
+      //parseo a mayusculas para comprobar si existe
+      if(negocio.nombre.toUpperCase() == this.validNombre.toUpperCase()){
+        Swal.fire(
+          'Atención!',
+          'Ya se encuentra un negocio con el mismo nombre',
+          'warning'
+        );
+        return false;
+      }
+    }
+
     this.ns.addModelos(form).subscribe(
       res => {
         // tslint:disable-next-line: no-string-literal
         const nombre = res['nombre'];
         Swal.fire(
-          'Listo!',
-          'Se guardo el modelo!',
+          'Listo',
+          'Se guardo el modelo',
           'success'
         );
         this.ngOnInit();
@@ -76,7 +99,7 @@ export class NegocioComponent implements OnInit {
       error => {
         Swal.fire(
           'Error!',
-          'Ocurrio un error al guardar, intente de nuevo.',
+          'Ocurrió un error al guardar, intente de nuevo.',
           'error'
         );
       });
@@ -92,12 +115,12 @@ export class NegocioComponent implements OnInit {
     })
 
     swalWithBootstrapButtons.fire({
-      title: 'Estas seguro?',
-      text: 'No podras deshacer este cambio!',
+      title: '¿Estás seguro?',
+      text: 'No podrás deshacer este cambio',
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonText: 'Si, eliminar!',
-      cancelButtonText: 'No, cancelar!',
+      confirmButtonText: 'Si, eliminar',
+      cancelButtonText: 'No, cancelar',
       reverseButtons: true
     }).then((result) => {
       if (result.value) {
