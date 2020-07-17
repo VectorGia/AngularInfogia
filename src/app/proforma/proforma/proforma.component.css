@@ -20,20 +20,20 @@ table input {
 
 }
 .mat-column-nombre{
-  border-right:black 1px solid;
+  border-right:lightgray 1px dotted;
 }
 
 .mat-column-total {
   text-align: center;
-  border-right:black 1px solid;
+  border-right:lightgray 1px dotted;
 }
 .mat-column-aant{
   text-align: center;
-  border-right:black 1px solid;
+  border-right:lightgray 1px dotted;
 }
 .mat-column-ejercicio{
   text-align: center;
-  border-right:black 1px solid;
+  border-right:lightgray 1px dotted;
 }
 .mat-column-enero{
   text-align: center;
@@ -70,7 +70,7 @@ table input {
 }
 .mat-column-diciembre{
   text-align: center;
-  border-right:black 1px solid;
+  border-right:lightgray 1px dotted;
 }
 
 table td {
@@ -87,8 +87,11 @@ table th{
   display: none;
 }
 
-table td .ari{
+/*table td .ari{
   font-size: 9px;
+}*/
+.import{
+  margin-top: 10px;
 }
 .input__row{
   margin-top: 10px;
@@ -121,4 +124,16 @@ table td .ari{
   right: 0;
   background: #c3e3fc url('https://www.interactius.com/wp-content/uploads/2017/09/folder.png') no-repeat center;
 }
+
+.example-container {
+  width: 100%;
+  overflow: auto;
+  margin-top: 10px;
+}
+
+table {
+  width: 1024px;
+}
+
+
 
