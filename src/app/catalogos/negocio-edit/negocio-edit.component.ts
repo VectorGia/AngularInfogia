@@ -6,6 +6,7 @@ import { Negocio } from 'src/app/core/models/negocio';
 import { CompaniaService } from 'src/app/core/service/compania.service';
 import {UnidadnegocioService} from '../../core/service/unidadnegocio.service';
 import { MatTableDataSource } from '@angular/material';
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-negocio-edit',
@@ -48,8 +49,20 @@ export class NegocioEditComponent implements OnInit {
       this.nS.updateModelo(this.id, centro )
       .subscribe((newCompania) => {
         console.log(newCompania);
+        Swal.fire(
+          'Listo',
+          'Modelo actualizado',
+          'success'
+        );
         this.router.navigate(['./catalogo/negocio' + this.getData(window.location.href, 'negocio/', '/edit')]);
       });
+    }else{
+      Swal.fire(
+        'Atención!',
+        'Complete la información requerida',
+        'warning'
+      );
+      return false;
     }
   }
 

@@ -58,7 +58,7 @@ export class EmpresaComponent implements OnInit {
         console.log('empresas: ', this.dataSource.data);
       },
       error => {
-        console.log('Error al extraer los registros!' + error);
+        console.log('Error al extraer los registros' + error);
       });
   }
   delete(id) {
@@ -69,12 +69,20 @@ export class EmpresaComponent implements OnInit {
       });
   }
   saveDatos(form: NgForm) {
+    if(!this.form.valid){
+      Swal.fire(
+        'Atención!',
+        'Complete la información requerida',
+        'warning'
+      );
+      return false;
+    }
     this.cs.addCompania(form).subscribe(
       res => {
         const id = res['STR_IDCOMPANIA'];
         Swal.fire(
-          'Listo!',
-          'Se guardo la empresa!',
+          'Listo',
+          'Se guardo la empresa',
           'success'
         );
         this.ngOnInit();
@@ -102,12 +110,12 @@ export class EmpresaComponent implements OnInit {
     })
 
     swalWithBootstrapButtons.fire({
-      title: 'Estas seguro?',
-      text: 'No podras deshacer este cambio!',
+      title: '¿Estás seguro?',
+      text: 'No podrás deshacer este cambio',
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonText: 'Si, eliminar!',
-      cancelButtonText: 'No, cancelar!',
+      confirmButtonText: 'Si, eliminar',
+      cancelButtonText: 'No, cancelar',
       reverseButtons: true
     }).then((result) => {
       if (result.value) {
