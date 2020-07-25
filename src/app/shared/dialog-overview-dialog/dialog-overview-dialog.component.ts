@@ -23,13 +23,12 @@ export class DialogOverviewDialogComponent implements OnInit {
   id: string;
   nombre: any;
   clave: any;
-  gender = '2';
   cuentainclu: any;
   cuentaexclu: any;
   aritmetica: any;
   rubros: any;
-  labelCtaOrTm: string = '';
-  nombreTipoCaptura: string = '';
+  labelCtaOrTm = '';
+  nombreTipoCaptura = '';
 
 
   disableSelect = new FormControl(false);
@@ -62,7 +61,8 @@ export class DialogOverviewDialogComponent implements OnInit {
       tipo_cuenta: [''],
       hijos: ['', Validators.required],
       activo: [true],
-      tipo_id: ['', Validators.required]
+      tipo_id: ['', Validators.required],
+      naturaleza: ['', Validators.required]
     });
   }
 
@@ -114,9 +114,9 @@ export class DialogOverviewDialogComponent implements OnInit {
   }
 
   saveRubro(form: any) {
-    if(form.clave.length!=4){
-      this.alertar("La longitud de la clave deber ser de 4 caracteres");
-    }else{
+    if ( form.clave.length !== 4) {
+      this.alertar('La longitud de la clave deber ser de 4 caracteres');
+    } else {
       if (form.aritmetica) {
         this.rS.getRubroByModeloId(this.data.id).subscribe(res => {
           const rubros = res;

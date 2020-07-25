@@ -1,34 +1,24 @@
 <h1 mat-dialog-title>Registro de Rubro</h1>
 <div mat-dialog-content>
     <form [formGroup]="cuentasForm" (ngSubmit)="saveRubro(cuentasForm.value)">
-     <div class="row">
-       <div class="col">
-         <br>
-        <label>
-          <input type="radio" formControlName="tipo_id" value="1" [(ngModel)]="gender" (click)="opcr()">
-          Rubro
-        </label>
-        <label>
-          <input type="radio" formControlName="tipo_id" value="2" [(ngModel)]="gender" (click)="opc()">
-          {{labelCtaOrTm}}
-        </label>
-       </div>
-       <div class="col" *ngIf="nombreTipoCaptura!=='FLUJO'">
-        <mat-form-field >
-          <mat-label >Tipo de cuenta</mat-label>
-          <mat-select formControlName="tipo_cuenta" matTooltip="Dato para clasificar el tipo de cuenta para ajustes de balanza">
-            <mat-option value="ingreso">Ingreso</mat-option>
-            <mat-option value="directo">Directo</mat-option>
-            <mat-option value="indirecto">Indirecto</mat-option>
-          </mat-select>
-        </mat-form-field>
-       </div>
-     </div>
+      <br>
+      <mat-radio-group aria-label="Tipo" formControlName="tipo_id" color="primary">
+        <span style="margin-right: 5px">Tipo:</span>
+        <mat-radio-button [value]="2" [checked]="true" (click)="opc()"> {{labelCtaOrTm}}</mat-radio-button>
+        <mat-radio-button style="margin-left: 2px" [value]="1" (click)="opcr()">Consolidador</mat-radio-button>
+      </mat-radio-group>
 
-      <!-- <mat-radio-group aria-label="Select an option" formControlName="tipo_id">
-        <mat-radio-button value="2" (click)="opc()" checked="true">Cuentas</mat-radio-button>
-        <mat-radio-button value="1" (click)="opcr()">Rubro</mat-radio-button>
-      </mat-radio-group>  -->
+      <mat-form-field *ngIf="nombreTipoCaptura!=='FLUJO'">
+        <mat-label>Tipo de ajuste</mat-label>
+        <mat-select formControlName="tipo_cuenta"
+                    matTooltip="Dato para clasificar el tipo de cuenta para ajustes de balanza">
+          <mat-option value="ingreso">Ingreso</mat-option>
+          <mat-option value="directo">Directo</mat-option>
+          <mat-option value="indirecto">Indirecto</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+
         <mat-form-field>
           <input autocomplete="off" matInput placeholder="Concepto: " formControlName="nombre" [(ngModel)]="nombre" maxlength="30">
           <button mat-button *ngIf="nombre" matSuffix mat-icon-button aria-label="Clear" (click)="nombre=''">
@@ -36,12 +26,19 @@
           </button>
         </mat-form-field>
         <mat-form-field>
-          <input autocomplete="off" matInput placeholder="Clave: " maxlength="4" formControlName="clave" matTooltip="Clave alfanumerica que permitira hacer referencia a este rubro mediante una expresión aritmetica de un rubro de rubros" [(ngModel)]="clave">
+          <input autocomplete="off" matInput placeholder="Clave: " maxlength="4" formControlName="clave" matTooltip="Clave alfanumerica que permitira hacer referencia a este rubro mediante una expresión aritmética de un rubro consolidador" [(ngModel)]="clave">
           <button mat-button *ngIf="clave" matSuffix mat-icon-button aria-label="Clear" (click)="clave=''">
             <mat-icon>close</mat-icon>
           </button>
         </mat-form-field>
         <div *ngIf="!select">
+
+          <mat-radio-group  aria-label="Naturaleza"  formControlName="tipo_id" color="primary"  matTooltip="Permite configurar la naturaleza con la que el rubro operará.">
+            <span style="margin-right: 5px">Naturaleza:</span>
+            <mat-radio-button  value="ACREEDORA" [checked]="true" > Acreedora</mat-radio-button>
+            <mat-radio-button  value="DEUDORA" style="margin-left: 2px">Deudora</mat-radio-button>
+          </mat-radio-group>
+
             <mat-form-field>
               <input autocomplete="off" matInput placeholder="{{labelCtaOrTm}} incluidas: " maxlength="200" pattern="^(((\s*\d+\*\s*(-\s*\d+\*\s*)?)|(\s*\d+\s*))\s*,)*(((\s*\d+\*\s*(-\s*\d+\*\s*)?)|(\s*\d+\s*))\s*)$" [(ngModel)]="cuentainclu" formControlName="rangos_cuentas_incluidas" matTooltip="El conjunto de {{labelCtaOrTm}} separadas por comas que seran incluidas en este rubro. Pueden ser rangos y {{labelCtaOrTm}} individuales. Ejemplo: 1000*-2000*,300000000000">
               <button mat-button *ngIf="cuentainclu" matSuffix mat-icon-button aria-label="Clear" (click)="cuentainclu=''">
@@ -68,7 +65,7 @@
               <div class="row">
                 <div class="col">
                   <mat-form-field>
-                    <mat-label>Tipo de Agrupador</mat-label>
+                    <mat-label>Tipo de agrupador</mat-label>
                     <mat-select  [disabled]="!disableSelect.value" formControlName="tipo_agrupador" matTooltip="Clasificador para el rubro de rubros para indicar si es un agupador de ingresos o egresos, esto para fines de reporter">
                         <mat-option value="ingreso">Ingresos</mat-option>
                         <mat-option value="egreso">Egresos</mat-option>

@@ -34,18 +34,20 @@ export class RubroService {
     return this.http.get<Rubros>(`${this.url}/api/Rubros/id/${id}`);
   }
 
-  postRubro(rubro): Observable<Rubros>{
+  postRubro(rubro): Observable<Rubros> {
     console.log(rubro);
     rubro.hijos = rubro.hijos.toString();
     return this.http.post<Rubros>(`${this.url}/api/Rubros`, rubro, httpOptions).pipe(
       tap((rubro: Rubros) => console.log(`added rubro w/ id=${rubro.id}`))
-    )}
-    updateRubro(id: any, changes: Partial<Rubros>){
-      console.log("recibi: ", id, changes);
-      return this.http.put(`${this.url}/api/Rubros/${id}`,changes,httpOptions);
-    } 
+    );
+  }
 
-    deleteRubro(id: any){
-      return this.http.delete(`${this.url}/api/Rubros/${id}`,httpOptions);
-    }
+  updateRubro(id: any, changes: Partial<Rubros>) {
+    console.log('recibi: ', id, changes);
+    return this.http.put(`${this.url}/api/Rubros/${id}`, changes, httpOptions);
+  }
+
+  deleteRubro(id: any) {
+    return this.http.delete(`${this.url}/api/Rubros/${id}`, httpOptions);
+  }
 }
