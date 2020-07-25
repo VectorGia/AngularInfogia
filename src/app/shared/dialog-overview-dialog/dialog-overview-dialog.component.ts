@@ -61,8 +61,8 @@ export class DialogOverviewDialogComponent implements OnInit {
       tipo_cuenta: [''],
       hijos: ['', Validators.required],
       activo: [true],
-      tipo_id: ['', Validators.required],
-      naturaleza: ['', Validators.required]
+      tipo_id: ['2', Validators.required],
+      naturaleza: ['ACREEDORA', Validators.required]
     });
   }
 
@@ -140,6 +140,8 @@ export class DialogOverviewDialogComponent implements OnInit {
               const nombre = res.nombre;
               this.onNoClick();
               this.ngOnInit();
+            }, error => {
+              this.alertar('Ocurrio un error en la operación. Causa:' + error.message);
             });
           }
         });
@@ -156,6 +158,8 @@ export class DialogOverviewDialogComponent implements OnInit {
             console.log('nombre', nombre);
             this.onNoClick();
             this.ngOnInit();
+          }, error => {
+            this.alertar('Ocurrio un error en la operación. Causa:' + error.message);
           });
         });
       }

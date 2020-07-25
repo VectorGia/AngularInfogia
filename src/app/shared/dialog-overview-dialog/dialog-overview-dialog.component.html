@@ -33,7 +33,7 @@
         </mat-form-field>
         <div *ngIf="!select">
 
-          <mat-radio-group  aria-label="Naturaleza"  formControlName="tipo_id" color="primary"  matTooltip="Permite configurar la naturaleza con la que el rubro operará.">
+          <mat-radio-group  aria-label="Naturaleza"  formControlName="naturaleza" color="primary"  matTooltip="Permite configurar la naturaleza con la que el rubro operará.">
             <span style="margin-right: 5px">Naturaleza:</span>
             <mat-radio-button  value="ACREEDORA" [checked]="true" > Acreedora</mat-radio-button>
             <mat-radio-button  value="DEUDORA" style="margin-left: 2px">Deudora</mat-radio-button>

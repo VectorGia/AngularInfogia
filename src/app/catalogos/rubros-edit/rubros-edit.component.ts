@@ -59,7 +59,8 @@ export class RubrosEditComponent implements OnInit {
       rango_cuentas_excluidas: [''],
       hijos: [''],
       tipo_cuenta: [''],
-      aritmetica: ['']
+      aritmetica: [''],
+      naturaleza: ['']
     });
   }
 
