@@ -75,7 +75,8 @@ table input {
 
 table td {
   font-size: 11px;
-
+  padding-left: 3px;
+  padding-right: 2px;
 }
 table th{
   text-align: center;

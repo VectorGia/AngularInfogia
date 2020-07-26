@@ -16,7 +16,7 @@
                     </mat-form-field>
                 </div>
             </div>
-          <mat-radio-group  aria-label="Naturaleza"  formControlName="naturaleza" color="primary"  matTooltip="Permite configurar la naturaleza con la que el rubro operará.">
+          <mat-radio-group  *ngIf="disabledC" aria-label="Naturaleza"  formControlName="naturaleza" color="primary"  matTooltip="Permite configurar la naturaleza con la que el rubro operará.">
             <span style="margin-right: 5px">Naturaleza:</span>
             <mat-radio-button  value="ACREEDORA"  > Acreedora</mat-radio-button>
             <mat-radio-button  value="DEUDORA" style="margin-left: 2px">Deudora</mat-radio-button>
@@ -34,7 +34,7 @@
                 </div>
                 <div class="col"  *ngIf="nombreTipoCaptura!=='FLUJO'">
                     <mat-form-field>
-                        <mat-label>Tipo de cuenta</mat-label>
+                        <mat-label>Tipo de ajuste</mat-label>
                         <mat-select formControlName="tipo_cuenta">
                           <mat-option value="ingreso">Ingreso</mat-option>
                           <mat-option value="directo">Directo</mat-option>

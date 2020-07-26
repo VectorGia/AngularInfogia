@@ -13,7 +13,7 @@ import {FormGroup, FormBuilder, Validators} from '@angular/forms';
   styleUrls: ['./rubros.component.css']
 })
 export class RubrosComponent implements OnInit {
-  displayedColumns: string[] = ['nombre', 'clave', 'cuenta', 'monto', 'aritmetica', 'action'];
+  displayedColumns: string[] = ['nombre', 'clave', 'naturaleza', 'cuenta', 'monto', 'aritmetica', 'action'];
   dataSource: any;
   id: any;
 
@@ -121,12 +121,24 @@ export class RubrosComponent implements OnInit {
 
   getPadres(rubros) {
     const padres = [];
+    const ponderacion = { ingreso: 1, egreso: 0};
     for (let i = 0; i < rubros.length; i++) {
       const actual = rubros[i];
       if (actual.hijos || actual.aritmetica) {
         padres.push(actual);
       }
     }
+    padres.sort((a, b) => {
+      let aValorPonderado = 0;
+      let bValorPonderado = 0;
+      if (a.tipo_agrupador) {
+        aValorPonderado = ponderacion[a.tipo_agrupador];
+      }
+      if (b.tipo_agrupador) {
+        bValorPonderado = ponderacion[b.tipo_agrupador];
+      }
+      return bValorPonderado - aValorPonderado;
+    });
     return padres;
   }
 
