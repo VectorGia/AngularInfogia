@@ -1,10 +1,9 @@
-import { Component, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
-import { CompaniaService } from 'src/app/core/service/compania.service';
-import { FormGroup, FormBuilder, Validators, NgForm, FormControl } from '@angular/forms';
-import { ProyectoService } from 'src/app/core/service/proyecto.service';
-import { ConfirmationDialogComponent } from './../../shared/confirmation-dialog/confirmation-dialog.component';
-import { MatDialog } from '@angular/material';
+import {CompaniaService} from 'src/app/core/service/compania.service';
+import {FormBuilder, FormGroup, NgForm, Validators} from '@angular/forms';
+import {ProyectoService} from 'src/app/core/service/proyecto.service';
+import {MatDialog} from '@angular/material';
 import Swal from 'sweetalert2';
 
 
@@ -95,8 +94,8 @@ export class ProyectoComponent implements OnInit {
     });
 
     swalWithBootstrapButtons.fire({
-      title: 'Estas seguro?',
-      text: 'No podras deshacer este cambio',
+      title: '¿Estas seguro?',
+      text: 'No podrás deshacer este cambio',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonText: 'Si, eliminar',

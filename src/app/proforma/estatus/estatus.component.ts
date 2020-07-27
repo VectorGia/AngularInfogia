@@ -90,8 +90,8 @@ export class EstatusComponent implements OnInit {
     });
 
     swalWithBootstrapButtons.fire({
-      title: 'Estas seguro?',
-      text: 'No podras deshacer este cambio!',
+      title: '¿Estas seguro?',
+      text: 'No podrás deshacer este cambio!',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonText: 'Si, eliminar!',
