@@ -30,7 +30,7 @@ export class NegocioComponent implements OnInit {
   unidades: any;
   select: boolean;
   nextClicked = false;
-  validNombre:any;
+  validNombre: any;
   constructor(private ns: NegocioService,
               private fb: FormBuilder,
               private cS: CompaniaService,
@@ -63,8 +63,8 @@ export class NegocioComponent implements OnInit {
 
   saveModelos(form: NgForm) {
     console.log('[Datos a guardar]: ', form);
-    //valido que el formulario este completo
-    if(!this.negocioForm.valid){
+    // valido que el formulario este completo
+    if (!this.negocioForm.valid) {
       Swal.fire(
         'Atención!',
         'Complete la información requerida',
@@ -72,10 +72,10 @@ export class NegocioComponent implements OnInit {
       );
       return false;
     }
-    //itero para ver si existe empresa negocio con mismo nombre
-    for(let negocio of this.dataSource.data){
-      //parseo a mayusculas para comprobar si existe
-      if(negocio.nombre.toUpperCase() == this.validNombre.toUpperCase()){
+    // itero para ver si existe empresa negocio con mismo nombre
+    for ( const negocio of this.dataSource.data) {
+      // parseo a mayusculas para comprobar si existe
+      if (negocio.nombre.toUpperCase() === this.validNombre.toUpperCase()) {
         Swal.fire(
           'Atención!',
           'Ya se encuentra un negocio con el mismo nombre',
@@ -112,11 +112,11 @@ export class NegocioComponent implements OnInit {
         cancelButton: 'btn btn-danger'
       },
       buttonsStyling: false
-    })
+    });
 
     swalWithBootstrapButtons.fire({
-      title: '¿Estás seguro?',
-      text: 'No podrás deshacer este cambio',
+      title: '¿Estás seguro de eliminar el modelo?',
+      text: 'No podrás deshacer este cambio y se eliminará el modelo contable y de flujo',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonText: 'Si, eliminar',
@@ -129,15 +129,6 @@ export class NegocioComponent implements OnInit {
           'Eliminado!',
           'El modelo se ha borrado.',
           'success'
-        );
-      } else if (
-        /* Read more about handling dismissals below */
-        result.dismiss === Swal.DismissReason.cancel
-      ) {
-        swalWithBootstrapButtons.fire(
-          'Cancelado',
-          'El modelo no se elimino :)',
-          'error'
         );
       }
     });

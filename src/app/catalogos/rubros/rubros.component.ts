@@ -5,6 +5,7 @@ import {Router, ActivatedRoute} from '@angular/router';
 import {DialogOverviewDialogComponent} from 'src/app/shared/dialog-overview-dialog/dialog-overview-dialog.component';
 import {MatDialog, MatSnackBar} from '@angular/material';
 import {FormGroup, FormBuilder, Validators} from '@angular/forms';
+import Swal from "sweetalert2";
 
 
 @Component({
@@ -80,8 +81,33 @@ export class RubrosComponent implements OnInit {
   }
 
   deleteRubro(id) {
-    this.rS.deleteRubro(id).subscribe(res => {
-      this.ngOnInit();
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: 'btn btn-success',
+        cancelButton: 'btn btn-danger'
+      },
+      buttonsStyling: false
+    });
+
+    swalWithBootstrapButtons.fire({
+      title: '¿Estás seguro de eliminar el rubro?',
+      text: 'No podrás deshacer este cambio',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Si, eliminar',
+      cancelButtonText: 'No, cancelar',
+      reverseButtons: true
+    }).then((result) => {
+      if (result.value) {
+        this.rS.deleteRubro(id).subscribe(res => {
+          this.ngOnInit();
+        });
+        swalWithBootstrapButtons.fire(
+          'Eliminado',
+          'El rubro se ha borrado.',
+          'success'
+        );
+      }
     });
   }
 
