@@ -45,7 +45,7 @@ export class ProformaComponent implements OnInit {
   empresas: any;
   proforma: any;
   centros: any;
-  centrosToShow:any;
+  centrosToShow: any;
   consulta: any = false;
   id: any = null;
   proformaExistente: any = false;
@@ -61,7 +61,7 @@ export class ProformaComponent implements OnInit {
 
   ngOnInit() {
     this.builForm();
-    this.fetchCentros();
+    // this.fetchCentros();
     this.fetchEmpresa();
     this.getAnios();
     this.tipoproformaService.getAllTipoProformas().subscribe(res => {this.tiposProforma = res; });
@@ -71,7 +71,7 @@ export class ProformaComponent implements OnInit {
         this.id = params.id;
         this.proformaService.getProformaby(this.id)
           .subscribe(res => {
-            this.centrosToShow=this.centros;
+            this.centrosToShow = this.centros;
             this.formProforma.patchValue(res[0]);
             this.consulta = true;
             this.proformaExistente = true;
@@ -158,9 +158,7 @@ getAnios() {
     this.empresaService.getAllCompania()
       .subscribe(res => {
         this.empresas = res;
-        this.empresas.sort((a, b) => {
-          return a.desc_id - b.desc_id;
-        });
+        this.fetchCentros();
       });
   }
 
@@ -168,6 +166,17 @@ getAnios() {
     this.centroService.getAllCentros()
       .subscribe(res => {
         this.centros = res;
+        const empresasFiltradas = [];
+        this.centros.forEach(centro => {
+          const  empresaFound = this.empresas.find((empresa => empresa.id === centro.empresa_id));
+          if ( !empresasFiltradas.includes(empresaFound)) {
+            empresasFiltradas.push(empresaFound);
+          }
+        });
+        empresasFiltradas.sort((a, b) => {
+          return a.desc_id - b.desc_id;
+        });
+        this.empresas = empresasFiltradas;
       });
   }
 
@@ -284,13 +293,13 @@ getAnios() {
     }
     this.detallesProfToRender = this.splitDetalles(detalles, this.mesInicio);
   }
-  showCentrosCostoByEmpredaId(empresaId){
+  showCentrosCostoByEmpredaId(empresaId) {
     this.centrosToShow = [];
-    let value=this.formProforma.value;
+    const value = this.formProforma.value;
     value['centro_costo_id'] = '';
     this.formProforma.patchValue(value);
     for ( let i = 0 ; i < this.centros.length; i++) {
-      if ( this.centros[i].empresa_id == empresaId) {
+      if ( this.centros[i].empresa_id === empresaId) {
         this.centrosToShow.push(this.centros[i]);
       }
     }
