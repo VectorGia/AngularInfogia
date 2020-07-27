@@ -14,7 +14,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./empresa.component.css']
 })
 export class EmpresaComponent implements OnInit {
-  displayedColumns: string[] = ['idDB', 'id', 'empresa', 'abrev', 'etl', 'cadconexion', 'cambio', 'action'];
+  displayedColumns: string[] = ['idDB', 'id', 'empresa', 'abrev', 'etl', 'cadconexion', 'bd_name' , 'cambio', 'action'];
   dataSource = new MatTableDataSource<Compania>();
   mostrarDatos: boolean;
   compania: Compania[] = [];
