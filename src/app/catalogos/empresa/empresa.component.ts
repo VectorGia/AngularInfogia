@@ -68,10 +68,11 @@ export class EmpresaComponent implements OnInit {
         this.ngOnInit();
       });
   }
+
   saveDatos(form: NgForm) {
-    if(!this.form.valid){
+    if (!this.form.valid) {
       Swal.fire(
-        'Atención!',
+        'Atención',
         'Complete la información requerida',
         'warning'
       );
@@ -85,7 +86,17 @@ export class EmpresaComponent implements OnInit {
           'Se guardo la empresa',
           'success'
         );
+        this.form.reset();
+        Object.keys(this.form.controls).forEach(key => {
+          this.form.get(key).setErrors(null) ;
+        });
         this.ngOnInit();
+      }, error => {
+        Swal.fire(
+          'Atención',
+          'Ocurrió un error. Causa ' + error['error'],
+          'error'
+        );
       });
   }
   activar(): void {
@@ -107,7 +118,7 @@ export class EmpresaComponent implements OnInit {
         cancelButton: 'btn btn-danger'
       },
       buttonsStyling: false
-    })
+    });
 
     swalWithBootstrapButtons.fire({
       title: '¿Estás seguro?',
