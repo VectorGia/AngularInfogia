@@ -50,17 +50,7 @@ export class BuscarproformaComponent implements OnInit {
           'La proforma se ha borrado.',
           'success'
         );
-      } else if (
-        /* Read more about handling dismissals below */
-        result.dismiss === Swal.DismissReason.cancel
-      ) {
-        swalWithBootstrapButtons.fire(
-          'Cancelado',
-          'La proforma no se elimino :)',
-          'error'
-        );
-      }
-    });
+      }});
 
   }
   delete(id) {

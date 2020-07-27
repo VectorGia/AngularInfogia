@@ -136,17 +136,7 @@ export class EmpresaComponent implements OnInit {
           'La empresa ha sido borrada.',
           'success'
         );
-      } else if (
-        /* Read more about handling dismissals below */
-        result.dismiss === Swal.DismissReason.cancel
-      ) {
-        swalWithBootstrapButtons.fire(
-          'Cancelado',
-          'La empresa no se elimino :)',
-          'error'
-        );
-      }
-    });
+      }});
   }
 }
 

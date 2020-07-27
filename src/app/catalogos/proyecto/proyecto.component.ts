@@ -44,7 +44,7 @@ export class ProyectoComponent implements OnInit {
       console.log(this.dataSource.data);
     },
     error => {
-      console.log('Error al obtener los registros!', error);
+      console.log('Error al obtener los registros', error);
     });
   }
   delete(id) {
@@ -57,8 +57,8 @@ export class ProyectoComponent implements OnInit {
     this.ps.addProyecto(form).subscribe(
       res => {
         Swal.fire(
-          'Listo!',
-          'Se guardo el proyecto!',
+          'Listo',
+          'Se guardo el proyecto',
           'success'
         );
         this.ngOnInit();
@@ -96,28 +96,19 @@ export class ProyectoComponent implements OnInit {
 
     swalWithBootstrapButtons.fire({
       title: 'Estas seguro?',
-      text: 'No podras deshacer este cambio!',
+      text: 'No podras deshacer este cambio',
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonText: 'Si, eliminar!',
-      cancelButtonText: 'No, cancelar!',
+      confirmButtonText: 'Si, eliminar',
+      cancelButtonText: 'No, cancelar',
       reverseButtons: true
     }).then((result) => {
       if (result.value) {
         this.delete(id);
         swalWithBootstrapButtons.fire(
-          'Eliminado!',
+          'Eliminado',
           'El proyecto se ha borrado.',
           'success'
-        );
-      } else if (
-        /* Read more about handling dismissals below */
-        result.dismiss === Swal.DismissReason.cancel
-      ) {
-        swalWithBootstrapButtons.fire(
-          'Cancelado',
-          'El proyecto no sera eliminado :)',
-          'error'
         );
       }
     });

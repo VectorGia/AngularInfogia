@@ -105,17 +105,7 @@ export class EstatusComponent implements OnInit {
           'El periodo se ha borrado.',
           'success'
         );
-      } else if (
-        /* Read more about handling dismissals below */
-        result.dismiss === Swal.DismissReason.cancel
-      ) {
-        swalWithBootstrapButtons.fire(
-          'Cancelado',
-          'El periodo no se elimino :)',
-          'error'
-        );
-      }
-    });
+      }});
   }
   delete(id) {
     this.periodoService.delete(id).subscribe(
