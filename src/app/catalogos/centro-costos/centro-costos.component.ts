@@ -32,7 +32,9 @@ export class CentroCostosComponent implements OnInit {
               public dialog: MatDialog,
               private activeRoute: ActivatedRoute,
               private empresaproService: EmpresaProyectoService,
-              private modeloService: NegocioService) {
+              private modeloService: NegocioService,
+              private router: Router
+              ) {
 
   }
 
@@ -59,7 +61,9 @@ export class CentroCostosComponent implements OnInit {
     this.fetchModelos();
     this.buildCentro();
   }
-
+  regresar() {
+    this.router.navigate(['./catalogo/proyecto/']);
+  }
   buildCentro() {
     this.centroForm = this.fb.group({
       tipo: ['local', Validators.required],

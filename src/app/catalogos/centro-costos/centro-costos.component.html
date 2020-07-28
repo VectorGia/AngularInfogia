@@ -84,11 +84,25 @@
         </div>
       </div>
     </div>
-    <div class="col">
-      <div class="btn-group btn-group-sm" role="group" aria-label="...">
-        <button type="submit"  class="btn btn-outline-primary btn-sm btn-block">Guardar</button>
+    <div class="row">
+      <div class="col-sm-1">
+        <div class="example-button-row ">
+          <button type="submit" class="btn btn-outline-primary btn-sm ">Guardar</button>
+        </div>
       </div>
-  </div>
+      <div class="col-sm-2">
+        <div class="example-button-row ">
+          <button class="btn btn-outline-primary btn-sm " (click)="regresar()">
+            Regresar
+          </button>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
   </form>
   <app-loading></app-loading>
     <div class="row">

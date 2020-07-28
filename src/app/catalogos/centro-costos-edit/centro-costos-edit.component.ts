@@ -42,7 +42,7 @@ export class CentroCostosEditComponent implements OnInit {
       this.fetchCompania();
     });
   }
-  return() {
+  regresar() {
     // let idProyecto = this.getIdProyecto(window.location.href);
     this.router.navigate(['./catalogo/costos/' + this.proyectoId]);
    }
