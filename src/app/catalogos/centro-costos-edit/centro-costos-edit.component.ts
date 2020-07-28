@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CentrosService } from 'src/app/core/service/centros.service';
 import { CompaniaService } from 'src/app/core/service/compania.service';
 import { NegocioService } from 'src/app/core/service/negocio.service';
+import {EmpresaProyectoService} from '../../core/service/empresa-proyecto.service';
 
 @Component({
   selector: 'app-centro-costos-edit',
@@ -12,52 +13,56 @@ import { NegocioService } from 'src/app/core/service/negocio.service';
 })
 export class CentroCostosEditComponent implements OnInit {
   form: FormGroup;
-  id: string;
+  centroId: string;
+  proyectoId: string;
   companias: any;
   modelos: any;
-  
+
   selected = false;
   constructor(private aR: ActivatedRoute, private companiaService: CompaniaService,
               private fB: FormBuilder, private cS: CentrosService, private router: Router,
-              private modeloService: NegocioService) {
+              private modeloService: NegocioService,
+              private empresaproService: EmpresaProyectoService) {
     this.builForm();
-    this.fetchCompania();
+   // this.fetchCompania();
     this.fetchModelos();
   }
 
   ngOnInit() {
     this.aR.params.subscribe((params) => {
-      this.id = params.id;
-      console.log("aqui", params.id);
-      this.cS.getCC(this.id)
+      this.centroId = params.centroId;
+      this.proyectoId = params.proyectoId;
+
+      this.cS.getCC(this.centroId)
         .subscribe(product => {
           console.log('product: ', product);
 
           this.form.patchValue(product);
-        })
-    })
+        });
+      this.fetchCompania();
+    });
   }
-  return(){
-    let idProyecto=this.getIdProyecto(window.location.href);
-    this.router.navigate(['./catalogo/costos/' + idProyecto])
+  return() {
+    // let idProyecto = this.getIdProyecto(window.location.href);
+    this.router.navigate(['./catalogo/costos/' + this.proyectoId]);
    }
   saveCentro(event: Event) {
     event.preventDefault();
     if (this.form.valid) {
       const centro = this.form.value;
-      this.cS.updateCentro(this.id, centro)
+      this.cS.updateCentro(this.centroId, centro)
       .subscribe((newCentro) => {
         console.log(newCentro);
-        let idProyecto=this.getIdProyecto(window.location.href);
-        this.router.navigate(['./catalogo/costos/' + idProyecto])
-      })
+        // let idProyecto=this.getIdProyecto(window.location.href);
+        this.router.navigate(['./catalogo/costos/' + this.proyectoId]);
+      });
     }
   }
 
-  private builForm(){
-    
+  private builForm() {
+
     this.form = this.fB.group({
-  
+
       tipo: [null, Validators.required],
       desc_id: [null, Validators.required],
       nombre: [null, Validators.required],
@@ -68,14 +73,28 @@ export class CentroCostosEditComponent implements OnInit {
       modelo_negocio_id: ['', Validators.required],
       porcentaje: [''],
       proyeccion: ['']
-    })
+    });
   }
-  fetchCompania(){
-    this.companiaService.getAllCompania()
+  fetchCompania() {
+  /*  this.companiaService.getAllCompania()
     .subscribe(compania => {
       this.companias = compania;
-      console.log("compañias", this.companias);
-    })
+      // console.log("compañias", this.companias);
+    });
+*/
+    this.empresaproService.getEmpresas(this.proyectoId)
+      .subscribe(companias => {
+        if (companias.length > 0 ) {
+          console.log(companias);
+          this.companias = companias;
+        } else {
+          this.companiaService.getAllCompania()
+            .subscribe( result => {
+              this.companias = result;
+            });
+        }
+        console.log('compañias listadas', this.companias);
+      });
   }
 
   fetchModelos() {
@@ -85,7 +104,7 @@ export class CentroCostosEditComponent implements OnInit {
       console.log('modelos-edit: ', this.modelos);
     });
   }
-   getIdProyecto(url){
+  /* getIdProyecto(url){
       var inicioCad="costos/";
       var idxIni=url.indexOf(inicioCad);
       idxIni = idxIni+inicioCad.length;
@@ -97,7 +116,7 @@ export class CentroCostosEditComponent implements OnInit {
           idProyecto = url.substring(idxIni,idxFin);
       }
       return idProyecto;
-  }
+  }*/
   selec() {
     this.selected = false;
   }

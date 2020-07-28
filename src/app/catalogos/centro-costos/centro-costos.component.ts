@@ -21,7 +21,7 @@ export class CentroCostosComponent implements OnInit {
   centroForm: FormGroup;
   companias: any;
   centros: any;
-  id: any;
+  proyectoId: any;
   modelos: any;
   selected = false;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
@@ -39,17 +39,17 @@ export class CentroCostosComponent implements OnInit {
   ngOnInit() {
     // this.array.paginator = this.paginator;
     this.activeRoute.params.subscribe((params) => {
-      this.id = params.id;
-      console.log('ID Proyecto:', this.id);
-      this.empresaproService.getEmpresas(this.id)
+      this.proyectoId = params.proyectoId;
+      console.log('ID Proyecto:', this.proyectoId);
+      this.empresaproService.getEmpresas(this.proyectoId)
         .subscribe(companias => {
           if (companias.length > 0 ) {
             console.log(companias);
             this.companias = companias;
           } else {
             this.companiaService.getAllCompania()
-            .subscribe( companias => {
-              this.companias = companias;
+            .subscribe( result => {
+              this.companias = result;
             });
           }
           console.log('compañias listadas', this.companias);
@@ -68,7 +68,7 @@ export class CentroCostosComponent implements OnInit {
       categoria: [null, Validators.required],
       estatus: [null, Validators.required],
       gerente: [null, Validators.required],
-      proyecto_id: [this.id],
+      proyecto_id: [this.proyectoId],
       empresa_id: ['', Validators.required],
       proyeccion: ['BASE', Validators.required],
       porcentaje: [100],
@@ -77,7 +77,7 @@ export class CentroCostosComponent implements OnInit {
     });
   }
   renderDataTable() {
-    this.cs.getCentro(this.id)
+    this.cs.getCentro(this.proyectoId)
     .subscribe(
       x => {
         this.dataSource = new MatTableDataSource();

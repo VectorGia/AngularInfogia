@@ -56,11 +56,11 @@ const routes: Routes = [
     component: EmpresaEditComponent
   },
   {
-    path: 'costos/:id/edit/:id',
+    path: 'costos/:proyectoId/edit/:centroId',
     component: CentroCostosEditComponent
   },
   {
-    path: 'costos/:id',
+    path: 'costos/:proyectoId',
     component: CentroCostosComponent
   },
   {
