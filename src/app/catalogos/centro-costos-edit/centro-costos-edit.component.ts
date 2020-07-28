@@ -100,8 +100,8 @@ export class CentroCostosEditComponent implements OnInit {
   fetchModelos() {
     this.modeloService.getAllModelos()
     .subscribe( res => {
-      this.modelos = res;
-      console.log('modelos-edit: ', this.modelos);
+      this.modelos = this.restringirModelos(res);
+      console.log('modelos: ', this.modelos);
     });
   }
   /* getIdProyecto(url){
@@ -122,5 +122,15 @@ export class CentroCostosEditComponent implements OnInit {
   }
   select() {
     this.selected = true;
+  }
+
+  restringirModelos(modelos) {
+    const nombresModelo = {};
+    for (const modelo of modelos) {
+      if (! nombresModelo[modelo.nombre] && modelo.nombre_tipo_captura === 'CONTABLE') {
+        nombresModelo [modelo.nombre] = modelo;
+      }
+    }
+    return Object.values(nombresModelo);
   }
 }
