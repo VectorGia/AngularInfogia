@@ -14,14 +14,14 @@ export class RubrosEditComponent implements OnInit {
   rubros: any;
   disabledC = true;
   disabledR = true;
-  nombreTipoCaptura: string = '';
-  labelCtaOrTm: string = '';
-  hijos: string = '';
+  nombreTipoCaptura = '';
+  labelCtaOrTm  = '';
+  hijos: any ;
 
   constructor(private formBuilder: FormBuilder, private activeRoute: ActivatedRoute,
               private rubroService: RubroService,
               private router: Router) {
-    let data =  decodeURI(this.getData(window.location.href, 'rubros/', '/edit')).split('|');
+    const data =  decodeURI(this.getData(window.location.href, 'rubros/', '/edit')).split('|');
     if (data.length > 1) {
       this.nombreTipoCaptura = data[1];
       this.labelCtaOrTm = this.nombreTipoCaptura === 'FLUJO' ? 'TMs' : 'Cuentas';
@@ -36,7 +36,7 @@ export class RubrosEditComponent implements OnInit {
       this.rubroService.getRubroById(this.id)
         .subscribe(data => {
           console.log('data: ', data);
-          if (data[0].aritmetica != '') {
+          if (data[0].aritmetica !== '') {
             this.disabledC = false;
             this.disabledR = true;
           } else {
@@ -44,7 +44,17 @@ export class RubrosEditComponent implements OnInit {
             this.disabledC = true;
           }
           this.getRubros(data[0].id_modelo_neg);
-          this.hijos = data[0].hijos;
+          const hijosActuales = data[0].hijos;
+          this.hijos = hijosActuales;
+          if (hijosActuales) {
+            data[0].hijos = hijosActuales.split(',');
+            const hijosNumericos = [];
+            data[0].hijos.forEach(hijo => {
+              hijosNumericos.push(parseInt(hijo, 10));
+            });
+            data[0].hijos = hijosNumericos;
+            console.log('data hijos manejados: ', data);
+          }
           this.editRubro.patchValue(data[0]);
         });
     });

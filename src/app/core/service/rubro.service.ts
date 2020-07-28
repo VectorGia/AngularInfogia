@@ -24,13 +24,13 @@ export class RubroService {
   return this.http.get<Rubros[]>(`${this.url}/api/Rubros/`);
   }
 
-  getRubroByModeloId(id){
-    console.log("recibi id: ", id)
+  getRubroByModeloId(id) {
+    console.log('recibi id: ', id);
     return this.http.get<Rubros>(`${this.url}/api/Rubros/${id}`);
   }
 
-  getRubroById(id){
-    console.log("recibi id: ", id)
+  getRubroById(id) {
+    console.log('recibi id: ', id);
     return this.http.get<Rubros>(`${this.url}/api/Rubros/id/${id}`);
   }
 
@@ -44,6 +44,7 @@ export class RubroService {
 
   updateRubro(id: any, changes: Partial<Rubros>) {
     console.log('recibi: ', id, changes);
+    changes.hijos = changes.hijos.toString();
     return this.http.put(`${this.url}/api/Rubros/${id}`, changes, httpOptions);
   }
 
