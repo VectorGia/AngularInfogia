@@ -58,7 +58,7 @@ export class NegocioEditComponent implements OnInit {
       });
     }else{
       Swal.fire(
-        'Atención!',
+        'Atención',
         'Complete la información requerida',
         'warning'
       );

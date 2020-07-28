@@ -35,18 +35,18 @@ export class BuscarproformaComponent implements OnInit {
     });
 
     swalWithBootstrapButtons.fire({
-      title: '¿Estas seguro?',
-      text: 'No podrás deshacer este cambio!',
+      title: '¿Estás seguro?',
+      text: 'No podrás deshacer este cambio',
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonText: 'Si, eliminar!',
-      cancelButtonText: 'No, cancelar!',
+      confirmButtonText: 'Si, eliminar',
+      cancelButtonText: 'No, cancelar',
       reverseButtons: true
     }).then((result) => {
       if (result.value) {
         this.delete(id);
         swalWithBootstrapButtons.fire(
-          'Eliminado!',
+          'Eliminado',
           'La proforma se ha borrado.',
           'success'
         );

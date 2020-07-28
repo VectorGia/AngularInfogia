@@ -72,8 +72,8 @@ export class EstatusComponent implements OnInit {
     this.periodoService.postPeriodo(form)
     .subscribe(res => {
       Swal.fire(
-        'Listo!',
-        'Se guardo el modelo!',
+        'Listo',
+        'Se guardo el modelo',
         'success'
       );
       this.ngOnInit();
@@ -90,18 +90,18 @@ export class EstatusComponent implements OnInit {
     });
 
     swalWithBootstrapButtons.fire({
-      title: '¿Estas seguro?',
-      text: 'No podrás deshacer este cambio!',
+      title: '¿Estás seguro?',
+      text: 'No podrás deshacer este cambio',
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonText: 'Si, eliminar!',
-      cancelButtonText: 'No, cancelar!',
+      confirmButtonText: 'Si, eliminar',
+      cancelButtonText: 'No, cancelar',
       reverseButtons: true
     }).then((result) => {
       if (result.value) {
         this.delete(id);
         swalWithBootstrapButtons.fire(
-          'Eliminado!',
+          'Eliminado',
           'El periodo se ha borrado.',
           'success'
         );

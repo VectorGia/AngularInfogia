@@ -16,7 +16,7 @@ export class UserComponent implements OnInit {
   hide = true;
   userForm: FormGroup;
   id: string;
-  constructor(private fb: FormBuilder, private uS: UsuarioService, public dialog: MatDialog) { 
+  constructor(private fb: FormBuilder, private uS: UsuarioService, public dialog: MatDialog) {
     this.buildForm();
   }
 
@@ -40,7 +40,7 @@ export class UserComponent implements OnInit {
       STR_PUESTO: ['', Validators.required],
       STR_EMAIL_USUARIO: ['', Validators.required, Validators.email],
       BOOL_ESTATUS_LOGICO_USUARIO: [true],
-  
+
     })
   }
 
@@ -53,7 +53,7 @@ export class UserComponent implements OnInit {
       console.log(this.dataSource.data)
     },
     error => {
-      console.log('Error al obtener los registros!', error)
+      console.log('Error al obtener los registros', error)
     });
   }
 
@@ -65,13 +65,13 @@ export class UserComponent implements OnInit {
     if (this.array.paginator) {
       this.array.paginator.firstPage();
     } */
-  } 
+  }
 
   delete(id){
-    
+
     this.uS.deleteUsuario(id).subscribe(
       res => {
-        
+
         this.getUsuarios();
       }
     )

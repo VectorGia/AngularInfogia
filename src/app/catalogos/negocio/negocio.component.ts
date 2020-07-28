@@ -66,7 +66,7 @@ export class NegocioComponent implements OnInit {
     // valido que el formulario este completo
     if (!this.negocioForm.valid) {
       Swal.fire(
-        'Atención!',
+        'Atención',
         'Complete la información requerida',
         'warning'
       );
@@ -77,7 +77,7 @@ export class NegocioComponent implements OnInit {
       // parseo a mayusculas para comprobar si existe
       if (negocio.nombre.toUpperCase() === this.validNombre.toUpperCase()) {
         Swal.fire(
-          'Atención!',
+          'Atención',
           'Ya se encuentra un negocio con el mismo nombre',
           'warning'
         );
@@ -98,7 +98,7 @@ export class NegocioComponent implements OnInit {
       },
       error => {
         Swal.fire(
-          'Error!',
+          'Error',
           'Ocurrió un error al guardar, intente de nuevo.',
           'error'
         );
@@ -126,7 +126,7 @@ export class NegocioComponent implements OnInit {
       if (result.value) {
         this.deleteModelo(id);
         swalWithBootstrapButtons.fire(
-          'Eliminado!',
+          'Eliminado',
           'El modelo se ha borrado.',
           'success'
         );
@@ -134,7 +134,7 @@ export class NegocioComponent implements OnInit {
     });
     /*const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       width: '550px',
-      data: 'Estas seguro de eliminar este grupo?'
+      data: 'Estás seguro de eliminar este grupo?'
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {

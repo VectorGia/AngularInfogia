@@ -22,7 +22,7 @@ export class RolComponent implements OnInit {
   displayedColumns: string[] = ['id', 'nombre', 'proyecto', 'empresa', 'cc', 'pantalla', 'ver', 'editar', 'borrar'];
   dataSource: any;
   formRol: FormGroup;
-  constructor(private fB: FormBuilder, 
+  constructor(private fB: FormBuilder,
     private rS: RolService,
     private rUS: RelacionesService) {
       this.fetchRoles();
@@ -46,14 +46,14 @@ export class RolComponent implements OnInit {
 
   fetchRoles(){
     this.rUS.getAllRelaciones()
-    .subscribe( 
+    .subscribe(
       data => {
         this.dataSource = new MatTableDataSource();
         this.dataSource.data = data;
         console.log(this.dataSource.data)
       },
       error => {
-        console.log('Error al extraer los registros!' + error);
+        console.log('Error al extraer los registros' + error);
       })
   }
 }

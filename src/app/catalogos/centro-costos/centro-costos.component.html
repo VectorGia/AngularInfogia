@@ -8,14 +8,14 @@
       <div class="col">
         <mat-label>Tipo: </mat-label>
         <mat-radio-group aria-label="Select an option" formControlName="tipo">
-          <mat-radio-button value="local">Local</mat-radio-button>
+          <mat-radio-button value="local" [checked]="true">Local</mat-radio-button>
           <mat-radio-button value="extranjero">Extranjero</mat-radio-button>
         </mat-radio-group>
       </div>
       <div class="col">
         <mat-label>Proyección: </mat-label>
         <mat-radio-group aria-label="Select an option" formControlName="proyeccion">
-          <mat-radio-button value="BASE" (click)="selec()" >Base</mat-radio-button>
+          <mat-radio-button value="BASE" (click)="selec()" [checked]="true">Base</mat-radio-button>
           <mat-radio-button value="SHADOW" (click)="selec()" >Shadow</mat-radio-button>
           <mat-radio-button value="METODO" (click)="select()">Metodo</mat-radio-button>
         </mat-radio-group>

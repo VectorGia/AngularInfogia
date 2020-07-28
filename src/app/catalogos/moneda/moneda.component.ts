@@ -64,7 +64,7 @@ export class MonedaComponent implements OnInit {
       console.log(this.dataSource.data);
     },
     error => {
-      console.log('Error al obtener los registros!', error)
+      console.log('Error al obtener los registros', error)
     });
   }
 
@@ -75,7 +75,7 @@ export class MonedaComponent implements OnInit {
       console.log("tipos", this.dataSourcee.data);
     },
     error => {
-      console.log('Error al obtener los registros!', error)
+      console.log('Error al obtener los registros', error);
     });
   }
   buildMoneda(){

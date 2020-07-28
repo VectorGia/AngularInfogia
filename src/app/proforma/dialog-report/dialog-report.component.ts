@@ -44,7 +44,7 @@ params: any;
       const parametro = this.params[i];
       if (parametro.requerido && !parametro.valor) {
         Swal.fire(
-          'Error!',
+          'Error',
           `Parametro ${parametro.clave} requerido`,
           'warning'
         );
@@ -62,7 +62,7 @@ params: any;
   changeValue(parametro, event: any) {
     if (parametro.requerido && !event.target.value) {
       Swal.fire(
-        'Advertencia!',
+        'Advertencia',
         'Parametro requerido',
         'warning'
       );

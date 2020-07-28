@@ -122,7 +122,7 @@ getAnios() {
       },
       error => {
         Swal.fire(
-          'Error!',
+          'Error',
            error,
           'warning'
         );
@@ -186,15 +186,15 @@ getAnios() {
       this.proformaService.addProforma(this.detallesProforma)
         .subscribe(res => {
           Swal.fire(
-            'Listo!',
-             'La proforma se guardo!',
+            'Listo',
+             'La proforma se guardo',
             'success'
           );
           // alert('Se guardo');
         },
         error => {
           Swal.fire(
-            'Error!',
+            'Error',
              error,
             'warning'
           );
@@ -204,14 +204,14 @@ getAnios() {
   }
   exitAlert() {
     Swal.fire({
-      title: 'Estas seguro de salir?',
-      text: 'Se perderan los datos sin guardar!',
+      title: '¿Estás seguro de salir?',
+      text: 'Se perderan los datos sin guardar',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
       cancelButtonText: 'No',
-      confirmButtonText: 'Si!'
+      confirmButtonText: 'Si'
     }).then((result) => {
       if (result.value) {
           this.router.navigate(['/proforma/proforma']);
@@ -224,14 +224,14 @@ getAnios() {
 
   alertUpdate() {
     Swal.fire({
-      title: 'Estas seguro de guardar los cambios?',
-      text: 'Se modificara la proforma!',
+      title: '¿Estás seguro de guardar los cambios?',
+      text: 'Se modificara la proforma',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
       cancelButtonText: 'No',
-      confirmButtonText: 'Si, actualiza!'
+      confirmButtonText: 'Si, actualiza'
     }).then((result) => {
       if (result.value) {
         this.updateProforma();
@@ -246,7 +246,7 @@ getAnios() {
         .subscribe(
         res => {
           Swal.fire(
-            'Actualizada!',
+            'Actualizada',
             'Se guardaron los cambios.',
             'success'
           );
@@ -254,7 +254,7 @@ getAnios() {
         },
         error => {
           Swal.fire(
-            'Error!',
+            'Error',
              error,
             'warning'
           );

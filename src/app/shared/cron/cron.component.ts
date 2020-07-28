@@ -70,8 +70,8 @@ export class CronComponent implements OnInit {
     this.etlService.rescheduleContable(this.cronExpression)
       .subscribe(res => {
         Swal.fire(
-          'Listo!',
-          'Se programo la extracción!',
+          'Listo',
+          'Se programo la extracción',
           'success'
         );
       });

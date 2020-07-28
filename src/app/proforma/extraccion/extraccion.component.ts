@@ -142,7 +142,7 @@ export class ExtraccionComponent implements OnInit {
           console.log(this.dataSource.data);
         },
         error => {
-          console.log('Error al extraer los registros!' + error);
+          console.log('Error al extraer los registros ' + error);
         });
   }
 
@@ -156,8 +156,8 @@ export class ExtraccionComponent implements OnInit {
 
   confirmExtraccion(applyFun) {
     Swal.fire({
-      title: '¿Estas seguro de ejecutar la extracción?',
-      text: '!Podria demorar varios segundos e incluso minutos!',
+      title: '¿Estás seguro de ejecutar la extracción?',
+      text: 'Podria demorar varios segundos e incluso minutos',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -184,11 +184,11 @@ export class ExtraccionComponent implements OnInit {
       this.etlService.extraccionManualCont(request)
         .subscribe(resul => {
             this.executing = false;
-            Swal.fire('Listo!', 'Se realizo la extracción!', 'success');
+            Swal.fire('Listo', 'Se realizo la extracción', 'success');
           },
           error => {
             this.executing = false;
-            Swal.fire('Error!', 'Ocurrio un error durante la extracción!', 'error'
+            Swal.fire('Error', 'Ocurrio un error durante la extracción', 'error'
             );
           }
         );
@@ -207,11 +207,11 @@ export class ExtraccionComponent implements OnInit {
       this.etlService.extraccionManualflujo(request)
         .subscribe(resul => {
             this.executing = false;
-            Swal.fire('Listo!', 'Se realizo la extracción!', 'success');
+            Swal.fire('Listo', 'Se realizo la extracción', 'success');
           },
           error => {
             this.executing = false;
-            Swal.fire('Error!', 'Ocurrio un error durante la extracción!', 'error');
+            Swal.fire('Error', 'Ocurrio un error durante la extracción', 'error');
           }
         );
     });
@@ -224,16 +224,16 @@ export class ExtraccionComponent implements OnInit {
         .subscribe(res => {
             this.executing = false;
             Swal.fire(
-              'Listo!',
-              'Se realizo la extracción!',
+              'Listo',
+              'Se realizo la extracción',
               'success'
             );
           },
           error => {
             this.executing = false;
             Swal.fire(
-              'Error!',
-              'Ocurrio un error durante la extracción!',
+              'Error',
+              'Ocurrio un error durante la extracción',
               'error'
             );
           });
@@ -243,7 +243,7 @@ export class ExtraccionComponent implements OnInit {
   extraccionProgContable() {
     console.log('cron: ', this.cronExpression);
     if(!this.cronExpression){
-      Swal.fire('Error!', 'La expresión cron es requerida!', 'error');
+      Swal.fire('Error', 'La expresión cron es requerida', 'error');
       return;
     }
     this.confirmExtraccion(() => {
@@ -251,15 +251,15 @@ export class ExtraccionComponent implements OnInit {
         .subscribe(res => {
           this.getDatosCron();
           Swal.fire(
-              'Listo!',
-              'Se programo la extracción!',
+              'Listo',
+              'Se programo la extracción',
               'success'
             );
           },
           error => {
             Swal.fire(
-              'Error!',
-              'Ocurrio un error durante la extracción!',
+              'Error',
+              'Ocurrio un error durante la extracción',
               'error'
             );
           });
@@ -270,8 +270,8 @@ export class ExtraccionComponent implements OnInit {
     console.log('cron: ', this.cronExpression);
     if(!this.cronExpression){
       Swal.fire(
-        'Error!',
-        'La expresión cron es requerida!',
+        'Error',
+        'La expresión cron es requerida',
         'error'
       );
       return;
@@ -281,15 +281,15 @@ export class ExtraccionComponent implements OnInit {
         .subscribe(res => {
             this.getDatosCron();
             Swal.fire(
-              'Listo!',
-              'Se programo la extracción!',
+              'Listo',
+              'Se programo la extracción',
               'success'
             );
           },
           error => {
             Swal.fire(
-              'Error!',
-              'Ocurrio un error durante la extracción!',
+              'Error',
+              'Ocurrio un error durante la extracción',
               'error'
             );
           });
@@ -300,8 +300,8 @@ export class ExtraccionComponent implements OnInit {
     console.log('cron: ', this.cronExpression);
     if(!this.cronExpression){
       Swal.fire(
-        'Error!',
-        'La expresión cron es requerida!',
+        'Error',
+        'La expresión cron es requerida',
         'error'
       );
       return;
@@ -311,15 +311,15 @@ export class ExtraccionComponent implements OnInit {
         .subscribe(res => {
             this.getDatosCron();
             Swal.fire(
-              'Listo!',
-              'Se programo la extracción!',
+              'Listo',
+              'Se programo la extracción',
               'success'
             );
           },
           error => {
             Swal.fire(
-              'Error!',
-              'Ocurrio un error durante la extracción!',
+              'Error',
+              'Ocurrio un error durante la extracción',
               'error'
             );
           });
@@ -330,8 +330,8 @@ export class ExtraccionComponent implements OnInit {
     console.log('cron: ', this.cronExpression);
     if(!this.cronExpression){
       Swal.fire(
-        'Error!',
-        'La expresión cron es requerida!',
+        'Error',
+        'La expresión cron es requerida',
         'error'
       );
       return;
@@ -341,15 +341,15 @@ export class ExtraccionComponent implements OnInit {
         .subscribe(res => {
             this.getDatosCron();
             Swal.fire(
-              'Listo!',
-              'Se programo la extracción!',
+              'Listo',
+              'Se programo la extracción',
               'success'
             );
           },
           error => {
             Swal.fire(
-              'Error!',
-              'Ocurrio un error durante la extracción!',
+              'Error',
+              'Ocurrio un error durante la extracción',
               'error'
             );
           });

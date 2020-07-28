@@ -13,7 +13,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./proyecto.component.css']
 })
 export class ProyectoComponent implements OnInit {
-  displayedColumns: string[] = ['position', 'name', 'responsable', 'empresa', 'action'];
+  displayedColumns: string[] = ['position', 'desc_id', 'name', 'responsable', 'empresa', 'estatus', 'action'];
   dataSource: any;
   proyectoForm: FormGroup;
   companias: any;
@@ -61,6 +61,12 @@ export class ProyectoComponent implements OnInit {
           'success'
         );
         this.ngOnInit();
+      }, error => {
+        Swal.fire(
+          'Atención',
+          'Ocurrió un error. Causa ' + error['error'],
+          'error'
+        );
       });
   }
   fetchCompania() {
@@ -94,7 +100,7 @@ export class ProyectoComponent implements OnInit {
     });
 
     swalWithBootstrapButtons.fire({
-      title: '¿Estas seguro?',
+      title: '¿Estás seguro?',
       text: 'No podrás deshacer este cambio',
       icon: 'warning',
       showCancelButton: true,

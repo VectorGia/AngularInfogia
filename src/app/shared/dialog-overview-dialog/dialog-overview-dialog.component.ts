@@ -89,7 +89,7 @@ export class DialogOverviewDialogComponent implements OnInit {
 
   onSubmit() {
     if (this.cuentasForm.valid) {
-      console.log('Form Submitted!');
+      console.log('Form Submitted');
       this.cuentasForm.reset();
     }
   }
@@ -232,7 +232,7 @@ export class DialogOverviewDialogComponent implements OnInit {
 
   alertar(msg) {
     Swal.fire(
-      'Aviso!',
+      'Aviso',
       msg,
       'warning'
     );

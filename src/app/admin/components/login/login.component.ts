@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit {
               private rService: RolService,
               private perService: PermisosService,
               private pantService: PantallaService,
-              private _formBuilder: FormBuilder) { 
+              private _formBuilder: FormBuilder) {
     this.fetchUsuario();
     this.fetchGrupos();
     this.fetchRoles();
@@ -65,10 +65,10 @@ export class LoginComponent implements OnInit {
     this.uService.getAllUsuarios()
     .subscribe( data => {
       this.usuario =  data;
-      console.log("usuarios",this.usuario)
+      console.log("usuarios",this.usuario);
     },
     error => {
-      console.log('Error al obtener los registros!', error)
+      console.log('Error al obtener los registros', error)
     });
   }
 
@@ -79,7 +79,7 @@ export class LoginComponent implements OnInit {
       console.log("grupo", this.grupo)
     },
     error => {
-      console.log('Error al obtener los registros!', error)
+      console.log('Error al obtener los registros', error)
     });
   }
 
@@ -90,7 +90,7 @@ export class LoginComponent implements OnInit {
       console.log("permisos", this.permiso)
     },
     error => {
-      console.log('Error al obtener los registros!', error)
+      console.log('Error al obtener los registros', error)
     });
   }
 
@@ -101,12 +101,12 @@ export class LoginComponent implements OnInit {
       console.log("pantallas", this.pantalla)
     },
     error => {
-      console.log('Error al obtener los registros!', error)
+      console.log('Error al obtener los registros', error)
     });
   }
 
   addUG(form: NgForm){
-    
+
   }
   applyFilter(filterValue: string) {
     filterValue = filterValue.trim();

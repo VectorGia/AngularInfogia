@@ -62,7 +62,7 @@ export class CentroCostosComponent implements OnInit {
 
   buildCentro() {
     this.centroForm = this.fb.group({
-      tipo: [null, Validators.required],
+      tipo: ['local', Validators.required],
       desc_id: [null, Validators.required],
       nombre: [null, Validators.required],
       categoria: [null, Validators.required],
@@ -70,7 +70,7 @@ export class CentroCostosComponent implements OnInit {
       gerente: [null, Validators.required],
       proyecto_id: [this.id],
       empresa_id: ['', Validators.required],
-      proyeccion: ['', Validators.required],
+      proyeccion: ['BASE', Validators.required],
       porcentaje: [100],
       modelo_negocio_id: ['', Validators.required],
       activo: [true]
@@ -85,7 +85,7 @@ export class CentroCostosComponent implements OnInit {
         console.log('cc: ', this.dataSource.data);
       },
       error => {
-        console.log('Error al extraer los registros!' + error);
+        console.log('Error al extraer los registros' + error);
       });
   }
 
@@ -107,8 +107,8 @@ export class CentroCostosComponent implements OnInit {
         // tslint:disable-next-line: no-string-literal
         const id = res['STR_IDCENTROCOSTO'];
         Swal.fire(
-          'Listo!',
-          'Se guardo el Centro de Costos!',
+          'Listo',
+          'Se guardo el Centro de Costos',
           'success'
         )
         this.renderDataTable();
@@ -123,16 +123,32 @@ export class CentroCostosComponent implements OnInit {
    );
  }
  openDialog(id): void {
-  const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-    width: '550px',
-    data: 'Esta seguro de eliminar este grupo?'
-  });
-  dialogRef.afterClosed().subscribe(result => {
-    if (result) {
-      console.log('Yes clicked');
-      this.delete(id);
-    }
-  });
+   const swalWithBootstrapButtons = Swal.mixin({
+     customClass: {
+       confirmButton: 'btn btn-success',
+       cancelButton: 'btn btn-danger'
+     },
+     buttonsStyling: false
+   });
+
+   swalWithBootstrapButtons.fire({
+     title: '¿Estás seguro de eliminar el centro de costos?',
+     text: 'No podrás deshacer este cambio',
+     icon: 'warning',
+     showCancelButton: true,
+     confirmButtonText: 'Si, eliminar',
+     cancelButtonText: 'No, cancelar',
+     reverseButtons: true
+   }).then((result) => {
+     if (result.value) {
+       this.delete(id);
+       swalWithBootstrapButtons.fire(
+         'Eliminado',
+         'El centro de costos se ha borrado.',
+         'success'
+       );
+     }
+   });
 }
 
 fetchModelos() {

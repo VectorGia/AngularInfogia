@@ -132,7 +132,7 @@ export class EmpresaComponent implements OnInit {
       if (result.value) {
         this.delete(id);
         swalWithBootstrapButtons.fire(
-          'Eliminado!',
+          'Eliminado',
           'La empresa ha sido borrada.',
           'success'
         );
