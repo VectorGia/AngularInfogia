@@ -62,7 +62,8 @@ export class DialogOverviewDialogComponent implements OnInit {
       hijos: ['', Validators.required],
       activo: [true],
       tipo_id: ['2', Validators.required],
-      naturaleza: ['ACREEDORA', Validators.required]
+      naturaleza: ['ACREEDORA', Validators.required],
+      esTotalIngresos: [false]
     });
   }
 
@@ -141,7 +142,7 @@ export class DialogOverviewDialogComponent implements OnInit {
               this.onNoClick();
               this.ngOnInit();
             }, error => {
-              this.alertar('Ocurrio un error en la operación. Causa:' + error.message);
+              this.alertar('Ocurrió un error en la operación. Causa:' + error.error);
             });
           }
         });

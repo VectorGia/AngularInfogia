@@ -102,11 +102,6 @@ export class RubrosComponent implements OnInit {
         this.rS.deleteRubro(id).subscribe(res => {
           this.ngOnInit();
         });
-        swalWithBootstrapButtons.fire(
-          'Eliminado',
-          'El rubro se ha borrado.',
-          'success'
-        );
       }
     });
   }
@@ -115,17 +110,19 @@ export class RubrosComponent implements OnInit {
 
   reorderRubros(rubros) {
     console.log('recibi rubros: ', rubros);
+    rubros.forEach(rubro => {
+      rubro.estilo = 'defecto';
+    });
     const rubrosReorder = [];
     const padres = this.getPadres(rubros);
     const padresSinHijos = [];
     for (const padre of padres) {
+      padre.estilo = padre.esTotalIngresos ? 'padreingresos' : 'padre';
       if (!padre.hijos) {
         padresSinHijos.push(padre);
-        padre.estilo = 'padre';
         continue;
       }
       rubrosReorder.push(padre);
-      padre.estilo = 'padre';
       const hijos = this.getHijos(padre, rubros);
       for (const hijo of hijos) {
         hijo.estilo = 'hijo';
@@ -134,13 +131,19 @@ export class RubrosComponent implements OnInit {
     }
 
     for (const padreSinHijos of padresSinHijos) {
-      rubrosReorder.push(padreSinHijos);
+      if ( padreSinHijos.esTotalIngresos) {
+        rubrosReorder.unshift(padreSinHijos);
+      } else {
+        rubrosReorder.push(padreSinHijos);
+      }
     }
     for (const rreodered of rubrosReorder) {
-      let idx = rubros.indexOf(rreodered);
-      rubros.splice(idx, 1);
+      const idx = rubros.indexOf(rreodered);
+      if ( idx >= 0) {
+        rubros.splice(idx, 1);
+      }
     }
-    let res = rubrosReorder.concat(rubros);
+    const res = rubrosReorder.concat(rubros);
     console.log('reorden:', res);
     return res;
   }
@@ -154,6 +157,9 @@ export class RubrosComponent implements OnInit {
         padres.push(actual);
       }
     }
+    padres.sort((a, b) => {
+      return a.id - b.id;
+    });
     padres.sort((a, b) => {
       let aValorPonderado = 0;
       let bValorPonderado = 0;

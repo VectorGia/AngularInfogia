@@ -64,7 +64,7 @@ export class ProyectoComponent implements OnInit {
       }, error => {
         Swal.fire(
           'Atención',
-          'Ocurrió un error. Causa ' + error['error'],
+          'Ocurrió un error. Causa: ' + error['error'],
           'error'
         );
       });

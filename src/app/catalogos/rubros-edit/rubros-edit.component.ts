@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormGroup, FormBuilder, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {RubroService} from 'src/app/core/service/rubro.service';
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-rubros-edit',
@@ -70,7 +71,8 @@ export class RubrosEditComponent implements OnInit {
       hijos: [''],
       tipo_cuenta: [''],
       aritmetica: [''],
-      naturaleza: ['']
+      naturaleza: [''],
+      esTotalIngresos: [false]
     });
   }
 
@@ -94,6 +96,12 @@ export class RubrosEditComponent implements OnInit {
       this.rubroService.updateRubro(this.id, rubro)
         .subscribe((newRubro) => {
           this.router.navigate(['./catalogo/negocio/rubros/' + decodeURI(this.getData(window.location.href, 'rubros/', '/edit'))]);
+        }, error => {
+          Swal.fire(
+            'Atención',
+            'Ocurrió un error. Causa: ' + error['error'],
+            'error'
+          );
         });
     }
   }

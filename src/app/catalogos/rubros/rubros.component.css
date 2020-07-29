@@ -1,11 +1,23 @@
 .padre{
   background-color: #FAFAD2;
   font-weight:bold ;
+  text-align: start !important;
 }
 .hijo{
   padding-left: 50px !important;
- 
+  text-align: start !important;
+  font-style: italic;
 }
+.padreingresos{
+  background-color: #fff8e5;
+  font-weight:bold ;
+  text-align: start !important;
+}
+
+.defecto{
+  text-align: start !important;
+}
+
 table th{
   text-align: center;
   background-color: blue;
