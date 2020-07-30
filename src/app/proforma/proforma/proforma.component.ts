@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterContentInit, AfterViewInit, Component, OnInit} from '@angular/core';
 import {MontosconsolidadosService} from 'src/app/core/service/montosconsolidados.service';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {ProformaService} from 'src/app/core/service/proforma.service';
@@ -10,13 +10,17 @@ import {TipocapturaService} from 'src/app/core/service/tipocaptura.service';
 import Swal from 'sweetalert2';
 import {ExcelService} from '../../core/service/excel.service';
 import {Location} from '@angular/common';
+import AutoNumeric from 'AutoNumeric';
+import * as numeral from 'numeral';
+import {delay} from 'rxjs/operators';
+
 type AOA = any[][];
 @Component({
   selector: 'app-proforma',
   templateUrl: './proforma.component.html',
   styleUrls: ['./proforma.component.css']
 })
-export class ProformaComponent implements OnInit {
+export class ProformaComponent implements OnInit, AfterContentInit {
   constructor(private fB: FormBuilder, private proformaService: ProformaService,
               private empresaService: CompaniaService, private centroService: CentrosService,
               private activeRoute: ActivatedRoute,
@@ -58,7 +62,22 @@ export class ProformaComponent implements OnInit {
     ' octubre_monto_resultado': 10, ' noviembre_monto_resultado': 11, ' diciembre_monto_resultado': 12
   };
   esProformaContable = false;
+  private  excludeProps = ['id_proforma',
+    'mes_inicio',
+    'centro_costo_id',
+    'anio',
+    'tipo_proforma_id',
+    'tipo_captura_id',
+    'idInterno',
+    'clave_rubro',
+    'rubro_id',
+    'tipo',
+    'estilo',
+    'aritmetica',
+    'id'];
 
+  ngAfterContentInit() {
+  }
   ngOnInit() {
     this.builForm();
     // this.fetchCentros();
@@ -80,6 +99,16 @@ export class ProformaComponent implements OnInit {
           });
       }
     });
+  }
+
+  formatInputsCurrency(delayTime) {
+    setTimeout(() => {
+      const inputs = document.getElementsByClassName('inputproform');
+      console.log('inputs %o', inputs);
+      for (let i = 0 ; i < inputs.length; i++) {
+        new AutoNumeric((inputs[i] as HTMLElement), null, {currencySymbol: '$'});
+      }
+    }, delayTime);
   }
 builForm() {
   this.formProforma = this.fB.group({
@@ -151,6 +180,7 @@ getAnios() {
       this.proformaEditable = !this.detallesProforma[0].editable;
       this.detallesProfToRender = this.splitDetalles(this.detallesProforma, this.mesInicio);
     }
+    this.formatInputsCurrency(2000);
     console.table('Proforma: ', this.detallesProfToRender);
   }
 
@@ -261,19 +291,7 @@ getAnios() {
         });
     }
   }
-  private  excludeProps = ['id_proforma',
-    'mes_inicio',
-    'centro_costo_id',
-    'anio',
-    'tipo_proforma_id',
-    'tipo_captura_id',
-    'idInterno',
-    'clave_rubro',
-    'rubro_id',
-    'tipo',
-    'estilo',
-    'aritmetica',
-    'id'];
+
 /*a cada detalle de la proforma calculada, se le aplica un factor correspondiente al tipo de cambio */
   recalculaPorTipoCambio(factor) {
     const detalles = [];
@@ -326,8 +344,10 @@ getAnios() {
       this.detallesProfToRender = this.splitDetalles(this.detallesProforma, this.mesInicio);
     }
   }
+
   changeMonto(detalle: any, nombrecol, event: any) {
-    if (isNaN(event.target.value)) {
+    const valor = numeral(event.target.value).value();
+    if (isNaN(valor)) {
       alert('Dato invalido, favor de verificar.');
       event.target.focus();
       event.stopPropagation();
@@ -336,12 +356,12 @@ getAnios() {
     }
     /*se recibe un detalle de la pantalla es decir uno con split por lo que se debe obtener el detalle de donde proviene*/
     const detalleSource = this.detallesProformaIdxIdInterno[detalle.idInterno];
-    detalleSource[nombrecol] = event.target.value;
+    detalleSource[nombrecol] = valor;
     // HNA: ocurrio un cambio correcto en la proforma por lo que se recalcula el detalle impactado y los totales de proforma
     this.recalculateDetalle(detalleSource, this.detallesProforma);
     // re re construlle los detalles para vista
     this.detallesProfToRender = this.splitDetalles(this.detallesProforma, this.mesInicio);
-
+    this.formatInputsCurrency(300);
     console.log(detalle);
 
   }
