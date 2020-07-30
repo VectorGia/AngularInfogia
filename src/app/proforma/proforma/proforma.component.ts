@@ -31,9 +31,9 @@ export class ProformaComponent implements OnInit, AfterContentInit {
               private _location: Location) {
   }
 
-  displayedColumns: string[] = ['nombre', 'total', 'aant', 'ejercicio', 'enero', 'febrero', 'marzo',
+  displayedColumns: string[] = ['nombre', 'total', 'porc_total', 'aant', 'porc_aant', 'ejercicio', 'porc_ejercicio', 'enero', 'febrero', 'marzo',
                                 'abril', 'mayo', 'junio', 'julio', 'agosto',
-                                'septiembre', 'octubre', 'noviembre', 'diciembre', 'apost'];
+                                'septiembre', 'octubre', 'noviembre', 'diciembre', 'apost', 'porc_apost'];
   detallesProfToRender: any = [];
   detallesProforma: any;
   detallesProformaIdxIdRubro: any;
@@ -76,6 +76,7 @@ export class ProformaComponent implements OnInit, AfterContentInit {
     'aritmetica',
     'id',
     'es_total_ingresos'];
+    private detalleTotalImpuesto;
 
   ngAfterContentInit() {
   }
@@ -175,6 +176,9 @@ getAnios() {
     for (const detalle of this.detallesProforma) {
       this.detallesProformaIdxIdInterno[detalle.idInterno] = detalle;
       this.detallesProformaIdxIdRubro[detalle.rubro_id] = detalle;
+      if (detalle.es_total_ingresos) {
+        this.detalleTotalImpuesto = detalle;
+      }
     }
     if (this.detallesProforma.length > 0) {
       this.mesInicio = this.detallesProforma[0].mes_inicio;
@@ -563,4 +567,16 @@ getAnios() {
     this._location.back();
   }
 
+  calculaPorcentajeVSIngresos(monto, nombreCampo) {
+    if (this.detalleTotalImpuesto) {
+      const montotal = this.detalleTotalImpuesto[nombreCampo];
+      const res = Math.round((monto * 100) / montotal) ;
+      if (isNaN(res)) {
+        return '0 %';
+      }
+      return  res + ' %';
+    } else {
+      return '0 %';
+    }
+  }
 }

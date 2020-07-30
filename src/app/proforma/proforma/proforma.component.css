@@ -29,15 +29,30 @@ table input {
 
 .mat-column-total {
   text-align: center;
-  border-right:lightgray 1px dotted;
+  min-width: 140px
+}
+.mat-column-porc_total {
+  text-align: center;
+  min-width: 40px;
+  border:lightgray 1px dotted;
 }
 .mat-column-aant{
   text-align: center;
-  border-right:lightgray 1px dotted;
+  min-width: 140px
+}
+.mat-column-porc_aant {
+  text-align: center;
+  min-width: 40px;
+  border:lightgray 1px dotted;
 }
 .mat-column-ejercicio{
   text-align: center;
-  border-right:lightgray 1px dotted;
+  min-width: 140px
+}
+.mat-column-porc_ejercicio {
+  text-align: center;
+  min-width: 40px;
+  border:lightgray 1px dotted;
 }
 .mat-column-enero{
   text-align: center;
@@ -76,7 +91,11 @@ table input {
   text-align: center;
   border-right:lightgray 1px dotted;
 }
-
+.mat-column-porc_apost {
+  text-align: center;
+  min-width: 40px;
+  border:lightgray 1px dotted;
+}
 table td {
   font-size: 11px;
   padding-left: 3px;
@@ -86,7 +105,7 @@ table th{
   text-align: center;
   background-color: #000080;
   color: white;
-  border-right: #000080;
+  border: #000080;
 }
 .display{
   display: none;
