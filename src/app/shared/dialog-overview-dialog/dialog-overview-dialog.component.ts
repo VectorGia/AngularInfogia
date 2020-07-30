@@ -63,7 +63,7 @@ export class DialogOverviewDialogComponent implements OnInit {
       activo: [true],
       tipo_id: ['2', Validators.required],
       naturaleza: ['ACREEDORA', Validators.required],
-      esTotalIngresos: [false]
+      es_total_ingresos: [false]
     });
   }
 

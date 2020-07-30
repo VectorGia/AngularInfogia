@@ -117,7 +117,7 @@ export class RubrosComponent implements OnInit {
     const padres = this.getPadres(rubros);
     const padresSinHijos = [];
     for (const padre of padres) {
-      padre.estilo = padre.esTotalIngresos ? 'padreingresos' : 'padre';
+      padre.estilo = padre.es_total_ingresos ? 'padreingresos' : 'padre';
       if (!padre.hijos) {
         padresSinHijos.push(padre);
         continue;
@@ -131,7 +131,7 @@ export class RubrosComponent implements OnInit {
     }
 
     for (const padreSinHijos of padresSinHijos) {
-      if ( padreSinHijos.esTotalIngresos) {
+      if ( padreSinHijos.es_total_ingresos) {
         rubrosReorder.unshift(padreSinHijos);
       } else {
         rubrosReorder.push(padreSinHijos);
@@ -150,7 +150,7 @@ export class RubrosComponent implements OnInit {
 
   getPadres(rubros) {
     const padres = [];
-    const ponderacion = { ingreso: 1, egreso: 0};
+    const ponderacion = { default: -1, egreso: 0, ingreso: 1, tingreso: 2};
     for (let i = 0; i < rubros.length; i++) {
       const actual = rubros[i];
       if (actual.hijos || actual.aritmetica) {
@@ -161,14 +161,16 @@ export class RubrosComponent implements OnInit {
       return a.id - b.id;
     });
     padres.sort((a, b) => {
-      let aValorPonderado = 0;
-      let bValorPonderado = 0;
-      if (a.tipo_agrupador) {
-        aValorPonderado = ponderacion[a.tipo_agrupador];
+
+      let aValorPonderado = ponderacion[a.tipo_agrupador ? a.tipo_agrupador : 'default'];
+      let bValorPonderado = ponderacion[b.tipo_agrupador ? b.tipo_agrupador : 'default'];
+      if ( a.es_total_ingresos) {
+        aValorPonderado = ponderacion['tingreso'];
       }
-      if (b.tipo_agrupador) {
-        bValorPonderado = ponderacion[b.tipo_agrupador];
+      if ( b.es_total_ingresos) {
+        bValorPonderado = ponderacion['tingreso'];
       }
+
       return bValorPonderado - aValorPonderado;
     });
     return padres;

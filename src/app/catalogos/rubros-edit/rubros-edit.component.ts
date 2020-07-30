@@ -72,7 +72,7 @@ export class RubrosEditComponent implements OnInit {
       tipo_cuenta: [''],
       aritmetica: [''],
       naturaleza: [''],
-      esTotalIngresos: [false]
+      es_total_ingresos: [false]
     });
   }
 

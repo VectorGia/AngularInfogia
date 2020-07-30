@@ -74,7 +74,8 @@ export class ProformaComponent implements OnInit, AfterContentInit {
     'tipo',
     'estilo',
     'aritmetica',
-    'id'];
+    'id',
+    'es_total_ingresos'];
 
   ngAfterContentInit() {
   }
@@ -114,7 +115,7 @@ builForm() {
   this.formProforma = this.fB.group({
     anio: [''],
     tipo_proforma_id: [''],
-    tipo_captura_id: [''],
+    tipo_captura_id: [2],
     empresa_id: [''],
     centro_costo_id: ['']
   });
@@ -270,7 +271,7 @@ getAnios() {
   }
   updateProforma() {
     if (this.isValidDetalles(this.detallesProforma, ['nombre_rubro', 'fecha_captura', 'clave_rubro', 'aritmetica', 'idInterno', 'editable',
-                                                                    'campoEnAjustes', 'hijos', 'estilo', 'tipo'])) {
+                                                                    'campoEnAjustes', 'hijos', 'estilo', 'tipo', 'es_total_ingresos'])) {
       this.recalculateAll(this.detallesProforma); // /HNA:Antes de mandar a guardar la proforma se recalcula completa
       this.proformaService.updateProforma(this.id, this.detallesProforma)
         .subscribe(
@@ -533,6 +534,9 @@ getAnios() {
       } else {
         alldetalles.push(detalle);
         detalle.estilo = 'padre';
+        if (detalle.es_total_ingresos) {
+          detalle.estilo = 'padreingresos';
+        }
       }
     }
     return alldetalles;

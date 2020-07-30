@@ -12,12 +12,16 @@ table input {
 }
 .padre{
   background-color: #FAFAD2;
-
   font-weight:bold ;
 }
 .hijo{
   padding-left: 50px !important;
 
+}
+.padreingresos{
+  background-color: #fff8e5;
+/*  font-weight:bold ;
+  text-align: start !important;*/
 }
 .mat-column-nombre{
   border-right:lightgray 1px dotted;
