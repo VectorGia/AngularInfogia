@@ -114,12 +114,13 @@
                                   </div>
                                 </th>
                                 <td mat-cell *matCellDef="let detalle">
-                                    <div *ngIf="!detalle.aritmetica && detalle.tipo == 'real'">
+                                  {{(detalle.total_resultado ) | currency}}
+                                    <!--<div *ngIf="!detalle.aritmetica && detalle.tipo == 'real'">
                                         {{(detalle.total_resultado ) | currency}}
                                     </div>
                                     <div *ngIf="detalle.aritmetica">
                                        <strong> {{(detalle.total_resultado ) | currency}}</strong>
-                                    </div>
+                                    </div>-->
                                 </td>
                         </ng-container>
                       <ng-container matColumnDef="porc_total" sticky>
@@ -152,12 +153,13 @@
                                   </div>
                                 </th>
                                 <td mat-cell *matCellDef="let detalle">
-                                    <div *ngIf="!detalle.aritmetica  && detalle.tipo == 'real'">
+                                  {{detalle.ejercicio_resultado  | currency}}
+                                    <!--<div *ngIf="!detalle.aritmetica  && detalle.tipo == 'real'">
                                         {{detalle.ejercicio_resultado  | currency}}
                                     </div>
                                     <div *ngIf="detalle.aritmetica">
                                      <strong>  {{detalle.ejercicio_resultado  | currency}} </strong>
-                                    </div>
+                                    </div>-->
                                 </td>
                         </ng-container>
                       <ng-container matColumnDef="porc_ejercicio" sticky>

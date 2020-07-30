@@ -276,7 +276,7 @@ getAnios() {
   updateProforma() {
     if (this.isValidDetalles(this.detallesProforma, ['nombre_rubro', 'fecha_captura', 'clave_rubro', 'aritmetica', 'idInterno', 'editable',
                                                                     'campoEnAjustes', 'hijos', 'estilo', 'tipo', 'es_total_ingresos'])) {
-      this.recalculateAll(this.detallesProforma); // /HNA:Antes de mandar a guardar la proforma se recalcula completa
+      this.recalculateAll(this.detallesProforma, true); // /HNA:Antes de mandar a guardar la proforma se recalcula completa
       this.proformaService.updateProforma(this.id, this.detallesProforma)
         .subscribe(
         res => {
@@ -345,7 +345,7 @@ getAnios() {
       }
     });
     if (this.ajustes.length > 0) {
-      this.recalculateAll(this.detallesProforma);
+      this.recalculateAll(this.detallesProforma, true);
       this.detallesProfToRender = this.splitDetalles(this.detallesProforma, this.mesInicio);
     }
   }
@@ -403,7 +403,7 @@ getAnios() {
       const datosProforma = res[0];
       self.formProforma.patchValue(datosProforma);
       self.renderDetallesProforma(res);
-      self.recalculateAll(self.detallesProforma);
+      self.recalculateAll(self.detallesProforma, true);
       if (datosProforma.id_proforma > 0) {
         self.consulta = true;
         self.proformaExistente = true;
@@ -454,14 +454,16 @@ getAnios() {
     return detalles;
   }
 
-  recalculateAll(detalles) {
+  recalculateAll(detalles, calcularTotales) {
     this.sumColumns(detalles, 'ejercicio_resultado', ['enero_monto_resultado',
       'febrero_monto_resultado', 'marzo_monto_resultado', 'abril_monto_resultado',
       'mayo_monto_resultado', 'junio_monto_resultado', 'julio_monto_resultado', 'agosto_monto_resultado',
       'septiembre_monto_resultado', 'octubre_monto_resultado', 'noviembre_monto_resultado', 'diciembre_monto_resultado']);
     this.sumColumns(detalles, 'total_resultado', ['ejercicio_resultado', 'acumulado_resultado'
     ]);
-    this.calculaDetTot(detalles, this.getDetallesTotales(detalles));
+    if (calcularTotales) {
+      this.calculaDetTot(detalles, this.getDetallesTotales(detalles));
+    }
     return detalles;
   }
 
@@ -543,22 +545,21 @@ getAnios() {
         }
       }
     }
+    this.recalculateAll(alldetalles, false);
     return alldetalles;
   }
 
   splitDetalle(detalle, mesinicio) {
 
     const detReal = Object.assign({}, detalle);
+    detReal.tipo = 'real';
     const detprof = Object.assign({}, detalle);
+    detprof.tipo = 'proform';
     for (const prop in this.ponderacionCampos) {
       if (this.ponderacionCampos[prop] >= mesinicio) {
-        // detReal[prop] = 0;
-        detReal.tipo = 'real';
-        // -> proformados
+        detReal[prop.trim()] = 0;
       } else {
-        // detprof[prop] = 0;
-        detprof.tipo = 'proform';
-        // -> reales
+        detprof[prop.trim()] = 0;
       }
     }
     return [detReal, detprof];
