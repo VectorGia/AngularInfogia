@@ -75,6 +75,6 @@ export class ProformaService {
 
    private handleError(error: HttpErrorResponse) {
      console.log(error);
-     return throwError('algo salio mal, intentalo de nuevo');
+     return throwError('algo salio mal. Causa: ' + error.error);
    }
 }

@@ -571,6 +571,9 @@ getAnios() {
   calculaPorcentajeVSIngresos(monto, nombreCampo) {
     if (this.detalleTotalImpuesto) {
       const montotal = this.detalleTotalImpuesto[nombreCampo];
+      if (montotal === 0) {
+        return '0 %';
+      }
       const res = Math.round((monto * 100) / montotal) ;
       if (isNaN(res)) {
         return '0 %';
