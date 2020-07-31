@@ -15,13 +15,13 @@ const httpOptions = {
 export class EmpresaProyectoService {
   private url = GlobalVariable.BASE_API_URL;
   header: any;
-  constructor(private http: HttpClient) { 
+  constructor(private http: HttpClient) {
     const headerSettings: {[name: string]: string | string[]; } = {};
     this.header = new HttpHeaders(headerSettings);
   }
 
-  getEmpresas(id){
-    console.log("recibi el id: ", id)
-    return this.http.get<any>(`${this.url}/api/Empresa_Proyecto/${id}`)
+  getEmpresas(id) {
+    console.log('recibi el id: ', id);
+    return this.http.get<any>(`${this.url}/api/Empresa_Proyecto/${id}`);
   }
 }

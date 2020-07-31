@@ -21,8 +21,8 @@ export class UnidadnegocioService {
   getAllUnidades(): Observable<UnidadNegocio[]> {
     return this.http.get<UnidadNegocio[]>(`${this.url}/api/UnidadNegocio`);
   }
-  getUnidadesById(id): Observable<any[]> {
-    console.log('id: ',id);
+  getUnidadesByIdModelo(id): Observable<any[]> {
+    console.log('id: ', id);
     return this.http.get<any[]>(`${this.url}/api/ModeloUnidad/${id}`);
   }
 

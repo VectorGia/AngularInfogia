@@ -56,7 +56,7 @@ export class NegocioEditComponent implements OnInit {
         );
         this.router.navigate(['./catalogo/negocio' + this.getData(window.location.href, 'negocio/', '/edit')]);
       });
-    }else{
+    } else {
       Swal.fire(
         'Atención',
         'Complete la información requerida',
@@ -80,12 +80,16 @@ export class NegocioEditComponent implements OnInit {
     console.log('[id]: ', this.id);
     this.unidadService.getAllUnidades()
       .subscribe(allUnidades => {
-        this.unidadService.getUnidadesById(this.id)
+        this.unidadService.getUnidadesByIdModelo(this.id)
         .subscribe(unidadesModelo => {
           console.log('unidadesModelo', unidadesModelo);
           this.dataSource = new MatTableDataSource();
           this.dataSource.data = unidadesModelo;
-          let tmp = {nombre: unidadesModelo[0].descripcionModelo}
+          const unidadesNegocioIds = [];
+          for (let i = 0; i < unidadesModelo.length; i++) {
+            unidadesNegocioIds.push(parseInt(unidadesModelo[i].idUnidad, 10));
+          }
+          const tmp = {nombre: unidadesModelo[0].descripcionModelo, unidades_negocio_ids: unidadesNegocioIds};
           this.modelo.patchValue(tmp);
         });
         this.unidades = allUnidades;
@@ -99,6 +103,6 @@ export class NegocioEditComponent implements OnInit {
     });
   }
   return() {
-    this.router.navigate(['./catalogo/negocio'])
+    this.router.navigate(['./catalogo/negocio']);
    }
 }
