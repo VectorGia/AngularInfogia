@@ -114,13 +114,12 @@
                                   </div>
                                 </th>
                                 <td mat-cell *matCellDef="let detalle">
-                                  {{(detalle.total_resultado ) | currency}}
-                                    <!--<div *ngIf="!detalle.aritmetica && detalle.tipo == 'real'">
+                                    <div *ngIf="!detalle.aritmetica">
                                         {{(detalle.total_resultado ) | currency}}
                                     </div>
                                     <div *ngIf="detalle.aritmetica">
                                        <strong> {{(detalle.total_resultado ) | currency}}</strong>
-                                    </div>-->
+                                    </div>
                                 </td>
                         </ng-container>
                       <ng-container matColumnDef="porc_total" sticky>
@@ -144,7 +143,12 @@
                         </ng-container>
                       <ng-container matColumnDef="porc_aant" sticky>
                         <th mat-header-cell *matHeaderCellDef><div>%</div></th>
-                        <td mat-cell *matCellDef="let detalle">{{calculaPorcentajeVSIngresos(detalle.acumulado_resultado, 'acumulado_resultado')}}</td>
+                        <td mat-cell *matCellDef="let detalle">
+                          <div *ngIf="detalle.aritmetica  || detalle.tipo == 'real'">
+                          {{calculaPorcentajeVSIngresos(detalle.acumulado_resultado, 'acumulado_resultado')}}
+                          </div>
+                        </td>
+
                       </ng-container>
                         <ng-container matColumnDef="ejercicio" sticky>
                                 <th mat-header-cell *matHeaderCellDef>
@@ -153,13 +157,12 @@
                                   </div>
                                 </th>
                                 <td mat-cell *matCellDef="let detalle">
-                                  {{detalle.ejercicio_resultado  | currency}}
-                                    <!--<div *ngIf="!detalle.aritmetica  && detalle.tipo == 'real'">
-                                        {{detalle.ejercicio_resultado  | currency}}
-                                    </div>
-                                    <div *ngIf="detalle.aritmetica">
-                                     <strong>  {{detalle.ejercicio_resultado  | currency}} </strong>
-                                    </div>-->
+                                  <div *ngIf="!detalle.aritmetica">
+                                    {{(detalle.ejercicio_resultado ) | currency}}
+                                  </div>
+                                  <div *ngIf="detalle.aritmetica">
+                                    <strong> {{(detalle.ejercicio_resultado ) | currency}}</strong>
+                                  </div>
                                 </td>
                         </ng-container>
                       <ng-container matColumnDef="porc_ejercicio" sticky>
@@ -383,7 +386,7 @@
                         <ng-container matColumnDef="apost" stickyEnd>
                             <th mat-header-cell *matHeaderCellDef> Años Posteriores </th>
                             <td mat-cell *matCellDef="let detalle">
-                                <div *ngIf="!detalle.aritmetica">
+                                <div *ngIf="!detalle.aritmetica && detalle.tipo == 'real'">
                                     {{detalle.anios_posteriores_resultado  | currency}}
                                 </div>
                                 <div *ngIf="detalle.aritmetica">
@@ -393,7 +396,12 @@
                     </ng-container>
                       <ng-container matColumnDef="porc_apost" sticky>
                         <th mat-header-cell *matHeaderCellDef><div>%</div></th>
-                        <td mat-cell *matCellDef="let detalle">{{calculaPorcentajeVSIngresos(detalle.anios_posteriores_resultado, 'anios_posteriores_resultado')}}</td>
+                        <td mat-cell *matCellDef="let detalle">
+                          <div *ngIf="detalle.aritmetica  || detalle.tipo == 'real'">
+                            {{calculaPorcentajeVSIngresos(detalle.anios_posteriores_resultado, 'anios_posteriores_resultado')}}
+                          </div>
+                        </td>
+
                       </ng-container>
 
                         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

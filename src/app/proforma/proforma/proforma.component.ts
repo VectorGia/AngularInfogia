@@ -449,7 +449,7 @@ getAnios() {
       'febrero_monto_resultado', 'marzo_monto_resultado', 'abril_monto_resultado',
       'mayo_monto_resultado', 'junio_monto_resultado', 'julio_monto_resultado', 'agosto_monto_resultado',
       'septiembre_monto_resultado', 'octubre_monto_resultado', 'noviembre_monto_resultado', 'diciembre_monto_resultado']);
-    this.sumColumnsForDetalle(detalleModificado, 'total_resultado', ['ejercicio_resultado', 'acumulado_resultado']);
+    this.sumColumnsForDetalle(detalleModificado, 'total_resultado', ['ejercicio_resultado', 'acumulado_resultado', 'anios_posteriores_resultado']);
     this.calculaDetTot(detalles, this.getDetallesTotales(detalles));
     return detalles;
   }
@@ -459,8 +459,7 @@ getAnios() {
       'febrero_monto_resultado', 'marzo_monto_resultado', 'abril_monto_resultado',
       'mayo_monto_resultado', 'junio_monto_resultado', 'julio_monto_resultado', 'agosto_monto_resultado',
       'septiembre_monto_resultado', 'octubre_monto_resultado', 'noviembre_monto_resultado', 'diciembre_monto_resultado']);
-    this.sumColumns(detalles, 'total_resultado', ['ejercicio_resultado', 'acumulado_resultado'
-    ]);
+    this.sumColumns(detalles, 'total_resultado', ['ejercicio_resultado', 'acumulado_resultado', 'anios_posteriores_resultado']);
     if (calcularTotales) {
       this.calculaDetTot(detalles, this.getDetallesTotales(detalles));
     }
@@ -503,6 +502,7 @@ getAnios() {
       aritmeticas['diciembre_monto'] = detalleTotal.aritmetica;
       aritmeticas['ejercicio'] = detalleTotal.aritmetica;
       aritmeticas['acumulado'] = detalleTotal.aritmetica;
+      aritmeticas['anios_posteriores'] = detalleTotal.aritmetica;
       aritmeticas['total'] = detalleTotal.aritmetica;
       allDetalles.forEach(detalle => {
         const detalleClave = detalle.clave_rubro;
